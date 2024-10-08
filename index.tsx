@@ -14,39 +14,33 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
 import definePlugin from "@utils/types";
 
 // import settings from "../_core/settings";
 import IconsTab from "./IconsTab";
 
-let settingsPlugin;
-try {
-    settingsPlugin = require("../_core/settings").default;
-} catch {
-    settingsPlugin = require("../../plugins/_core/settings").default;
-}
-
-
 export default definePlugin({
-    name: "IconViewer",
-    description: "Adds a new tab to settings, to preview all icons",
-    authors: [],
-    dependencies: ["Settings"],
-    insertSettings() {
-        return {
-            section: "VencordDiscordIcons",
-            label: "Icons",
-            element: IconsTab,
-            className: "vc-discord-icons"
-        };
-    },
-    start() {
-        console.log(settingsPlugin);
-        settingsPlugin.customSections.push(this.insertSettings);
-    },
-    stop() {
-        settingsPlugin.customSections = settingsPlugin.customSections.filter(x => x !== this.insertSettings);
-    }
+  name: "IconViewer",
+  description: "Adds a new tab to settings, to preview all icons",
+  authors: [],
+  dependencies: ["Settings"],
+  insertSettings() {
+    return {
+      section: "VencordDiscordIcons",
+      label: "Icons",
+      element: IconsTab,
+      className: "vc-discord-icons",
+    };
+  },
+  start() {
+    Vencord.Plugins.plugins.Settings.customSections.push(this.insertSettings);
+  },
+  stop() {
+    Vencord.Plugins.plugins.Settings.customSections =
+      Vencord.Plugins.plugins.Settings.customSections.filter(
+        (x) => x !== this.insertSettings
+      );
+  },
 });
