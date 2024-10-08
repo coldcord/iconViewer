@@ -1,6 +1,8 @@
 Adds a new tab to settings, to preview all icons
 
 ![preview](https://github.com/user-attachments/assets/f08e9514-5b0c-4a27-ae96-755a5ab0443d)
+> [!NOTE]  
+> you can use the arrows to switch icon color
 
 <!-->
 
