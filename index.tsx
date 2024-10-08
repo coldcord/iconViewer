@@ -16,39 +16,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { Devs } from "@utils/constants";
 import definePlugin from "@utils/types";
 
+// import settings from "../_core/settings";
 import IconsTab from "./IconsTab";
+
+let settingsPlugin;
+try {
+    settingsPlugin = require("../_core/settings").default;
+} catch {
+    settingsPlugin = require("../../plugins/_core/settings").default;
+}
 
 
 export default definePlugin({
     name: "IconViewer",
     description: "Adds a new tab to settings, to preview all icons",
-    authors: [Devs.iamme],
+    authors: [],
     dependencies: ["Settings"],
-    patches: [
-        {
-            find: "Messages.ACTIVITY_SETTINGS",
-            replacement: {
-                match: /(shouldMergeGameSettings.{0,10}return )(\i\.useMemo\(\(\)=>\i\(.{0,10}\i,\i\]\))/,
-                replace: (_, rest, settingsHook) => `${rest}$self.wrapSettingsHook(${settingsHook})`
-            }
-        }
-    ],
-
-    wrapSettingsHook(elements: Record<string, unknown>[]) {
-        const elementIndex = elements.findIndex(
-            ({ section }) =>
-                section === (!IS_DEV ? "VencordSettingsSync" : "VencordPatchHelper")
-        );
-        if (elementIndex !== -1)
-            elements.splice(elementIndex + 1, 0, {
-                section: "VencordDiscordIcons",
-                label: "Icons",
-                element: IconsTab,
-                className: "vc-discord-icons"
-            });
-        return elements;
+    insertSettings() {
+        return {
+            section: "VencordDiscordIcons",
+            label: "Icons",
+            element: IconsTab,
+            className: "vc-discord-icons"
+        };
     },
+    start() {
+        console.log(settingsPlugin);
+        settingsPlugin.customSections.push(this.insertSettings);
+    },
+    stop() {
+        settingsPlugin.customSections = settingsPlugin.customSections.filter(x => x !== this.insertSettings);
+    }
 });
