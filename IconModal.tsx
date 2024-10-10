@@ -12,25 +12,11 @@ import {
     ModalSize,
     openModal
 } from "@utils/modal";
-import { findByPropsLazy } from "@webpack";
 import { Text, TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
 import * as t from "@webpack/types";
 
-const Colors = findByPropsLazy("colors", "layout");
-const cssColors = new Proxy(
-    {},
-    {
-        get: (target, key) => {
-            if (Number(key) < 0)
-                key = String(Object.keys(Colors.colors).length + Number(key));
-            const colorKey = Object.keys(Colors.colors)[key];
-            return key in target
-                ? target[key]
-                : Colors.colors[colorKey]?.css != null ? (target[key] = { name: colorKey.split("_").map((x: string) => x[0].toUpperCase() + x.toLowerCase().slice(1)).join(" "), css: Colors.colors[colorKey].css, key: colorKey }) : undefined;
-        }
-    }
-) as unknown as Array<{ name: string; css: string; key: string; }>;
-const iconSizes = ["lg", "md", "sm", "xs", "xxs"].reverse();
+import { cssColors, iconSizes } from "./utils";
+
 
 
 function ModalComponent(props) {

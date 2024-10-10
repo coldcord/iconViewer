@@ -19,22 +19,18 @@
 import "./IconsTab.css";
 
 import { SettingsTab, wrapTab } from "@components/VencordSettings/shared";
-import { waitFor } from "@webpack";
-import { Clickable, Forms, Icons as OrgIcons, React, TextInput } from "@webpack/common";
-import * as t from "@webpack/types";
+import { Clickable, Forms, React, TextInput } from "@webpack/common";
 
 import { openIconModal } from "./IconModal";
+import { Icons } from "./utils";
 
-let Icons = {} as t.Icons;
+
 const searchMatch = (search: string, name: string) => {
     const words = name.replace(/([A-Z]([a-z]+)?)/g, " $1").toLowerCase().split(" ");
     const searchKeywords = search.toLowerCase().split(" ");
     return searchKeywords.every(keyword => words.includes(keyword)) || words.every(keyword => searchKeywords.includes(keyword)) || name.toLowerCase().includes(search.toLowerCase());
 };
 
-waitFor(["FormItem", "Button"], m => {
-    Icons = Object.fromEntries(Object.keys(OrgIcons).filter(k => k.endsWith("Icon")).map(k => [k, OrgIcons[k]])) as t.Icons;
-});
 
 function RenderIcons({ search }: { search: string; }) {
     return <div className="vc-icons-tab-grid-container"
