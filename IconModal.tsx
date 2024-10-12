@@ -4,19 +4,26 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+import { Margins } from "@utils/margins";
+import { classes } from "@utils/misc";
 import {
     ModalCloseButton,
     ModalContent,
+    ModalFooter,
     ModalHeader,
     ModalRoot,
     ModalSize,
     openModal
 } from "@utils/modal";
-import { Text, TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
+import { Button, Clickable, Clipboard, Text, TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
 import * as t from "@webpack/types";
 
 import { cssColors, iconSizes, iconSizesInPx, saveIcon } from "./utils";
-
+function IconTooltip({ children, copy, className }: { children: string; copy: string; className?: string; }) {
+    return <TooltipContainer text={"Click to copy"} className={className}>
+        <Clickable onClick={() => Clipboard.copy(copy)} >{children}</Clickable>
+    </TooltipContainer>;
+}
 
 
 function ModalComponent(props) {
@@ -40,7 +47,7 @@ function ModalComponent(props) {
     const { iconName, Icon }: { iconName: string; Icon: t.Icon; } = props;
     return (<ModalRoot {...props} size={ModalSize.MEDIUM}>
         <ModalHeader>
-            <Text variant="heading-lg/semibold" style={{ flexGrow: 1 }}>{`${iconName} - ${cssColors[color]?.name}`}</Text>
+            <Text variant="heading-lg/semibold" style={{ flexGrow: 1, display: "flex" }}><IconTooltip copy={iconName} className={classes(Margins.right8, "vc-icon-modal-color-tooltip")}>{iconName}</IconTooltip> - <IconTooltip copy={cssColors[color]?.css} className={classes(Margins.left8, "vc-icon-modal-color-tooltip")}>{cssColors[color]?.name}</IconTooltip></Text>
             <ModalCloseButton onClick={props.onClose} />
         </ModalHeader>
         <ModalContent>
@@ -59,6 +66,14 @@ function ModalComponent(props) {
                 </div>
             </div>
         </ModalContent>
+        <ModalFooter>
+            <Button
+                color={Button.Colors.BRAND}
+                onClick={() => { }}
+            >
+                Save
+            </Button>
+        </ModalFooter>
     </ModalRoot>);
 }
 
