@@ -9,6 +9,7 @@ import { Icons as OrgIcons, React } from "@webpack/common";
 import * as t from "@webpack/types";
 
 export const Colors = findByPropsLazy("colors", "layout");
+export const iconSizesInPx = findByPropsLazy("md", "lg");
 export const cssColors = new Proxy(
     {},
     {
@@ -25,8 +26,36 @@ export const cssColors = new Proxy(
 
 export const iconSizes = ["xxs", "xs", "sm", "md", "lg"];
 
+export function saveIcon(iconName: string, icon: EventTarget & SVGSVGElement, color: number, size: number) {
+    // iterate over children of svg, if they have fill, resolve the var
+    const innerElements = icon.children;
+    for (const el of innerElements) {
+        const fill = el.getAttribute("fill");
+        if (fill && fill.startsWith("var(")) {
+            el.setAttribute("fill", getComputedStyle(icon).getPropertyValue(fill.replace("var(", "").replace(")", "")));
+        }
+    }
 
-function ConvertComponentToHtml(component?: null | boolean | string | t.Icon) {
+    // save svg as png
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    const img = new Image();
+
+    img.onload = () => {
+        ctx.drawImage(img, 0, 0, size, size);
+        const link = document.createElement("a");
+        link.download = `${iconName}-${cssColors[color]?.name ?? "unknown"}-${size}px.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+    };
+
+    img.src = `data:image/svg+xml;base64,${btoa(icon.outerHTML)}`;
+}
+
+export function ConvertComponentToHtml(component?: null | boolean | string | t.Icon) {
     if (!component) return "";
     if (typeof component === "string") return component;
     if (Array.isArray(component)) return component.map(ConvertComponentToHtml).join("");

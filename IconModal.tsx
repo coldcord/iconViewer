@@ -15,7 +15,7 @@ import {
 import { Text, TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
 import * as t from "@webpack/types";
 
-import { cssColors, iconSizes } from "./utils";
+import { cssColors, iconSizes, iconSizesInPx, saveIcon } from "./utils";
 
 
 
@@ -40,13 +40,13 @@ function ModalComponent(props) {
     const { iconName, Icon }: { iconName: string; Icon: t.Icon; } = props;
     return (<ModalRoot {...props} size={ModalSize.MEDIUM}>
         <ModalHeader>
-            <Text variant="heading-lg/semibold" style={{ flexGrow: 1 }}>{`${iconName} - ${cssColors[color]?.name ?? "unknown"}`}</Text>
+            <Text variant="heading-lg/semibold" style={{ flexGrow: 1 }}>{`${iconName} - ${cssColors[color]?.name}`}</Text>
             <ModalCloseButton onClick={props.onClose} />
         </ModalHeader>
         <ModalContent>
             <div className="vc-icon-modal-main-container">
-                <div className="vc-icon-display-box" aria-label={cssColors[color]?.name ?? "unknown"} aria-key={cssColors[color]?.key}>
-                    <Icon className="vc-icon-modal-icon" color={cssColors[color]?.css} />
+                <div className="vc-icon-display-box" aria-label={cssColors[color].name} aria-key={cssColors[color]?.key}>
+                    <Icon className="vc-icon-modal-icon" color={cssColors[color].css} onClick={event => saveIcon(iconName, event.currentTarget, color, iconSizesInPx.lg)} />
                 </div>
                 <div className="vc-icon-other-icon-sizes">
                     {iconSizes.map((size, idx) =>
