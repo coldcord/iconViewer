@@ -26,9 +26,18 @@ export const cssColors = new Proxy(
 ) as unknown as Array<{ name: string; css: string; key: string; }>;
 
 export const iconSizes = ["xxs", "xs", "sm", "md", "lg"];
+const CrosspendingTypes: Record<string, string> = {
+    "image/png": "png",
+    "image/jpeg": "jpeg",
+    "image/gif": "gif",
+    "image/bmp": "bmp",
+    "image/tiff": "tiff",
+    "image/webp": "webp",
+    "image/svg+xml": "svg"
+};
 
 export function saveIcon(iconName: string, icon: EventTarget & SVGSVGElement | Element | string, color: number, size: number, type = "image/png") {
-    const filename = `${iconName}-${cssColors[color]?.name ?? "unknown"}-${size}px.png`;
+    const filename = `${iconName}-${cssColors[color]?.name ?? "unknown"}-${size}px.${CrosspendingTypes[type] ?? "png"}`;
     if (typeof icon === "string") {
         const file = new File([icon], filename, { type: "text/plain" });
         saveFile(file);
