@@ -78,3 +78,12 @@
 .vc-save-select-option-2 {
   margin-top: 5%;
 }
+
+.vc-ic-modals-root {
+  border-radius: 25px;
+}
+
+.vc-ic-modals-footer {
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+}

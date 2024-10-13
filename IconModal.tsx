@@ -19,7 +19,7 @@ import { Button, Text, TooltipContainer, useCallback, useEffect, useState } from
 import * as t from "@webpack/types";
 
 import { openSaveModal } from "./saveModal";
-import { cssColors, iconSizes, iconSizesInPx, IconTooltip, saveIcon } from "./utils";
+import { cssColors, iconSizes, IconTooltip } from "./utils";
 
 
 
@@ -42,7 +42,7 @@ function ModalComponent(props) {
         };
     }, [onKeyDown]);
     const { iconName, Icon }: { iconName: string; Icon: t.Icon; } = props;
-    return (<ModalRoot {...props} size={ModalSize.MEDIUM}>
+    return (<ModalRoot {...props} size={ModalSize.MEDIUM} className="vc-ic-modals-root vc-ic-icon-modal-root">
         <ModalHeader>
             <Text variant="heading-lg/semibold" style={{ flexGrow: 1, display: "flex" }}><IconTooltip copy={iconName} className={classes(Margins.right8, "vc-icon-modal-color-tooltip")}>{iconName}</IconTooltip> - <IconTooltip copy={cssColors[color]?.css} className={classes(Margins.left8, "vc-icon-modal-color-tooltip")}>{cssColors[color]?.name}</IconTooltip></Text>
             <ModalCloseButton onClick={props.onClose} />
@@ -50,7 +50,7 @@ function ModalComponent(props) {
         <ModalContent>
             <div className="vc-icon-modal-main-container">
                 <div className="vc-icon-display-box" aria-label={cssColors[color].name} aria-key={cssColors[color]?.key}>
-                    <Icon className="vc-icon-modal-icon" color={cssColors[color].css} onClick={event => saveIcon(iconName, event.currentTarget, color, iconSizesInPx.lg)} />
+                    <Icon className="vc-icon-modal-icon" color={cssColors[color].css} />
                 </div>
                 <div className="vc-icon-other-icon-sizes">
                     {iconSizes.map((size, idx) =>
@@ -63,7 +63,7 @@ function ModalComponent(props) {
                 </div>
             </div>
         </ModalContent>
-        <ModalFooter>
+        <ModalFooter className="vc-ic-modals-footer">
             <Button
                 color={Button.Colors.BRAND}
                 onClick={() => openSaveModal(iconName, Icon, color)}
