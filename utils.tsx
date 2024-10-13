@@ -33,7 +33,8 @@ const CrosspendingTypes: Record<string, string> = {
     "image/bmp": "bmp",
     "image/tiff": "tiff",
     "image/webp": "webp",
-    "image/svg+xml": "svg"
+    "image/svg+xml": "svg",
+    "image/avif": "avif"
 };
 
 export function saveIcon(iconName: string, icon: EventTarget & SVGSVGElement | Element | string, color: number, size: number, type = "image/png") {

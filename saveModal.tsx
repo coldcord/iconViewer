@@ -124,6 +124,8 @@ function ModalComponent(props) {
                                 { "label": "png", "value": "image/png", "default": true },
                                 { "label": "jpeg", "value": "image/jpeg" },
                                 { "label": "gif", "value": "image/gif" },
+                                { "label": "avif", "value": "image/avif" },
+                                { "label": "webp", "value": "image/webp" },
                                 { "label": "svg", "value": "image/svg+xml" },
                             ]
                         } as any} onChange={newValue => SetSaveType(newValue)} onError={() => { }} />
