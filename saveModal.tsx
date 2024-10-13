@@ -20,7 +20,9 @@ import * as t from "@webpack/types";
 
 import { convertComponentToHtml, cssColors, iconSizesInPx, IconTooltip, saveIcon } from "./utils";
 
-export function NumericComponent({ onChange, value }: { onChange: (value: number) => void, value: number; }) {
+type IDivElement = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+
+export function NumericComponent({ onChange, value, className, style }: { onChange: (value: number) => void, value: number; className?: string; style?: React.CSSProperties; }) {
     const handleChange = (value: string) => {
         const newValue = Number(value);
         if (isNaN(newValue)) return;
@@ -28,18 +30,19 @@ export function NumericComponent({ onChange, value }: { onChange: (value: number
     };
 
     return (
-        <TextInput
-            type="number"
-            pattern="-?[0-9]+"
-            value={value}
-            placeholder="Enter a number"
-            onChange={handleChange}
-        />
+        <div className={className} style={style}>
+            <TextInput
+                type="number"
+                pattern="-?[0-9]+"
+                value={value}
+                placeholder="Enter a number"
+                onChange={handleChange}
+            />
+        </div>
     );
 }
 
-
-export function SelectComponent({ option, onChange, onError }: { option: any, onChange: (value: any) => void, onError: (msg: string | null) => void; }) {
+export function SelectComponent({ option, onChange, onError, className }: IDivElement & { option: any, onChange: (value: any) => void, onError: (msg: string | null) => void; className?: string; }) {
     const [state, setState] = useState(option.options?.find(o => o.default)?.value ?? null);
     const [error, setError] = useState<string | null>(null);
 
@@ -55,7 +58,7 @@ export function SelectComponent({ option, onChange, onError }: { option: any, on
         }
     };
 
-    return (<>
+    return (<div className={className}>
         <Select
             options={option.options}
             placeholder={"Select an option"}
@@ -66,7 +69,7 @@ export function SelectComponent({ option, onChange, onError }: { option: any, on
             serialize={v => String(v)}
         />
         {error && <Forms.FormText style={{ color: "var(--text-danger)" }}>{error}</Forms.FormText>}
-    </>);
+    </div>);
 }
 
 
@@ -99,26 +102,31 @@ function ModalComponent(props) {
         </ModalHeader>
         <ModalContent>
             <div className="vc-save-modal">
-                <div className="vc-icon-display-box" aria-label={cssColors[color].name} aria-key={cssColors[color]?.key} style={{ marginLeft: "0", marginTop: "0" }}>
+                <div className="vc-icon-display-box vc-save-modal-icon-display-box" aria-label={cssColors[color].name} aria-key={cssColors[color]?.key} style={{ marginLeft: "0", marginTop: "0" }}>
                     <Icon className="vc-icon-modal-icon" color={cssColors[color].css} onClick={event => saveIcon(iconName, event.currentTarget, color, iconSizesInPx.lg)} />
                 </div>
                 <div className="vc-save-options" style={{ marginTop: "0", marginLeft: "0" }}>
-                    <SelectComponent option={{
-                        options: [
-                            { "label": "large", "value": "lg", "default": true },
-                            { "label": "medium", "value": "md" },
-                            { "label": "small", "value": "sm" },
-                            { "label": "custom", "value": "custom" }
-                        ]
-                    } as any} onChange={newValue => SetIconSize(newValue)} onError={() => { }} />
-                    <SelectComponent option={{
-                        options: [
-                            { "label": "png", "value": "image/png", "default": true },
-                            { "label": "jpeg", "value": "image/jpeg	" },
-                            { "label": "svg", "value": "image/svg+xml" },
-                        ]
-                    } as any} onChange={newValue => SetSaveType(newValue)} onError={() => { }} />
-                    {iconSize === "custom" && <NumericComponent value={32} onChange={SetCustomSize} />}
+                    <SelectComponent className="vc-save-select-option-1"
+                        option={{
+                            options: [
+                                { "label": "large", "value": "lg", "default": true },
+                                { "label": "medium", "value": "md" },
+                                { "label": "small", "value": "sm" },
+                                { "label": "extra small", "value": "xs" },
+                                { "label": "extra extra small", "value": "xxs" },
+                                { "label": "custom", "value": "custom" }
+                            ]
+                        } as any} onChange={newValue => SetIconSize(newValue)} onError={() => { }} />
+                    <NumericComponent style={{ visibility: iconSize === "custom" ? "visible" : "hidden" }} value={customSize} onChange={(value: number) => SetCustomSize(value)} />
+                    <SelectComponent className="vc-save-select-option-2"
+                        option={{
+                            options: [
+                                { "label": "png", "value": "image/png", "default": true },
+                                { "label": "jpeg", "value": "image/jpeg" },
+                                { "label": "gif", "value": "image/gif" },
+                                { "label": "svg", "value": "image/svg+xml" },
+                            ]
+                        } as any} onChange={newValue => SetSaveType(newValue)} onError={() => { }} />
                 </div>
             </div>
         </ModalContent>

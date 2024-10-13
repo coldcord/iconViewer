@@ -65,18 +65,16 @@
 }
 
 .vc-save-modal {
+  margin-top: 10%;
   display: grid;
-  grid-template:
-    "icon" 1fr
-    "options" auto
-    / 1fr;
-  gap: 5px;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
 }
 
-.vc-save-modal .vc-save-options {
-  grid-area: options;
+.vc-save-select-option-1 {
+  margin-bottom: 5%;
 }
 
-.vc-save-modal .vc-icon-display-box {
-  grid-area: icon;
+.vc-save-select-option-2 {
+  margin-top: 5%;
 }
