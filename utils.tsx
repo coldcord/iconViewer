@@ -26,7 +26,10 @@ export const cssColors = new Proxy(
 
 export const iconSizes = ["xxs", "xs", "sm", "md", "lg"];
 
-export function saveIcon(iconName: string, icon: EventTarget & SVGSVGElement, color: number, size: number) {
+type SVGSVGElementAsString = string;
+
+export function saveIcon(iconName: string, icon: EventTarget & SVGSVGElement | SVGSVGElementAsString, color: number, size: number, type = "image/png") {
+    if (typeof icon === "string") icon = createElementFromHTML(icon) as SVGSVGElement;
     // iterate over children of svg, if they have fill, resolve the var
     const innerElements = icon.children;
     for (const el of innerElements) {
@@ -48,26 +51,37 @@ export function saveIcon(iconName: string, icon: EventTarget & SVGSVGElement, co
         ctx.drawImage(img, 0, 0, size, size);
         const link = document.createElement("a");
         link.download = `${iconName}-${cssColors[color]?.name ?? "unknown"}-${size}px.png`;
-        link.href = canvas.toDataURL("image/png");
+        link.href = canvas.toDataURL(type);
         link.click();
     };
 
     img.src = `data:image/svg+xml;base64,${btoa(icon.outerHTML)}`;
 }
 
-export function ConvertComponentToHtml(component?: null | boolean | string | t.Icon) {
+export function convertComponentToHtml(component?: null | boolean | string | Element) {
     if (!component) return "";
     if (typeof component === "string") return component;
-    if (Array.isArray(component)) return component.map(ConvertComponentToHtml).join("");
-    if (!React.isValidElement(component)) throw new Error("Invalid component");
+    if (Array.isArray(component)) return component.map(convertComponentToHtml).join("");
+    // @ts-ignore
+    if (typeof component?.type === "function") component = component.type(component.props); // react, what's wrong with you
+    if (!React.isValidElement(component) || typeof component.type !== "string") throw new Error("Invalid component");
     const props = component.props as any;
     const propsStr = Object.keys(props).map(key => {
         if (key === "children") return "";
         if (key === "className") return `class="${props[key]}"`;
         return `${key}="${props[key]}"`;
     }).join(" ");
-    return `<${component.type} ${propsStr}>${ConvertComponentToHtml(props.children)}</${component.type}>`;
+    return `<${component.type} ${propsStr}>${convertComponentToHtml(props.children)}</${component.type}>`;
 }
+
+// some workaround
+export function createElementFromHTML(html: string) {
+    var div = document.createElement("div");
+    div.innerHTML = html.trim();
+
+    return div.firstChild;
+}
+
 
 export let Icons = {} as t.Icons;
 
