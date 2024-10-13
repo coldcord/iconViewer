@@ -15,15 +15,12 @@ import {
     ModalSize,
     openModal
 } from "@utils/modal";
-import { Button, Clickable, Clipboard, Text, TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
+import { Button, Text, TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
 import * as t from "@webpack/types";
 
-import { cssColors, iconSizes, iconSizesInPx, saveIcon } from "./utils";
-function IconTooltip({ children, copy, className }: { children: string; copy: string; className?: string; }) {
-    return <TooltipContainer text={"Click to copy"} className={className}>
-        <Clickable onClick={() => Clipboard.copy(copy)} >{children}</Clickable>
-    </TooltipContainer>;
-}
+import { openSaveModal } from "./saveModal";
+import { cssColors, iconSizes, iconSizesInPx, IconTooltip, saveIcon } from "./utils";
+
 
 
 function ModalComponent(props) {
@@ -69,9 +66,9 @@ function ModalComponent(props) {
         <ModalFooter>
             <Button
                 color={Button.Colors.BRAND}
-                onClick={() => { }}
+                onClick={() => openSaveModal(iconName, Icon, color)}
             >
-                Save
+                Save as
             </Button>
         </ModalFooter>
     </ModalRoot>);

@@ -4,8 +4,9 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+import { saveFile } from "@utils/web";
 import { findByPropsLazy, waitFor } from "@webpack";
-import { Icons as OrgIcons, React } from "@webpack/common";
+import { Clickable, Clipboard, Icons as OrgIcons, React, TooltipContainer } from "@webpack/common";
 import * as t from "@webpack/types";
 
 export const Colors = findByPropsLazy("colors", "layout");
@@ -26,11 +27,14 @@ export const cssColors = new Proxy(
 
 export const iconSizes = ["xxs", "xs", "sm", "md", "lg"];
 
-type SVGSVGElementAsString = string;
+export function saveIcon(iconName: string, icon: EventTarget & SVGSVGElement | Element | string, color: number, size: number, type = "image/png") {
+    const filename = `${iconName}-${cssColors[color]?.name ?? "unknown"}-${size}px.png`;
+    if (typeof icon === "string") {
+        const file = new File([icon], filename, { type: "text/plain" });
+        saveFile(file);
+        return;
+    }
 
-export function saveIcon(iconName: string, icon: EventTarget & SVGSVGElement | SVGSVGElementAsString, color: number, size: number, type = "image/png") {
-    if (typeof icon === "string") icon = createElementFromHTML(icon) as SVGSVGElement;
-    // iterate over children of svg, if they have fill, resolve the var
     const innerElements = icon.children;
     for (const el of innerElements) {
         const fill = el.getAttribute("fill");
@@ -50,7 +54,7 @@ export function saveIcon(iconName: string, icon: EventTarget & SVGSVGElement | S
     img.onload = () => {
         ctx.drawImage(img, 0, 0, size, size);
         const link = document.createElement("a");
-        link.download = `${iconName}-${cssColors[color]?.name ?? "unknown"}-${size}px.png`;
+        link.download = filename;
         link.href = canvas.toDataURL(type);
         link.click();
     };
@@ -58,7 +62,13 @@ export function saveIcon(iconName: string, icon: EventTarget & SVGSVGElement | S
     img.src = `data:image/svg+xml;base64,${btoa(icon.outerHTML)}`;
 }
 
-export function convertComponentToHtml(component?: null | boolean | string | Element) {
+export function IconTooltip({ children, copy, className }: { children: string; copy: string; className?: string; }) {
+    return <TooltipContainer text={"Click to copy"} className={className}>
+        <Clickable onClick={() => Clipboard.copy(copy)} >{children}</Clickable>
+    </TooltipContainer>;
+}
+
+export function convertComponentToHtml(component?: null | boolean | string | JSX.Element): string {
     if (!component) return "";
     if (typeof component === "string") return component;
     if (Array.isArray(component)) return component.map(convertComponentToHtml).join("");
@@ -73,15 +83,6 @@ export function convertComponentToHtml(component?: null | boolean | string | Ele
     }).join(" ");
     return `<${component.type} ${propsStr}>${convertComponentToHtml(props.children)}</${component.type}>`;
 }
-
-// some workaround
-export function createElementFromHTML(html: string) {
-    var div = document.createElement("div");
-    div.innerHTML = html.trim();
-
-    return div.firstChild;
-}
-
 
 export let Icons = {} as t.Icons;
 
