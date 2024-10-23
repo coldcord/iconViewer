@@ -97,12 +97,12 @@ function ModalComponent(props) {
     const { iconName, Icon }: { iconName: string; Icon: t.Icon; } = props;
     return (<ModalRoot {...props} size={ModalSize.MEDIUM} className="vc-ic-modals-root vc-ic-save-modal-root">
         <ModalHeader>
-            <Text variant="heading-lg/semibold" style={{ flexGrow: 1, display: "flex" }}><IconTooltip copy={iconName} className={classes(Margins.right8, "vc-icon-modal-color-tooltip")}>{iconName}</IconTooltip> - <IconTooltip copy={cssColors[color]?.css} className={classes(Margins.left8, "vc-icon-modal-color-tooltip")}>{cssColors[color]?.name}</IconTooltip></Text>
+            <Text variant="heading-lg/semibold" style={{ flexGrow: 1, display: "flex" }}><IconTooltip copy={iconName} className={classes(Margins.right8, "vc-icon-modal-color-tooltip")}>{iconName}</IconTooltip> - <IconTooltip copy={cssColors[color]?.css} className={classes(Margins.left8, "vc-icon-modal-color-tooltip")}>{cssColors[color]?.name ?? "Unknown"}</IconTooltip></Text>
             <ModalCloseButton onClick={props.onClose} />
         </ModalHeader>
         <ModalContent>
             <div className="vc-save-modal">
-                <div className="vc-icon-display-box vc-save-modal-icon-display-box" aria-label={cssColors[color].name} aria-key={cssColors[color]?.key} style={{ marginLeft: "0", marginTop: "0" }}>
+                <div className="vc-icon-display-box vc-save-modal-icon-display-box" aria-label={cssColors[color]?.name ?? "Unknown"} aria-key={cssColors[color]?.key} style={{ marginLeft: "0", marginTop: "0" }}>
                     <Icon className="vc-icon-modal-icon" color={cssColors[color].css} />
                 </div>
                 <div className="vc-save-options" style={{ marginTop: "0", marginLeft: "0" }}>
