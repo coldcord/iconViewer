@@ -42,7 +42,7 @@ function ModalComponent(props) {
         };
     }, [onKeyDown]);
     if (color < 0 || color >= cssColors.length) {
-        SetColor(defaultColor);
+        SetColor(0);
     }
     const { iconName, Icon }: { iconName: string; Icon: t.Icon; } = props;
     return (<ModalRoot {...props} size={ModalSize.MEDIUM} className="vc-ic-modals-root vc-ic-icon-modal-root">
