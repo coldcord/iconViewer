@@ -35,7 +35,6 @@ export default definePlugin({
     stop() {
         // @ts-ignore
         const { customSections } = Vencord.Plugins.plugins.Settings;
-        // @ts-ignore
         customSections.splice(customSections.indexOf(this.insertSettings), 1);
     },
 });

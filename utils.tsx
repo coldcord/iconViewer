@@ -6,21 +6,26 @@
 
 import { saveFile } from "@utils/web";
 import { findByPropsLazy, waitFor } from "@webpack";
-import { Clickable, Clipboard, Icons as OrgIcons, React, TooltipContainer } from "@webpack/common";
+import { Clickable, Clipboard, Icons as OrgIcons, React, ReactDOM, TooltipContainer } from "@webpack/common";
 import * as t from "@webpack/types";
-
+import type { ReactNode } from "react";
+let _cssColors: string[] = [];
 export const Colors = findByPropsLazy("colors", "layout");
 export const iconSizesInPx = findByPropsLazy("md", "lg");
+
 export const cssColors = new Proxy(
-    {},
+    {
+    },
     {
         get: (target, key) => {
-            if (Number(key) < 0)
-                key = String(Object.keys(Colors.colors).length + Number(key));
-            const colorKey = Object.keys(Colors.colors)[key];
+            const colorKey = _cssColors[key];
             return key in target
                 ? target[key]
                 : Colors.colors[colorKey]?.css != null ? (target[key] = { name: colorKey.split("_").map((x: string) => x[0].toUpperCase() + x.toLowerCase().slice(1)).join(" "), css: Colors.colors[colorKey].css, key: colorKey }) : undefined;
+        },
+        set: (target, key, value) => {
+            target[key] = value;
+            return true;
         }
     }
 ) as unknown as Array<{ name: string; css: string; key: string; }>;
@@ -78,24 +83,22 @@ export function IconTooltip({ children, copy, className }: { children: string; c
     </TooltipContainer>;
 }
 
-export function convertComponentToHtml(component?: null | boolean | string | JSX.Element): string {
-    if (!component) return "";
-    if (typeof component === "string") return component;
-    if (Array.isArray(component)) return component.map(convertComponentToHtml).join("");
-    // @ts-ignore
-    if (typeof component?.type === "function") component = component.type(component.props); // react, what's wrong with you
-    if (!React.isValidElement(component) || typeof component.type !== "string") throw new Error("Invalid component");
-    const props = component.props as any;
-    const propsStr = Object.keys(props).map(key => {
-        if (key === "children") return "";
-        if (key === "className") return `class="${props[key]}"`;
-        return `${key}="${props[key]}"`;
-    }).join(" ");
-    return `<${component.type} ${propsStr}>${convertComponentToHtml(props.children)}</${component.type}>`;
+
+export function convertComponentToHtml(component?: ReactNode): string {
+    const container = document.createElement("div");
+    const root = ReactDOM.createRoot(container);
+
+    ReactDOM.flushSync(() => root.render(component));
+    const content = container.innerHTML;
+    root.unmount();
+
+    return content;
 }
 
 export let Icons = {} as t.Icons;
 
 waitFor(["FormItem", "Button"], m => {
     Icons = Object.fromEntries(Object.keys(OrgIcons).filter(k => k.endsWith("Icon")).map(k => [k, OrgIcons[k]])) as t.Icons;
+    _cssColors = Object.keys(Colors.colors);
+    cssColors.length = _cssColors.length;
 });

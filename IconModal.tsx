@@ -21,10 +21,10 @@ import * as t from "@webpack/types";
 import { openSaveModal } from "./saveModal";
 import { cssColors, iconSizes, IconTooltip } from "./utils";
 
-
+const defaultColor = 171;
 
 function ModalComponent(props) {
-    const [color, SetColor] = useState(187);
+    const [color, SetColor] = useState(defaultColor);
     const onKeyDown = useCallback((e: KeyboardEvent) => {
         if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
             e.preventDefault();
@@ -41,15 +41,18 @@ function ModalComponent(props) {
             document.removeEventListener("keydown", onKeyDown);
         };
     }, [onKeyDown]);
+    if (color < 0 || color >= cssColors.length) {
+        SetColor(defaultColor);
+    }
     const { iconName, Icon }: { iconName: string; Icon: t.Icon; } = props;
     return (<ModalRoot {...props} size={ModalSize.MEDIUM} className="vc-ic-modals-root vc-ic-icon-modal-root">
         <ModalHeader>
-            <Text variant="heading-lg/semibold" style={{ flexGrow: 1, display: "flex" }}><IconTooltip copy={iconName} className={classes(Margins.right8, "vc-icon-modal-color-tooltip")}>{iconName}</IconTooltip> - <IconTooltip copy={cssColors[color]?.css} className={classes(Margins.left8, "vc-icon-modal-color-tooltip")}>{cssColors[color]?.name ?? "Unknown"}</IconTooltip></Text>
+            <Text variant="heading-lg/semibold" style={{ flexGrow: 1, display: "flex" }}><IconTooltip copy={iconName} className={classes(Margins.right8, "vc-icon-modal-color-tooltip")}>{iconName}</IconTooltip> - <IconTooltip copy={cssColors[color]?.css} className={classes(Margins.left8, "vc-icon-modal-color-tooltip")}>{cssColors[color]?.name}</IconTooltip></Text>
             <ModalCloseButton onClick={props.onClose} />
         </ModalHeader>
         <ModalContent>
             <div className="vc-icon-modal-main-container">
-                <div className="vc-icon-display-box" aria-label={cssColors[color]?.name ?? "Unknown"} aria-key={cssColors[color]?.key}>
+                <div className="vc-icon-display-box" aria-label={cssColors[color]?.name} aria-key={cssColors[color]?.key}>
                     <Icon className="vc-icon-modal-icon" color={cssColors[color]?.css} />
                 </div>
                 <div className="vc-icon-other-icon-sizes">
