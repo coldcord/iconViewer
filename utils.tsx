@@ -6,7 +6,7 @@
 
 import { saveFile } from "@utils/web";
 import { findByPropsLazy, waitFor } from "@webpack";
-import { Clickable, Clipboard, Icons as OrgIcons, React, ReactDOM, TooltipContainer } from "@webpack/common";
+import { Clickable, Clipboard, IconUtils as OrgIcons, React, ReactDOM, TooltipContainer } from "@webpack/common";
 import * as t from "@webpack/types";
 import type { ReactNode } from "react";
 let _cssColors: string[] = [];
@@ -95,10 +95,14 @@ export function convertComponentToHtml(component?: ReactNode): string {
     return content;
 }
 
-export let Icons = {} as t.Icons;
+export let Icons = {} as t.IconUtils;
 
 waitFor(["FormItem", "Button"], m => {
-    Icons = Object.fromEntries(Object.keys(OrgIcons).filter(k => k.endsWith("Icon")).map(k => [k, OrgIcons[k]])) as t.Icons;
+    Icons = Object.fromEntries(
+        Object.keys(OrgIcons)
+            .filter((k) => k.endsWith('Icon'))
+            .map((k) => [k, OrgIcons[k]])
+    ) as t.IconUtils;
     _cssColors = Object.keys(Colors.colors);
     cssColors.length = _cssColors.length;
 });
