@@ -97,7 +97,7 @@ function ModalComponent(props) {
     const { iconName, Icon }: { iconName: string; Icon: t.Icon; } = props;
     return (<ModalRoot {...props} size={ModalSize.MEDIUM} className="vc-ic-modals-root vc-ic-save-modal-root">
         <ModalHeader>
-            <Text variant="heading-lg/semibold" style={{ flexGrow: 1, display: "flex" }}><IconTooltip copy={iconName} className={classes(Margins.right8, "vc-icon-modal-color-tooltip")}>{iconName}</IconTooltip> - <IconTooltip copy={cssColors[color]?.css} className={classes(Margins.left8, "vc-icon-modal-color-tooltip")}>{cssColors[color]?.name}</IconTooltip></Text>
+            <Text variant="heading-lg/semibold" style={{ flexGrow: 1, display: "flex" }}><IconTooltip copy={iconName} className={classes(Margins.right8, "vc-save-modal-color-tooltip")}>{iconName}</IconTooltip> - <IconTooltip copy={cssColors[color]?.css} className={classes(Margins.left8, "vc-save-modal-color-tooltip")}>{cssColors[color]?.name}</IconTooltip></Text>
             <ModalCloseButton onClick={props.onClose} />
         </ModalHeader>
         <ModalContent>

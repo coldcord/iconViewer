@@ -24,9 +24,9 @@ import { cssColors, IconTooltip } from "./utils";
 
 function ModalComponent(props) {
     const { func, iconName, color }: { func: Function; iconName: string; color: number; } = props;
-    return (<ModalRoot {...props} size={ModalSize.LARGE} className="vc-ic-modals-root vc-ic-save-modal-root">
+    return (<ModalRoot {...props} size={ModalSize.LARGE} className="vc-ic-modals-root vc-ic-raw-modal-root">
         <ModalHeader>
-            <Text variant="heading-lg/semibold" style={{ flexGrow: 1, display: "flex" }}><IconTooltip copy={iconName} className={classes(Margins.right8, "vc-icon-modal-color-tooltip")}>{iconName}</IconTooltip> - <IconTooltip copy={cssColors[color]?.css} className={classes(Margins.left8, "vc-icon-modal-color-tooltip")}>{cssColors[color]?.name}</IconTooltip></Text>
+            <Text variant="heading-lg/semibold" style={{ flexGrow: 1, display: "flex" }}><IconTooltip copy={iconName} className={classes(Margins.right8, "vc-raw-modal-color-tooltip")}>{iconName}</IconTooltip> - <IconTooltip copy={cssColors[color]?.css} className={classes(Margins.left8, "vc-raw-modal-color-tooltip")}>{cssColors[color]?.name}</IconTooltip></Text>
             <ModalCloseButton onClick={props.onClose} />
         </ModalHeader>
         <ModalContent>
