@@ -46,13 +46,7 @@ function RenderIcons({ search, searchbyFunction }: { search: string; searchbyFun
         const OrgIcons = Array.from(new Set(findAllByCode("[\"size\",\"width\",\"height\",\"color\",\"colorClass\"]")));
         Icons = Object.fromEntries(Object.keys(OrgIcons).map(k => [String(getNameByIcon(OrgIcons[k], k)), OrgIcons[k]])) as IconsDef;
     }
-    return <div className="vc-icons-tab-grid-container"
-        style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(64px, 1fr))",
-            gap: "8px",
-        }}
-    >
+    return <div className="vc-icons-tab-grid-container">
         {Object.entries(Icons).map(([iconName, Icon], index) =>
             searchMatch(search, iconName, Icon, searchbyFunction) && <React.Fragment key={`iv-${iconName}`}>
                 <div className="vc-icon-box">
