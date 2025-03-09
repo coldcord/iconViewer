@@ -1,5 +1,6 @@
 .vc-icon-modal-codeblock {
   margin-left: 10%;
+  margin-top: 30px;
 }
 
 .vc-icon-icon {
@@ -17,12 +18,9 @@
   margin-left: 5%;
 }
 
-.vc-ic-modals-root {
+.vc-ic-icon-modal-root {
   height: 450px;
   width: 700px;
-}
-.vc-icon-modal-codeblock {
-  margin-top: 30px;
 }
 
 .vc-icons-tab-grid-container {
