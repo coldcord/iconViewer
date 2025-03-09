@@ -17,13 +17,13 @@ import {
     ModalSize,
     openModal
 } from "@utils/modal";
-import { Button, Text, TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
+import { Button, TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
 import * as t from "@webpack/types";
 
 import { IconsFinds } from "./names";
 import { openRawModal } from "./rawModal";
 import { openSaveModal } from "./saveModal";
-import { IconTooltip } from "./subComponents";
+import { ModalHeaderTitle } from "./subComponents";
 import { cssColors, iconSizes } from "./utils";
 
 const defaultColor = 209;
@@ -52,7 +52,7 @@ function ModalComponent(props: { iconName: string; Icon: t.Icon; } & ModalProps)
     const { iconName, Icon } = props;
     return (<ModalRoot {...props} size={ModalSize.DYNAMIC} className="vc-ic-modals-root vc-ic-icon-modal-root">
         <ModalHeader>
-            <Text variant="heading-lg/semibold" style={{ flexGrow: 1, display: "flex" }}><IconTooltip copy={iconName} className={classes(Margins.right8, "vc-icon-modal-color-tooltip")}>{iconName}</IconTooltip> - <IconTooltip copy={cssColors[color]?.css} className={classes(Margins.left8, "vc-icon-modal-color-tooltip")}>{cssColors[color]?.name}</IconTooltip></Text>
+            <ModalHeaderTitle iconName={iconName} color={color} name="icon" />
             <ModalCloseButton onClick={props.onClose} />
         </ModalHeader>
         <ModalContent>

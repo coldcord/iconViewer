@@ -17,18 +17,18 @@ import {
     ModalSize,
     openModal
 } from "@utils/modal";
-import { Button, Text, Toasts } from "@webpack/common";
+import { Button, Toasts } from "@webpack/common";
 import * as t from "@webpack/types";
 
-import { IconTooltip } from "./subComponents";
-import { cssColors } from "./utils";
+import { ModalHeaderTitle } from "./subComponents";
+
 
 
 function ModalComponent(props: { func: Function; iconName: string; color: number; } & ModalProps) {
     const { func, iconName, color } = props;
     return (<ModalRoot {...props} size={ModalSize.LARGE} className="vc-ic-modals-root vc-ic-raw-modal-root">
         <ModalHeader>
-            <Text variant="heading-lg/semibold" style={{ flexGrow: 1, display: "flex" }}><IconTooltip copy={iconName} className={classes(Margins.right8, "vc-raw-modal-color-tooltip")}>{iconName}</IconTooltip> - <IconTooltip copy={cssColors[color]?.css} className={classes(Margins.left8, "vc-raw-modal-color-tooltip")}>{cssColors[color]?.name}</IconTooltip></Text>
+            <ModalHeaderTitle iconName={iconName} color={color} name="raw" />
             <ModalCloseButton onClick={props.onClose} />
         </ModalHeader>
         <ModalContent>

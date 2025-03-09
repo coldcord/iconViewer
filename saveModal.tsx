@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-import { Margins } from "@utils/margins";
-import { classes } from "@utils/misc";
 import {
     ModalCloseButton,
     ModalContent,
@@ -16,10 +14,10 @@ import {
     ModalSize,
     openModal
 } from "@utils/modal";
-import { Button, Forms, Select, Text, TextInput, useCallback, useEffect, useState } from "@webpack/common";
+import { Button, Forms, Select, TextInput, useCallback, useEffect, useState } from "@webpack/common";
 import * as t from "@webpack/types";
 
-import { IconTooltip } from "./subComponents";
+import { ModalHeaderTitle } from "./subComponents";
 import { convertComponentToHtml, cssColors, iconSizesInPx, saveIcon } from "./utils";
 
 type IDivElement = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
@@ -99,7 +97,7 @@ function ModalComponent(props: { iconName: string, Icon: t.Icon; color: number; 
     const { iconName, Icon } = props;
     return (<ModalRoot {...props} size={ModalSize.MEDIUM} className="vc-ic-modals-root vc-ic-save-modal-root">
         <ModalHeader>
-            <Text variant="heading-lg/semibold" style={{ flexGrow: 1, display: "flex" }}><IconTooltip copy={iconName} className={classes(Margins.right8, "vc-save-modal-color-tooltip")}>{iconName}</IconTooltip> - <IconTooltip copy={cssColors[color]?.css} className={classes(Margins.left8, "vc-save-modal-color-tooltip")}>{cssColors[color]?.name}</IconTooltip></Text>
+            <ModalHeaderTitle iconName={iconName} color={color} name="save" />
             <ModalCloseButton onClick={props.onClose} />
         </ModalHeader>
         <ModalContent>
@@ -118,7 +116,7 @@ function ModalComponent(props: { iconName: string, Icon: t.Icon; color: number; 
                                 { "label": "extra extra small", "value": "xxs" },
                                 { "label": "custom", "value": "custom" }
                             ]
-                        } as any} onChange={newValue => SetIconSize(newValue)} onError={() => { }} />
+                        }} onChange={newValue => SetIconSize(newValue)} onError={() => { }} />
                     <NumericComponent style={{ visibility: iconSize === "custom" ? "visible" : "hidden" }} value={customSize} onChange={(value: number) => SetCustomSize(value)} />
                     <SelectComponent className="vc-save-select-option-2"
                         option={{
@@ -149,7 +147,7 @@ function ModalComponent(props: { iconName: string, Icon: t.Icon; color: number; 
     </ModalRoot>);
 }
 
-export function openSaveModal(iconName: string, Icon: t.Icon, colorIndex?: number) {
-    openModal(props => <ModalComponent iconName={iconName} Icon={Icon} colorIndex={colorIndex} {...props} />);
+export function openSaveModal(iconName: string, Icon: t.Icon, colorIndex: number) {
+    openModal(props => <ModalComponent iconName={iconName} Icon={Icon} color={colorIndex} {...props} />);
 }
 
