@@ -88,7 +88,6 @@ export const IconsFinds = {
 
 export const namePatterns = new Map(Object.entries(IconsFinds).map(([name, pattern]) => [name, pattern]));
 
-
 export function getNameByIcon(Icon: t.Icon, defaultName: any) {
     for (const [name, pattern] of namePatterns) {
         if (String(Icon).includes(pattern)) {

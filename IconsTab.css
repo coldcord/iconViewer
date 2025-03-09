@@ -17,6 +17,20 @@
   margin-left: 5%;
 }
 
+.vc-ic-modals-root {
+  height: 450px;
+  width: 700px;
+}
+.vc-icon-modal-codeblock {
+  margin-top: 30px;
+}
+
+.vc-icons-tab-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+  gap: 8px;
+}
+
 .vc-icon-modal-size-ex-icon {
   margin-right: 5%;
 }
