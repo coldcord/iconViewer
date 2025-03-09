@@ -102,7 +102,7 @@ function ModalComponent(props) {
         </ModalHeader>
         <ModalContent>
             <div className="vc-save-modal">
-                <div className="vc-icon-display-box vc-save-modal-icon-display-box" aria-label={cssColors[color]?.name} aria-key={cssColors[color]?.key} style={{ marginLeft: "0", marginTop: "0" }}>
+                <div className="vc-icon-display-box vc-save-modal-icon-display-box" aria-label={cssColors[color]?.name} style={{ marginLeft: "0", marginTop: "0" }}>
                     <Icon className="vc-icon-modal-icon" color={cssColors[color].css} />
                 </div>
                 <div className="vc-save-options" style={{ marginTop: "0", marginLeft: "0" }}>
