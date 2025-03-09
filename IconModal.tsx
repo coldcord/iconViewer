@@ -12,6 +12,7 @@ import {
     ModalContent,
     ModalFooter,
     ModalHeader,
+    ModalProps,
     ModalRoot,
     ModalSize,
     openModal
@@ -22,11 +23,12 @@ import * as t from "@webpack/types";
 import { IconsFinds } from "./names";
 import { openRawModal } from "./rawModal";
 import { openSaveModal } from "./saveModal";
-import { cssColors, iconSizes, IconTooltip } from "./utils";
+import { IconTooltip } from "./subComponents";
+import { cssColors, iconSizes } from "./utils";
 
 const defaultColor = 209;
 
-function ModalComponent(props) {
+function ModalComponent(props: { iconName: string; Icon: t.Icon; } & ModalProps) {
     const [color, SetColor] = useState(defaultColor);
     const onKeyDown = useCallback((e: KeyboardEvent) => {
         if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
@@ -47,8 +49,8 @@ function ModalComponent(props) {
     if (color < 0 || color >= cssColors.length) {
         SetColor(0);
     }
-    const { iconName, Icon }: { iconName: string; Icon: t.Icon; } = props;
-    return (<ModalRoot {...props} size={ModalSize.LARGE} className="vc-ic-modals-root vc-ic-icon-modal-root">
+    const { iconName, Icon } = props;
+    return (<ModalRoot {...props} size={ModalSize.DYNAMIC} className="vc-ic-modals-root vc-ic-icon-modal-root">
         <ModalHeader>
             <Text variant="heading-lg/semibold" style={{ flexGrow: 1, display: "flex" }}><IconTooltip copy={iconName} className={classes(Margins.right8, "vc-icon-modal-color-tooltip")}>{iconName}</IconTooltip> - <IconTooltip copy={cssColors[color]?.css} className={classes(Margins.left8, "vc-icon-modal-color-tooltip")}>{cssColors[color]?.name}</IconTooltip></Text>
             <ModalCloseButton onClick={props.onClose} />

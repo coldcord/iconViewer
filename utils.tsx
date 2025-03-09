@@ -6,7 +6,7 @@
 
 import { saveFile } from "@utils/web";
 import { filters, findAll, findByPropsLazy, waitFor } from "@webpack";
-import { Clickable, Clipboard, React, ReactDOM, TooltipContainer } from "@webpack/common";
+import { React, ReactDOM } from "@webpack/common";
 import * as t from "@webpack/types";
 let _cssColors: string[] = [];
 export type IconsDef = { [k: string]: t.Icon; };
@@ -32,6 +32,7 @@ export const cssColors = new Proxy(
 ) as unknown as Array<{ name: string; css: string; key: string; }>;
 
 export const iconSizes = ["xxs", "xs", "sm", "md", "lg"];
+
 const CrosspendingTypes: Record<string, string> = {
     "image/png": "png",
     "image/jpeg": "jpeg",
@@ -78,12 +79,6 @@ export function saveIcon(iconName: string, icon: EventTarget & SVGSVGElement | E
     img.src = `data:image/svg+xml;base64,${btoa(icon.outerHTML)}`;
 }
 
-export function IconTooltip({ children, copy, className }: { children: string; copy: string; className?: string; }) {
-    return <TooltipContainer text={"Click to copy"} className={className}>
-        <Clickable onClick={() => Clipboard.copy(copy)} >{children}</Clickable>
-    </TooltipContainer>;
-}
-
 
 export function convertComponentToHtml(component?: React.ReactElement): string {
     const container = document.createElement("div");
@@ -95,6 +90,7 @@ export function convertComponentToHtml(component?: React.ReactElement): string {
 
     return content;
 }
+
 
 
 export const findAllByCode = (code: string) => findAll(filters.byCode(code));

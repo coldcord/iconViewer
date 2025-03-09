@@ -11,6 +11,7 @@ import {
     ModalContent,
     ModalFooter,
     ModalHeader,
+    ModalProps,
     ModalRoot,
     ModalSize,
     openModal
@@ -18,7 +19,8 @@ import {
 import { Button, Forms, Select, Text, TextInput, useCallback, useEffect, useState } from "@webpack/common";
 import * as t from "@webpack/types";
 
-import { convertComponentToHtml, cssColors, iconSizesInPx, IconTooltip, saveIcon } from "./utils";
+import { IconTooltip } from "./subComponents";
+import { convertComponentToHtml, cssColors, iconSizesInPx, saveIcon } from "./utils";
 
 type IDivElement = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 
@@ -73,8 +75,8 @@ export function SelectComponent({ option, onChange, onError, className }: IDivEl
 }
 
 
-function ModalComponent(props) {
-    const [color, SetColor] = useState((props.colorIndex ?? 187) as number);
+function ModalComponent(props: { iconName: string, Icon: t.Icon; color: number; } & ModalProps) {
+    const [color, SetColor] = useState((props.color ?? 187));
     const [iconSize, SetIconSize] = useState("lg");
     const [saveType, SetSaveType] = useState("png");
     const [customSize, SetCustomSize] = useState(32);
@@ -94,7 +96,7 @@ function ModalComponent(props) {
             document.removeEventListener("keydown", onKeyDown);
         };
     }, [onKeyDown]);
-    const { iconName, Icon }: { iconName: string; Icon: t.Icon; } = props;
+    const { iconName, Icon } = props;
     return (<ModalRoot {...props} size={ModalSize.MEDIUM} className="vc-ic-modals-root vc-ic-save-modal-root">
         <ModalHeader>
             <Text variant="heading-lg/semibold" style={{ flexGrow: 1, display: "flex" }}><IconTooltip copy={iconName} className={classes(Margins.right8, "vc-save-modal-color-tooltip")}>{iconName}</IconTooltip> - <IconTooltip copy={cssColors[color]?.css} className={classes(Margins.left8, "vc-save-modal-color-tooltip")}>{cssColors[color]?.name}</IconTooltip></Text>
@@ -128,7 +130,7 @@ function ModalComponent(props) {
                                 { "label": "webp", "value": "image/webp" },
                                 { "label": "svg", "value": "image/svg+xml" },
                             ]
-                        } as any} onChange={newValue => SetSaveType(newValue)} onError={() => { }} />
+                        }} onChange={newValue => SetSaveType(newValue)} onError={() => { }} />
                 </div>
             </div>
         </ModalContent>

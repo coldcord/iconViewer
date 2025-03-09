@@ -12,6 +12,7 @@ import {
     ModalContent,
     ModalFooter,
     ModalHeader,
+    ModalProps,
     ModalRoot,
     ModalSize,
     openModal
@@ -19,11 +20,12 @@ import {
 import { Button, Text, Toasts } from "@webpack/common";
 import * as t from "@webpack/types";
 
-import { cssColors, IconTooltip } from "./utils";
+import { IconTooltip } from "./subComponents";
+import { cssColors } from "./utils";
 
 
-function ModalComponent(props) {
-    const { func, iconName, color }: { func: Function; iconName: string; color: number; } = props;
+function ModalComponent(props: { func: Function; iconName: string; color: number; } & ModalProps) {
+    const { func, iconName, color } = props;
     return (<ModalRoot {...props} size={ModalSize.LARGE} className="vc-ic-modals-root vc-ic-raw-modal-root">
         <ModalHeader>
             <Text variant="heading-lg/semibold" style={{ flexGrow: 1, display: "flex" }}><IconTooltip copy={iconName} className={classes(Margins.right8, "vc-raw-modal-color-tooltip")}>{iconName}</IconTooltip> - <IconTooltip copy={cssColors[color]?.css} className={classes(Margins.left8, "vc-raw-modal-color-tooltip")}>{cssColors[color]?.name}</IconTooltip></Text>
@@ -62,7 +64,7 @@ function ModalComponent(props) {
     </ModalRoot>);
 }
 
-export function openRawModal(iconName: string, Icon: t.Icon, colorIndex?: number) {
+export function openRawModal(iconName: string, Icon: t.Icon, colorIndex: number) {
     openModal(props => <ModalComponent iconName={iconName} func={Icon} color={colorIndex} {...props} />);
 }
 
