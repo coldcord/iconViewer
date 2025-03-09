@@ -5,13 +5,14 @@
  */
 
 import { saveFile } from "@utils/web";
-import { findByPropsLazy, waitFor } from "@webpack";
-import { Clickable, Clipboard, Icons as OrgIcons, React, ReactDOM, TooltipContainer } from "@webpack/common";
+import { filters, findAll, findByPropsLazy, waitFor } from "@webpack";
+import { Clickable, Clipboard, React, ReactDOM, TooltipContainer } from "@webpack/common";
 import * as t from "@webpack/types";
-import type { ReactNode } from "react";
 let _cssColors: string[] = [];
+export type IconsDef = { [k: string]: t.Icon; };
+
+export const iconSizesInPx = findByPropsLazy("md", "lg", "xxs");
 export const Colors = findByPropsLazy("colors", "layout");
-export const iconSizesInPx = findByPropsLazy("md", "lg");
 
 export const cssColors = new Proxy(
     {
@@ -58,7 +59,7 @@ export function saveIcon(iconName: string, icon: EventTarget & SVGSVGElement | E
         }
     }
 
-    // save svg as png
+    // save svg as the given type
     const canvas = document.createElement("canvas");
     canvas.width = size;
     canvas.height = size;
@@ -84,7 +85,7 @@ export function IconTooltip({ children, copy, className }: { children: string; c
 }
 
 
-export function convertComponentToHtml(component?: ReactNode): string {
+export function convertComponentToHtml(component?: React.ReactElement): string {
     const container = document.createElement("div");
     const root = ReactDOM.createRoot(container);
 
@@ -95,10 +96,12 @@ export function convertComponentToHtml(component?: ReactNode): string {
     return content;
 }
 
-export let Icons = {} as t.Icons;
 
-waitFor(["FormItem", "Button"], m => {
-    Icons = Object.fromEntries(Object.keys(OrgIcons).filter(k => k.endsWith("Icon")).map(k => [k, OrgIcons[k]])) as t.Icons;
-    _cssColors = Object.keys(Colors.colors);
+export const findAllByCode = (code: string) => findAll(filters.byCode(code));
+// findAllByCode(`["size","width","height","color","colorClass"]`)
+
+waitFor(["colors", "layout"], m => {
+    _cssColors = Object.keys(m.colors);
     cssColors.length = _cssColors.length;
 });
+

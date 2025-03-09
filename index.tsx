@@ -4,17 +4,19 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-import definePlugin from "@utils/types";
+import definePlugin, { StartAt } from "@utils/types";
 import { SettingsRouter } from "@webpack/common";
 
 // import settings from "../_core/settings";
 import IconsTab from "./IconsTab";
+
 
 export default definePlugin({
     name: "IconViewer",
     description: "Adds a new tab to settings, to preview all icons",
     authors: [],
     dependencies: ["Settings"],
+    startAt: StartAt.WebpackReady,
     toolboxActions: {
         "Open Icons Tab"() {
             SettingsRouter.open("VencordDiscordIcons");

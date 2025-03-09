@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+import { CodeBlock } from "@components/CodeBlock";
 import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
 import {
@@ -18,10 +19,12 @@ import {
 import { Button, Text, TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
 import * as t from "@webpack/types";
 
+import { IconsFinds } from "./names";
+import { openRawModal } from "./rawModal";
 import { openSaveModal } from "./saveModal";
 import { cssColors, iconSizes, IconTooltip } from "./utils";
 
-const defaultColor = 171;
+const defaultColor = 209;
 
 function ModalComponent(props) {
     const [color, SetColor] = useState(defaultColor);
@@ -45,20 +48,26 @@ function ModalComponent(props) {
         SetColor(0);
     }
     const { iconName, Icon }: { iconName: string; Icon: t.Icon; } = props;
-    return (<ModalRoot {...props} size={ModalSize.MEDIUM} className="vc-ic-modals-root vc-ic-icon-modal-root">
+    return (<ModalRoot {...props} size={ModalSize.LARGE} className="vc-ic-modals-root vc-ic-icon-modal-root">
         <ModalHeader>
             <Text variant="heading-lg/semibold" style={{ flexGrow: 1, display: "flex" }}><IconTooltip copy={iconName} className={classes(Margins.right8, "vc-icon-modal-color-tooltip")}>{iconName}</IconTooltip> - <IconTooltip copy={cssColors[color]?.css} className={classes(Margins.left8, "vc-icon-modal-color-tooltip")}>{cssColors[color]?.name}</IconTooltip></Text>
             <ModalCloseButton onClick={props.onClose} />
         </ModalHeader>
         <ModalContent>
+            {IconsFinds[iconName] ?
+                <div className="vc-icon-modal-codeblock">
+                    <CodeBlock lang="ts" content={`const ${iconName + "Icon"} = findComponentByCode(${JSON.stringify(IconsFinds[iconName])})`} />
+                </div>
+                : null
+            }
             <div className="vc-icon-modal-main-container">
-                <div className="vc-icon-display-box" aria-label={cssColors[color]?.name} aria-key={cssColors[color]?.key}>
+                <div className="vc-icon-display-box" aria-label={cssColors[color]?.name}>
                     <Icon className="vc-icon-modal-icon" color={cssColors[color]?.css} />
                 </div>
                 <div className="vc-icon-other-icon-sizes">
                     {iconSizes.map((size, idx) =>
-                        <TooltipContainer text={`${size} size`}>
-                            <Icon className="vc-icon-modal-size-ex-icon" size={size as any} color={cssColors[color]?.css} style={{
+                        <TooltipContainer text={`${size} size`} key={`vc-iv-size-${size}-${idx}`}>
+                            <Icon className="vc-icon-modal-size-ex-icon" size={size} color={cssColors[color]?.css} style={{
                                 marginLeft: "25px"
                             }} />
                         </TooltipContainer>
@@ -72,6 +81,13 @@ function ModalComponent(props) {
                 onClick={() => openSaveModal(iconName, Icon, color)}
             >
                 Save as
+            </Button>
+            <Button
+                color={Button.Colors.YELLOW}
+                className={classes(Margins.right8, "vc-iv-raw-modal-button")}
+                onClick={() => openRawModal(iconName, Icon, color)}
+            >
+                Raw
             </Button>
         </ModalFooter>
     </ModalRoot>);
