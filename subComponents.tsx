@@ -7,7 +7,7 @@
 import { getIntlMessage } from "@utils/discord";
 import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
-import { Clickable, ContextMenuApi, FluxDispatcher, Menu, Text, TooltipContainer, useState } from "@webpack/common";
+import { Clickable, ContextMenuApi, FluxDispatcher, Forms, Menu, Text, TooltipContainer, useState } from "@webpack/common";
 import type { ComponentPropsWithRef, PropsWithChildren } from "react";
 
 import { _cssColors, cssColors } from "./utils";
@@ -88,5 +88,31 @@ export const ModalHeaderTitle = ({ iconName, color, name }: { iconName: string; 
     </Text >;
 };
 
-// {cssColors[color]?.name}
+export function SettingsAbout() {
+    return <>
+        <Forms.FormTitle tag="h3">Features</Forms.FormTitle>
+        <Forms.FormText>
+            <Text variant="heading-sm/normal">
+                <ul className="vc-ic-unordered-list">
+                    <li>Preview icons</li>
+                    <li>Copy icon names and CSS variables</li>
+                    <li>Ability to download icons in different formats (SVG, PNG, GIF, etc.)</li>
+                    <li>Copy pre-made icon finds for your plugins (Only some icons have this, submit finds either in a server or DMs)</li>
+                    <li>Find icons by function context (helpful when creating finds)</li>
+                    <li>Search for colors by right-clicking the color name in the modal title</li>
+                </ul>
+            </Text>
+        </Forms.FormText>
+        <Forms.FormTitle tag="h3">Special thanks</Forms.FormTitle>
+        <Forms.FormText>
+            <Text variant="heading-sm/normal" className="vc-ic-unordered-list">
+                <ul>
+                    <li>krystalskullofficial._.</li>
+                    <li>davr1</li>
+                    <li>suffocate</li>
+                </ul>
+            </Text>
+        </Forms.FormText>
+    </>;
+}
 

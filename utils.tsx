@@ -91,10 +91,7 @@ export function convertComponentToHtml(component?: React.ReactElement): string {
     return content;
 }
 
-
-
 export const findAllByCode = (code: string) => findAll(filters.byCode(code));
-// findAllByCode(`["size","width","height","color","colorClass"]`)
 
 waitFor(["colors", "layout"], m => {
     _cssColors = Object.keys(m.colors);

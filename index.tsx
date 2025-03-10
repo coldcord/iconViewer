@@ -9,12 +9,17 @@ import { SettingsRouter } from "@webpack/common";
 
 // import settings from "../_core/settings";
 import IconsTab from "./IconsTab";
+import { SettingsAbout } from "./subComponents";
 
 
 export default definePlugin({
     name: "IconViewer",
     description: "Adds a new tab to settings, to preview all icons",
-    authors: [],
+    // @ts-ignore
+    authors: [{
+        name: "iamme",
+        id: 984392761929256980n
+    }],
     dependencies: ["Settings"],
     startAt: StartAt.WebpackReady,
     toolboxActions: {
@@ -22,6 +27,7 @@ export default definePlugin({
             SettingsRouter.open("VencordDiscordIcons");
         },
     },
+    settingsAboutComponent: SettingsAbout,
     insertSettings() {
         return {
             section: "VencordDiscordIcons",

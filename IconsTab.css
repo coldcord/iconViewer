@@ -11,6 +11,11 @@
   display: flex;
 }
 
+.vc-ic-unordered-list li {
+  margin-left: 5%;
+  list-style: disc;
+}
+
 .vc-icon-other-icon-sizes {
   height: 32px;
   display: flex;
