@@ -4,21 +4,21 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-//            <Text variant="heading-lg/semibold" style={{ flexGrow: 1, display: "flex" }}>
-//                <IconNameTooltip iconName={iconName} />
-//                -
-//                <IconColorTooltip color={color} />
-//            </Text>
-
 import { getIntlMessage } from "@utils/discord";
 import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
 import { Clickable, ContextMenuApi, FluxDispatcher, Menu, Text, TooltipContainer, useState } from "@webpack/common";
 import type { ComponentPropsWithRef, PropsWithChildren } from "react";
 
-import { cssColors } from "./utils";
+import { _cssColors, cssColors } from "./utils";
 
 
+function searchMatch(search: string, name: string): boolean {
+    if (search === "") return true;
+    const words = name.toLowerCase().split("_");
+    const searchKeywords = search.toLowerCase().split(" ").filter(keyword => keyword !== "");
+    return searchKeywords.every(keyword => words.includes(keyword)) || words.every(keyword => searchKeywords.includes(keyword)) || name.toLowerCase().includes(search.toLowerCase());
+}
 
 export type ClickableProps<T extends "a" | "div" | "span" | "li" = "div"> = PropsWithChildren<ComponentPropsWithRef<T>> & {
     tag?: T;
@@ -34,7 +34,6 @@ export function IconTooltip({ children, copy, className, ...props }: ClickablePr
 }
 
 export const ModalHeaderTitle = ({ iconName, color, name }: { iconName: string; color: number; name: string; }) => {
-    const [query, setQuery] = useState("");
     return <Text variant="heading-lg/semibold"
         style={{ flexGrow: 1, display: "flex" }}
         className={classes("vc-ic-modal-header-title", `vc-ic-${name}-modal-header-title`)}>
@@ -44,13 +43,15 @@ export const ModalHeaderTitle = ({ iconName, color, name }: { iconName: string; 
         {" - "}
         <IconTooltip copy={cssColors[color]?.css} className={classes(Margins.left8, "vc-icon-modal-color-tooltip")}
             onContextMenu={e => {
-                ContextMenuApi.openContextMenu(e, () => (
-                    <Menu.Menu
-                        navId="vc-pindms-header-menu"
+                ContextMenuApi.openContextMenu(e, () => {
+                    const [query, setQuery] = useState("");
+                    return (<Menu.Menu
+                        navId="vc-ic-colors-header-menu"
                         onClose={() => FluxDispatcher.dispatch({ type: "CONTEXT_MENU_CLOSE" })}
                         color="danger"
                         aria-label="Icon Viewer Colors"
                     >
+
                         <Menu.MenuControlItem
                             id="vc-ic-colors-search"
                             control={(props, ref) => (
@@ -60,12 +61,27 @@ export const ModalHeaderTitle = ({ iconName, color, name }: { iconName: string; 
                                     onChange={setQuery}
                                     ref={ref}
                                     placeholder={getIntlMessage("SEARCH")}
+                                    autoFocus
                                 />
                             )}
                         />
 
-                    </Menu.Menu>
-                ));
+                        {!!_cssColors.length && <Menu.MenuSeparator />}
+
+                        {_cssColors.map(p => (
+                            searchMatch(query, p) && <Menu.MenuItem
+                                key={p}
+                                id={p}
+                                label={p}
+                                action={() => {
+                                    // @ts-ignore
+                                    FluxDispatcher.dispatch({ type: "ICONVIEWER_COLOR_CHANGE", color: p });
+                                }}
+                            />
+                        ))}
+
+                    </Menu.Menu>);
+                });
             }}>
             {cssColors[color]?.name}
         </IconTooltip>

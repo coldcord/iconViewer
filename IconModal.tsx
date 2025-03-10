@@ -17,19 +17,21 @@ import {
     ModalSize,
     openModal
 } from "@utils/modal";
-import { Button, TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
+import { Button, FluxDispatcher, TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
 import * as t from "@webpack/types";
 
 import { IconsFinds } from "./names";
 import { openRawModal } from "./rawModal";
 import { openSaveModal } from "./saveModal";
 import { ModalHeaderTitle } from "./subComponents";
-import { cssColors, iconSizes } from "./utils";
+import { _cssColors, cssColors, iconSizes } from "./utils";
 
 const defaultColor = 209;
 
+
 function ModalComponent(props: { iconName: string; Icon: t.Icon; } & ModalProps) {
     const [color, SetColor] = useState(defaultColor);
+
     const onKeyDown = useCallback((e: KeyboardEvent) => {
         if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
             e.preventDefault();
@@ -40,10 +42,19 @@ function ModalComponent(props: { iconName: string; Icon: t.Icon; } & ModalProps)
             }
         }
     }, [color]);
+
+    const onColorChange = useCallback((e: { type: string; color: string; }) => {
+        SetColor(_cssColors.indexOf(e.color));
+    }, [color]);
+
     useEffect(() => {
         document.addEventListener("keydown", onKeyDown);
+        // @ts-ignore
+        FluxDispatcher.subscribe("ICONVIEWER_COLOR_CHANGE", onColorChange);
         return () => {
             document.removeEventListener("keydown", onKeyDown);
+            // @ts-ignore
+            FluxDispatcher.unsubscribe("ICONVIEWER_COLOR_CHANGE", onColorChange);
         };
     }, [onKeyDown]);
     if (color < 0 || color >= cssColors.length) {

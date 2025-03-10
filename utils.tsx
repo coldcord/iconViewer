@@ -8,7 +8,7 @@ import { saveFile } from "@utils/web";
 import { filters, findAll, findByPropsLazy, waitFor } from "@webpack";
 import { React, ReactDOM } from "@webpack/common";
 import * as t from "@webpack/types";
-let _cssColors: string[] = [];
+export let _cssColors: string[] = [];
 export type IconsDef = { [k: string]: t.Icon; };
 
 export const iconSizesInPx = findByPropsLazy("md", "lg", "xxs");

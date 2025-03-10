@@ -112,6 +112,7 @@ export const IconsFinds = {
     CheckmarkLargeBold: "2.12-2.12L9",
     CheckmarkSmallBold: "13.88l6.94-6.94a1.5",
     CheckmarkSmall: "1-1.4 0l-4-4a1",
+    DoubleCheckmark: "1.4l4.5 4.5a1",
     NewUser: "0-.92h-.03a2", // a guess
     UserCheck: "0l1.8-1.8c.17",
     User: "2.9.06.24.26.",
