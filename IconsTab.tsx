@@ -18,11 +18,11 @@
 
 import "./IconsTab.css";
 
-import { SettingsTab, wrapTab } from "@components/VencordSettings/shared";
+import { SettingsTab, wrapTab } from "@components/settings/tabs/BaseTab";
 import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
+import * as t from "@vencord/discord-types";
 import { Button, Clickable, Forms, React, TextInput, TooltipContainer } from "@webpack/common";
-import * as t from "@webpack/types";
 
 import { openIconModal } from "./IconModal";
 import { getNameByIcon } from "./names";
