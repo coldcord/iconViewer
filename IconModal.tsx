@@ -61,7 +61,7 @@ function ModalComponent(props: { iconName: string; Icon: t.Icon; } & ModalProps)
     const { iconName, Icon } = props;
     return (<ModalRoot {...props} size={ModalSize.DYNAMIC} className="vc-ic-modals-root vc-ic-icon-modal-root">
         <ModalHeader>
-            <ModalHeaderTitle iconName={iconName} color={color} name="icon" />
+            <ModalHeaderTitle iconName={iconName} color={color} name="icon" onColor={c => SetColor(_cssColors.indexOf(c))} />
             <ModalCloseButton onClick={props.onClose} />
         </ModalHeader>
         <ModalContent>

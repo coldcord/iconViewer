@@ -33,7 +33,7 @@ export function IconTooltip({ children, copy, className, ...props }: ClickablePr
     </TooltipContainer>;
 }
 
-export const ModalHeaderTitle = ({ iconName, color, name }: { iconName: string; color: number; name: string; }) => {
+export const ModalHeaderTitle = ({ iconName, color, name, onColor }: { iconName: string; color: number; name: string; onColor?: (color: string) => void; }) => {
     return <Text variant="heading-lg/semibold"
         style={{ flexGrow: 1, display: "flex" }}
         className={classes("vc-ic-modal-header-title", `vc-ic-${name}-modal-header-title`)}>
@@ -74,8 +74,8 @@ export const ModalHeaderTitle = ({ iconName, color, name }: { iconName: string; 
                                 id={p}
                                 label={p}
                                 action={() => {
-                                    // @ts-ignore
-                                    FluxDispatcher.dispatch({ type: "ICONVIEWER_COLOR_CHANGE", color: p });
+                                    if (!onColor) return;
+                                    onColor(p);
                                 }}
                             />
                         ))}
