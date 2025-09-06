@@ -18,9 +18,9 @@ import {
     openModal
 } from "@utils/modal";
 import { Button, Toasts } from "@webpack/common";
-import * as t from "@webpack/types";
 
 import { ModalHeaderTitle } from "./subComponents";
+import * as t from "./types";
 
 
 

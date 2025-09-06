@@ -15,9 +15,9 @@ import {
     openModal
 } from "@utils/modal";
 import { Button, Forms, Select, TextInput, useCallback, useEffect, useState } from "@webpack/common";
-import * as t from "@webpack/types";
 
 import { ModalHeaderTitle } from "./subComponents";
+import * as t from "./types";
 import { convertComponentToHtml, cssColors, iconSizesInPx, saveIcon } from "./utils";
 
 type IDivElement = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;

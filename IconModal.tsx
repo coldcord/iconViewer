@@ -18,19 +18,17 @@ import {
     openModal
 } from "@utils/modal";
 import { Button, FluxDispatcher, TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
-import * as t from "@webpack/types";
 
 import { IconsFinds } from "./names";
 import { openRawModal } from "./rawModal";
 import { openSaveModal } from "./saveModal";
 import { ModalHeaderTitle } from "./subComponents";
+import * as t from "./types";
 import { _cssColors, cssColors, iconSizes } from "./utils";
-
-const defaultColor = 209;
 
 
 function ModalComponent(props: { iconName: string; Icon: t.Icon; } & ModalProps) {
-    const [color, SetColor] = useState(defaultColor);
+    const [color, SetColor] = useState(_cssColors.indexOf("INTERACTIVE_NORMAL"));
 
     const onKeyDown = useCallback((e: KeyboardEvent) => {
         if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
