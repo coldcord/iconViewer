@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-import * as t from "@webpack/types";
+import * as t from "./types";
 
 // name: pattern
 export const IconsFinds = {
@@ -88,10 +88,9 @@ export const IconsFinds = {
     Hammer: "1.42ZM7.76",
     StickerSmall: "1-.5.5H7a4",
     StickerSad: "1.66-1.12 5.5",
-    StickerDeny: "\"M21.76 14.83a", // a guess
     MagnifyingGlassPlus: "M11 7a1 1 0",
-    MagnifyingGlassMinus: "3v12H5.5a1.5 1.5",
-    // MagnifyingGlass: "???", // not quite possible
+    MagnifyingGlassMinus: "1 0 2H7a1",
+    // MagnifyingGlass Icon is difficult to match (1.41-1.41l4.68 4.67a1)
     ChatArrowRight: "2.43l.06",
     Bookmark: "1-1.67.74l",
     ChannelList: "1-1-1ZM2 8a1",
@@ -132,10 +131,61 @@ export const IconsFinds = {
     Key: "23-.24ZM10 16a2",
     InBox: "3H5ZM4 5.5C4",
     BookmarkOutline: "0-1-1ZM7 2a3",
-    Food: "7.58V8a1 1"
+    Food: "7.58V8a1 1",
+    //
+    Robot: "06.03-.",
+    GlobeEarth: "25.25H13a3",
+    Burger: "1.13-.76Zm", // Unknown name, named burger for now
+    Spotify: ".25.53.78.28",
+    Home: "0l8.39 6.45a2",
+    Orb: "-.64l7.48", // new icon
+    Keyboard: "28.22.5.5.5h1a",
+    NewUserSimple: "93-.94h-2.24a5.6",
+    Apple: "2.54A12.25 12.25",
+    Steam: "2.94v.05l-2.62",
+    HeadphonesSlash: "04-.25l3.48-3.48Z",
+    //
+    Headphones: "4.1-2.13h1.86A9",
+    HeadphonesDeny: "2.13h1.86c.03",
+    Microphone: "7.94V20H9a1",
+    MicrophoneDeny: ".63.32.51.65A8",
+    ExperimentalMicrophoneSparkle: "1.18L6.14.79a1.21",
+    ExperimentalMicrophoneSparkleSlash: "1.18l1.38.51Z", // name guess
+    ExperimentalPineappleHouse: "1.41-1.14Zm",
+    Eyedropper: "4.4a4.57",
+    Badge: ".44.5.49a3.14",
+    Tag: "88-2.12V4a2",
+    // Attachment mostly guesses (or papers? idk)
+    Attachment: "5.22.5.5V18a4",
+    AttachmentWarning: "1.48Zm3.93-4.47a",
+    AttachmentDeny: "\"M21.76 14.83a", // name guess
+    UploadAttachment: " 0-.06.04V5a3",
+    Bicycle: "10h4.48l.55",
+    At: "33h1.02Zm",
+    Riot: "8.45-2.04ZM14.88",
+    BookCheck: "3v12H5.5a1.5 1.5",
+    BrowserLink: "1.41l2.52-2.52a5.98", // name guess
+    Sun: "1.42ZM23", // name guess
+    //
+    Thread: "1.3-.12l9.54 6.72a1",
+    ThreadPlus: "1.34-.32ZM15.82",
+    ThreadWarning: "M18.09 15.63c.4",
+    // ThreadLock, couldn't find a unique pattern
+    VoiceNormal: "1-1V3ZM15.1 20.75c",
+    VoiceX: "1.42L20.42 12l2.3-2.3a1",
+    VoiceLow: "1-1V3ZM15.18 15.36c",
+    Compass: "7.75l7.22-1.45a1",
+    Gift: "8H16Zm-5.89-2.42.6",
+    PlusMid: "0v6H5a1",
+    ExperimentalLootbox: ".98-1.18c.87", // a guess
+    Location: "9-8.03 9-13a9",
+    Phone: "1-3-3V4Zm5"
 };
 
 // 13l4.91-8.05a1.8
+// 82.58l4.24
+// 7 1.43-.7 1.82 0l3.96 6.9c.38.66-.12 1.47-.91 1.47h-7.92c
+// M12 2.81a1 1 0 0 1 0-1.41l.36-.36a1
 
 export const namePatterns = new Map(Object.entries(IconsFinds).map(([name, pattern]) => [name, pattern]));
 

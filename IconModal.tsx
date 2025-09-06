@@ -17,7 +17,7 @@ import {
     ModalSize,
     openModal
 } from "@utils/modal";
-import { Button, FluxDispatcher, TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
+import { Button, TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
 
 import { IconsFinds } from "./names";
 import { openRawModal } from "./rawModal";
@@ -47,12 +47,8 @@ function ModalComponent(props: { iconName: string; Icon: t.Icon; } & ModalProps)
 
     useEffect(() => {
         document.addEventListener("keydown", onKeyDown);
-        // @ts-ignore
-        FluxDispatcher.subscribe("ICONVIEWER_COLOR_CHANGE", onColorChange);
         return () => {
             document.removeEventListener("keydown", onKeyDown);
-            // @ts-ignore
-            FluxDispatcher.unsubscribe("ICONVIEWER_COLOR_CHANGE", onColorChange);
         };
     }, [onKeyDown]);
     if (color < 0 || color >= cssColors.length) {
