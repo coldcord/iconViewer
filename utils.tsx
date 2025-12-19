@@ -13,7 +13,7 @@ import * as t from "./types";
 export let _cssColors: string[] = [];
 export type IconsDef = { [k: string]: t.Icon; };
 
-export const iconSizesInPx = findByPropsLazy("sm", "md", "lg", "xxs");
+export const iconSizesInPx = findByPropsLazy("sm", "md", "lg", "xxs", "xs");
 export const Colors = findByPropsLazy("colors", "layout");
 
 export const cssColors = new Proxy( // a nice way of accessing a specific

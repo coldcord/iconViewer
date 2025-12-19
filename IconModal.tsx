@@ -9,26 +9,23 @@ import { CodeBlock } from "@components/CodeBlock";
 import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
 import {
-    ModalCloseButton,
     ModalContent,
     ModalFooter,
-    ModalHeader,
     ModalProps,
-    ModalRoot,
     ModalSize,
     openModal
 } from "@utils/modal";
 import { TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
 
+import { BaseIconModal } from "./baseIconModal";
 import { IconsFinds } from "./names";
 import { openRawModal } from "./rawModal";
 import { openSaveModal } from "./saveModal";
-import { ModalHeaderTitle } from "./subComponents";
 import * as t from "./types";
 import { cssColors, getColorIndex, iconSizes } from "./utils";
 
 
-function ModalComponent(props: { iconName: string; Icon: t.Icon; } & ModalProps) {
+function ModalComponent({ iconName, Icon, ...props }: { iconName: string; Icon: t.Icon; } & ModalProps) {
     const [color, SetColor] = useState(getColorIndex("INTERACTIVE_ICON_DEFAULT"));
 
     const onKeyDown = useCallback((e: KeyboardEvent) => {
@@ -51,12 +48,12 @@ function ModalComponent(props: { iconName: string; Icon: t.Icon; } & ModalProps)
     if (color < 0 || color >= cssColors.length) {
         SetColor(0);
     }
-    const { iconName, Icon } = props;
-    return (<ModalRoot {...props} size={ModalSize.DYNAMIC} className="vc-ic-modals-root vc-ic-icon-modal-root">
-        <ModalHeader>
-            <ModalHeaderTitle iconName={iconName} color={color} name="icon" onColor={newColor => SetColor(getColorIndex(newColor))} />
-            <ModalCloseButton onClick={props.onClose} />
-        </ModalHeader>
+
+    return (<BaseIconModal {...props}
+        iconName={iconName}
+        size={ModalSize.DYNAMIC}
+        className={classes("vc-ic-modals-root", "vc-ic-icon-modal-root")}
+        name="root-icon" color={color}>
         <ModalContent>
             {IconsFinds[iconName] ?
                 <div className="vc-icon-modal-codeblock">
@@ -93,7 +90,7 @@ function ModalComponent(props: { iconName: string; Icon: t.Icon; } & ModalProps)
                 Raw
             </Button>
         </ModalFooter>
-    </ModalRoot>);
+    </BaseIconModal>);
 }
 
 export function openIconModal(iconName: string, Icon: t.Icon) {

@@ -5,19 +5,17 @@
  */
 
 import { Button } from "@components/Button";
+import { classes } from "@utils/misc";
 import {
-    ModalCloseButton,
     ModalContent,
     ModalFooter,
-    ModalHeader,
     ModalProps,
-    ModalRoot,
     ModalSize,
     openModal
 } from "@utils/modal";
 import { Forms, Select, TextInput, useCallback, useEffect, useState } from "@webpack/common";
 
-import { ModalHeaderTitle } from "./subComponents";
+import { BaseIconModal } from "./baseIconModal";
 import * as t from "./types";
 import { convertComponentToHtml, cssColors, getColorIndex, iconSizesInPx, saveIcon } from "./utils";
 
@@ -74,8 +72,8 @@ export function SelectComponent({ option, onChange, onError, className }: IDivEl
 }
 
 
-function ModalComponent(props: { iconName: string, Icon: t.Icon; color: number; } & ModalProps) {
-    const [color, SetColor] = useState((props.color));
+function ModalComponent({ iconName, Icon, ...props }: { iconName: string, Icon: t.Icon; color: number; } & ModalProps) {
+    const [color, SetColor] = useState(props.color);
     const [iconSize, SetIconSize] = useState("lg");
     const [saveType, SetSaveType] = useState("png");
     const [customSize, SetCustomSize] = useState(32);
@@ -83,7 +81,7 @@ function ModalComponent(props: { iconName: string, Icon: t.Icon; color: number; 
         if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
             e.preventDefault();
             if (e.key === "ArrowLeft") {
-                SetColor(color + -1);
+                SetColor(color - 1);
             } else if (e.key === "ArrowRight") {
                 SetColor(color + 1);
             }
@@ -95,12 +93,8 @@ function ModalComponent(props: { iconName: string, Icon: t.Icon; color: number; 
             document.removeEventListener("keydown", onKeyDown);
         };
     }, [onKeyDown]);
-    const { iconName, Icon } = props;
-    return (<ModalRoot {...props} size={ModalSize.MEDIUM} className="vc-ic-modals-root vc-ic-save-modal-root">
-        <ModalHeader>
-            <ModalHeaderTitle iconName={iconName} color={color} name="save" onColor={c => SetColor(getColorIndex(c))} />
-            <ModalCloseButton onClick={props.onClose} />
-        </ModalHeader>
+    return (<BaseIconModal {...props} size={ModalSize.MEDIUM} className={classes("vc-ic-modals-root", "vc-ic-save-modal-root")}
+        iconName={iconName} color={color} name="save" onColor={c => SetColor(getColorIndex(c))} >
         <ModalContent>
             <div className="vc-save-modal">
                 <div className="vc-icon-display-box vc-save-modal-icon-display-box" aria-label={cssColors[color]?.name} style={{ marginLeft: "0", marginTop: "0" }}>
@@ -144,7 +138,7 @@ function ModalComponent(props: { iconName: string, Icon: t.Icon; color: number; 
                 Save
             </Button>
         </ModalFooter>
-    </ModalRoot>);
+    </BaseIconModal>);
 }
 
 export function openSaveModal(iconName: string, Icon: t.Icon, colorIndex: number) {

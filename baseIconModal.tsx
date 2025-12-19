@@ -1,18 +1,23 @@
 /*
  * Vencord, a Discord client mod
- * Copyright (c) 2025 Vendicated and contributors
+ * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
 import { BaseText } from "@components/BaseText";
-import { Heading } from "@components/Heading";
 import { copyToClipboard } from "@utils/clipboard";
 import { getIntlMessage } from "@utils/discord";
 import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
+import {
+    ModalCloseButton,
+    ModalHeader,
+    ModalProps,
+    ModalRoot,
+} from "@utils/modal";
 import { Clickable, ContextMenuApi, FluxDispatcher, Menu, showToast, Toasts, TooltipContainer, useState } from "@webpack/common";
 
-import { ClickableProps } from "./types";
+import { ClickableProps, IconModalProps } from "./types";
 import { _cssColors, cssColors } from "./utils";
 
 
@@ -89,27 +94,12 @@ export const ModalHeaderTitle = ({ iconName, color, name, onColor }: { iconName:
     </BaseText>;
 };
 
-export function SettingsAbout() {
-    return <>
-        <Heading tag="h3">Features</Heading>
-        <BaseText>
-            <ul className="vc-ic-unordered-list">
-                <li>Preview icons</li>
-                <li>Copy icon names and CSS variables</li>
-                <li>Ability to download icons in different formats (SVG, PNG, GIF, etc.)</li>
-                <li>Copy pre-made icon finds for your plugins (Only some icons have this, submit finds either in a server or DMs)</li>
-                <li>Find icons by function context (helpful when creating finds)</li>
-                <li>Search for colors by right-clicking the color name in the modal title</li>
-            </ul>
-        </BaseText>
-        <Heading tag="h3">Special thanks</Heading>
-        <BaseText className="vc-ic-unordered-list">
-            <ul>
-                <li>krystalskullofficial._.</li>
-                <li>davr1</li>
-                <li>suffocate</li>
-            </ul>
-        </BaseText>
-    </>;
+export function BaseIconModal({ children, iconName, color, Icon, onColor, name, ...props }: IconModalProps & ModalProps) {
+    return (<ModalRoot {...props}>
+        <ModalHeader>
+            <ModalHeaderTitle iconName={iconName} color={color} name={name} onColor={onColor} />
+            <ModalCloseButton onClick={props.onClose} />
+        </ModalHeader>
+        {children}
+    </ModalRoot>);
 }
-

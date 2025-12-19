@@ -4,8 +4,9 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+import { ModalSize } from "@utils/modal";
 import type { JSX, SVGProps } from "react";
-
+import type { ComponentPropsWithRef, PropsWithChildren } from "react";
 
 export type IconProps = SVGProps<SVGSVGElement> & {
     size?: string; // "sm" | "md" | "lg" | "xl" | "xxl"
@@ -16,3 +17,19 @@ export type IconProps = SVGProps<SVGSVGElement> & {
 };
 
 export type Icon = (props: IconProps) => JSX.Element;
+
+
+export interface IconModalProps {
+    children: any[];
+    iconName: string;
+    color: number;
+    Icon?: Icon;
+    onColor?: (color: string) => void;
+    name: string;
+    className?: string;
+    size?: ModalSize;
+}
+
+export type ClickableProps<T extends "a" | "div" | "span" | "li" = "div"> = PropsWithChildren<ComponentPropsWithRef<T>> & {
+    tag?: T;
+};
