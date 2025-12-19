@@ -5,12 +5,14 @@
  */
 
 import definePlugin, { StartAt } from "@utils/types";
+import { findComponentByCodeLazy } from "@webpack";
 import { SettingsRouter } from "@webpack/common";
 
 // import settings from "../_core/settings";
 import IconsTab from "./IconsTab";
 import { SettingsAbout } from "./subComponents";
 
+const PaintPaletteIcon = findComponentByCodeLazy("2v2c0 1.66-1.37");
 
 export default definePlugin({
     name: "IconViewer",
@@ -38,11 +40,16 @@ export default definePlugin({
     },
     start() {
         // @ts-ignore
-        Vencord.Plugins.plugins.Settings.customSections.push(this.insertSettings);
+        Vencord.Plugins.plugins.Settings.customEntries.push({
+            key: "vencord_discord_icons_viewer",
+            title: "Icons",
+            Component: IconsTab,
+            Icon: PaintPaletteIcon
+        });
     },
     stop() {
         // @ts-ignore
-        const { customSections } = Vencord.Plugins.plugins.Settings;
-        customSections.splice(customSections.indexOf(this.insertSettings), 1);
+        const { customEntries } = Vencord.Plugins.plugins.Settings;
+        customEntries.splice(customEntries.findIndex(setting => setting.key === "vencord_discord_icons_viewer"), 1);
     },
 });
