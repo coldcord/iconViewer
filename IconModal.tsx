@@ -25,11 +25,11 @@ import { openRawModal } from "./rawModal";
 import { openSaveModal } from "./saveModal";
 import { ModalHeaderTitle } from "./subComponents";
 import * as t from "./types";
-import { _cssColors, cssColors, iconSizes } from "./utils";
+import { cssColors, getColorIndex, iconSizes } from "./utils";
 
 
 function ModalComponent(props: { iconName: string; Icon: t.Icon; } & ModalProps) {
-    const [color, SetColor] = useState(_cssColors.indexOf("INTERACTIVE_ICON_DEFAULT"));
+    const [color, SetColor] = useState(getColorIndex("INTERACTIVE_ICON_DEFAULT"));
 
     const onKeyDown = useCallback((e: KeyboardEvent) => {
         if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
@@ -43,7 +43,7 @@ function ModalComponent(props: { iconName: string; Icon: t.Icon; } & ModalProps)
     }, [color]);
 
     const onColorChange = useCallback((e: { type: string; color: string; }) => {
-        SetColor(_cssColors.indexOf(e.color));
+        SetColor(getColorIndex(e.color));
     }, [color]);
 
     useEffect(() => {
@@ -58,7 +58,7 @@ function ModalComponent(props: { iconName: string; Icon: t.Icon; } & ModalProps)
     const { iconName, Icon } = props;
     return (<ModalRoot {...props} size={ModalSize.DYNAMIC} className="vc-ic-modals-root vc-ic-icon-modal-root">
         <ModalHeader>
-            <ModalHeaderTitle iconName={iconName} color={color} name="icon" onColor={c => SetColor(_cssColors.indexOf(c))} />
+            <ModalHeaderTitle iconName={iconName} color={color} name="icon" onColor={newColor => SetColor(getColorIndex(newColor))} />
             <ModalCloseButton onClick={props.onClose} />
         </ModalHeader>
         <ModalContent>

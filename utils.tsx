@@ -13,11 +13,12 @@ import * as t from "./types";
 export let _cssColors: string[] = [];
 export type IconsDef = { [k: string]: t.Icon; };
 
-export const iconSizesInPx = findByPropsLazy("md", "lg", "xxs");
+export const iconSizesInPx = findByPropsLazy("sm", "md", "lg", "xxs");
 export const Colors = findByPropsLazy("colors", "layout");
 
-export const cssColors = new Proxy(
+export const cssColors = new Proxy( // a nice way of accessing a specific
     {
+
     },
     {
         get: (target, key) => {
@@ -33,6 +34,10 @@ export const cssColors = new Proxy(
     }
 ) as unknown as Array<{ name: string; css: string; key: string; }>;
 
+export function getColorIndex(colorKey: string): number {
+    return _cssColors.indexOf(colorKey);
+}
+
 export const iconSizes = ["xxs", "xs", "sm", "md", "lg"];
 
 const CrosspendingTypes: Record<string, string> = {
@@ -46,7 +51,7 @@ const CrosspendingTypes: Record<string, string> = {
     "image/avif": "avif"
 };
 
-export function saveIcon(iconName: string, icon: EventTarget & SVGSVGElement | Element | string, color: number, size: number, type = "image/png") {
+export function saveIcon(iconName: string, icon: EventTarget & SVGSVGElement | Element | string, color: number, size: number, type: string = "image/png") {
     const filename = `${iconName}-${cssColors[color]?.name ?? "unknown"}-${size}px.${CrosspendingTypes[type] ?? "png"}`;
     if (typeof icon === "string") {
         const file = new File([icon], filename, { type: "text/plain" });
