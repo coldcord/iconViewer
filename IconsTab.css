@@ -73,7 +73,7 @@
 
 .vc-icon-container:hover {
     border-radius: 5px;
-    border: 3px solid var(--background-base-low);
+    border: 3px solid var(--checkbox-border-hover);
     box-sizing: border-box;
 }
 
@@ -87,7 +87,7 @@
 }
 
 .vc-icon-modal-color-tooltip:hover {
-    background-color: var(--info-help-background);
+    background-color: var(--control-secondary-border-active);
 }
 
 .vc-save-modal {
