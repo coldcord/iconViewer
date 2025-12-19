@@ -6,6 +6,7 @@
 
 import { BaseText } from "@components/BaseText";
 import { Heading } from "@components/Heading";
+import { copyToClipboard } from "@utils/clipboard";
 import { getIntlMessage } from "@utils/discord";
 import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
@@ -30,7 +31,7 @@ export function IconTooltip({ children, copy, className, ...props }: ClickablePr
     return <TooltipContainer text={"Click to copy"} className={className}>
         <Clickable onClick={() => {
             // @ts-ignore
-            Clipboard.copy(copy);
+            copyToClipboard(copy);
         }} {...props}>{children}</Clickable>
     </TooltipContainer>;
 }

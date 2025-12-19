@@ -6,6 +6,7 @@
 
 import { Button } from "@components/Button";
 import { CodeBlock } from "@components/CodeBlock";
+import { copyToClipboard } from "@utils/clipboard";
 import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
 import {
@@ -43,7 +44,7 @@ function ModalComponent(props: { iconFn: Function; iconName: string; color: numb
                 onClick={() => {
                     // silly typescript
                     // @ts-ignore
-                    Clipboard.copy(String(iconFn));
+                    copyToClipboard(String(iconFn));
                     Toasts.show({
                         id: Toasts.genId(),
                         message: `Copied raw \`${iconName}\` to clipboard`,
