@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+import { Button } from "@components/Button";
 import { CodeBlock } from "@components/CodeBlock";
 import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
@@ -17,7 +18,7 @@ import {
     ModalSize,
     openModal
 } from "@utils/modal";
-import { Button, TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
+import { TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
 
 import { IconsFinds } from "./names";
 import { openRawModal } from "./rawModal";
@@ -28,7 +29,7 @@ import { _cssColors, cssColors, iconSizes } from "./utils";
 
 
 function ModalComponent(props: { iconName: string; Icon: t.Icon; } & ModalProps) {
-    const [color, SetColor] = useState(_cssColors.indexOf("INTERACTIVE_NORMAL"));
+    const [color, SetColor] = useState(_cssColors.indexOf("INTERACTIVE_ICON_DEFAULT"));
 
     const onKeyDown = useCallback((e: KeyboardEvent) => {
         if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
@@ -65,7 +66,7 @@ function ModalComponent(props: { iconName: string; Icon: t.Icon; } & ModalProps)
                 <div className="vc-icon-modal-codeblock">
                     <CodeBlock lang="ts" content={`const ${iconName + "Icon"} = findComponentByCode(${JSON.stringify(IconsFinds[iconName])})`} />
                 </div>
-                : null
+                : <></>
             }
             <div className="vc-icon-modal-main-container">
                 <div className="vc-icon-display-box" aria-label={cssColors[color]?.name}>
