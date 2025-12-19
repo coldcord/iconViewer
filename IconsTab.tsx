@@ -78,7 +78,7 @@ function IconsTab() {
                         size="small"
                         aria-label="Search by function context"
                         style={{ marginTop: "50%" }}
-                        color={searchByFunction ? "positive" : "primary"}
+                        variant={searchByFunction ? "positive" : "none"}
                         onClick={() => setSearchByFunction(!searchByFunction)}
                     >Func</Button>
                 </TooltipContainer>
