@@ -42,10 +42,6 @@ function ModalComponent(props: { iconName: string; Icon: t.Icon; } & ModalProps)
         }
     }, [color]);
 
-    const onColorChange = useCallback((e: { type: string; color: string; }) => {
-        SetColor(getColorIndex(e.color));
-    }, [color]);
-
     useEffect(() => {
         document.addEventListener("keydown", onKeyDown);
         return () => {
