@@ -18,10 +18,12 @@
 
 import "./IconsTab.css";
 
+import { Button } from "@components/Button";
+import { Heading } from "@components/Heading";
 import { SettingsTab, wrapTab } from "@components/settings/tabs/BaseTab";
 import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
-import { Button, Clickable, Forms, React, TextInput, TooltipContainer } from "@webpack/common";
+import { Clickable, React, TextInput, TooltipContainer } from "@webpack/common";
 
 import { openIconModal } from "./IconModal";
 import { getNameByIcon } from "./names";
@@ -42,6 +44,7 @@ function searchMatch(search: string, name: string, Icon: t.Icon, searchbyFunctio
 
 
 function RenderIcons({ search, searchbyFunction }: { search: string; searchbyFunction: boolean; }) {
+    // TODO: ref might be best fit here, actually WaitFor is better a ton if possible
     if (Icons === null) {
         const OrgIcons = Array.from(new Set(findAllByCode("[\"size\",\"width\",\"height\",\"color\",\"colorClass\"]")));
         Icons = Object.fromEntries(Object.keys(OrgIcons).map(k => [String(getNameByIcon(OrgIcons[k], k)), OrgIcons[k]])) as IconsDef;
@@ -55,7 +58,7 @@ function RenderIcons({ search, searchbyFunction }: { search: string; searchbyFun
                             <Icon className="vc-icon-icon" size="xxl" />
                         </div>
                     </Clickable>
-                    <Forms.FormTitle className="vc-icon-title" tag="h3">{iconName}</Forms.FormTitle>
+                    <Heading className="vc-icon-title" tag="h3">{iconName}</Heading>
                 </div>
             </React.Fragment>
         )}</div>;
@@ -67,15 +70,15 @@ function IconsTab() {
     const MemoRenderIcons = React.memo(RenderIcons);
 
     return (
-        <SettingsTab title="Icons">
+        <SettingsTab>
             <div className={classes(Margins.top16, "vc-icon-tab-search-bar-grid")}>
                 <TextInput autoFocus value={search} placeholder="Search for an icon..." onChange={setSearch} />
                 <TooltipContainer text="Search by function context">
                     <Button
-                        size={Button.Sizes.SMALL}
+                        size="small"
                         aria-label="Search by function context"
                         style={{ marginTop: "50%" }}
-                        color={searchByFunction ? Button.Colors.GREEN : Button.Colors.PRIMARY}
+                        color={searchByFunction ? "positive" : "primary"}
                         onClick={() => setSearchByFunction(!searchByFunction)}
                     >Func</Button>
                 </TooltipContainer>

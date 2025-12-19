@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+import { Button } from "@components/Button";
 import {
     ModalCloseButton,
     ModalContent,
@@ -14,7 +15,7 @@ import {
     ModalSize,
     openModal
 } from "@utils/modal";
-import { Button, Forms, Select, TextInput, useCallback, useEffect, useState } from "@webpack/common";
+import { Forms, Select, TextInput, useCallback, useEffect, useState } from "@webpack/common";
 
 import { ModalHeaderTitle } from "./subComponents";
 import * as t from "./types";
@@ -134,7 +135,6 @@ function ModalComponent(props: { iconName: string, Icon: t.Icon; color: number; 
         </ModalContent>
         <ModalFooter className="vc-ic-modals-footer">
             <Button
-                color={Button.Colors.BRAND}
                 onClick={() => saveIcon(iconName,
                     saveType === "image/svg+xml" || document.querySelector(".vc-icon-modal-icon") == null ?
                         convertComponentToHtml(<Icon className="vc-icon-modal-icon" color={cssColors[color].css} />) :

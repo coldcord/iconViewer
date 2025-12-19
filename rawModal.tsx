@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+import { Button } from "@components/Button";
 import { CodeBlock } from "@components/CodeBlock";
 import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
@@ -17,15 +18,15 @@ import {
     ModalSize,
     openModal
 } from "@utils/modal";
-import { Button, Toasts } from "@webpack/common";
+import { Toasts } from "@webpack/common";
 
 import { ModalHeaderTitle } from "./subComponents";
 import * as t from "./types";
 
 
 
-function ModalComponent(props: { func: Function; iconName: string; color: number; } & ModalProps) {
-    const { func, iconName, color } = props;
+function ModalComponent(props: { iconFn: Function; iconName: string; color: number; } & ModalProps) {
+    const { iconFn, iconName, color } = props;
     return (<ModalRoot {...props} size={ModalSize.LARGE} className="vc-ic-modals-root vc-ic-raw-modal-root">
         <ModalHeader>
             <ModalHeaderTitle iconName={iconName} color={color} name="raw" />
@@ -33,17 +34,16 @@ function ModalComponent(props: { func: Function; iconName: string; color: number
         </ModalHeader>
         <ModalContent>
             <div className="vc-iv-raw-modal">
-                <CodeBlock content={String(func)} lang="js" />
+                <CodeBlock content={String(iconFn)} lang="js" />
             </div>
         </ModalContent>
         <ModalFooter className="vc-ic-modals-footer">
             <Button
-                color={Button.Colors.PRIMARY}
                 className={"vc-iv-raw-modal-copy-button"}
                 onClick={() => {
                     // silly typescript
                     // @ts-ignore
-                    Clipboard.copy(String(func));
+                    Clipboard.copy(String(iconFn));
                     Toasts.show({
                         id: Toasts.genId(),
                         message: `Copied raw \`${iconName}\` to clipboard`,
@@ -54,9 +54,9 @@ function ModalComponent(props: { func: Function; iconName: string; color: number
                 Copy
             </Button>
             <Button
-                color={Button.Colors.YELLOW}
+                variant="primary"
                 className={classes(Margins.right8, "vc-iv-log-to-console-button")}
-                onClick={() => { console.log(func); }}
+                onClick={() => { console.log(iconFn); }}
             >
                 log to console
             </Button>
@@ -65,6 +65,6 @@ function ModalComponent(props: { func: Function; iconName: string; color: number
 }
 
 export function openRawModal(iconName: string, Icon: t.Icon, colorIndex: number) {
-    openModal(props => <ModalComponent iconName={iconName} func={Icon} color={colorIndex} {...props} />);
+    openModal(props => <ModalComponent iconName={iconName} iconFn={Icon} color={colorIndex} {...props} />);
 }
 

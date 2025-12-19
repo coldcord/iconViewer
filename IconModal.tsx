@@ -85,13 +85,12 @@ function ModalComponent(props: { iconName: string; Icon: t.Icon; } & ModalProps)
         </ModalContent>
         <ModalFooter className="vc-ic-modals-footer">
             <Button
-                color={Button.Colors.BRAND}
                 onClick={() => openSaveModal(iconName, Icon, color)}
             >
                 Save as
             </Button>
             <Button
-                color={Button.Colors.YELLOW}
+                variant="secondary"
                 className={classes(Margins.right8, "vc-iv-raw-modal-button")}
                 onClick={() => openRawModal(iconName, Icon, color)}
             >
