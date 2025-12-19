@@ -10,7 +10,7 @@ import { copyToClipboard } from "@utils/clipboard";
 import { getIntlMessage } from "@utils/discord";
 import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
-import { Clickable, ContextMenuApi, FluxDispatcher, Menu, TooltipContainer, useState } from "@webpack/common";
+import { Clickable, ContextMenuApi, FluxDispatcher, Menu, showToast, Toasts, TooltipContainer, useState } from "@webpack/common";
 import type { ComponentPropsWithRef, PropsWithChildren } from "react";
 
 import { _cssColors, cssColors } from "./utils";
@@ -27,11 +27,12 @@ export type ClickableProps<T extends "a" | "div" | "span" | "li" = "div"> = Prop
     tag?: T;
 };
 
-export function IconTooltip({ children, copy, className, ...props }: ClickableProps & { children: string; copy: string; }) {
+export function IconTooltip({ children, copy, className, message, ...props }: ClickableProps & { children: string; copy: string; message?: string; }) {
     return <TooltipContainer text={"Click to copy"} className={className}>
         <Clickable onClick={() => {
             // @ts-ignore
             copyToClipboard(copy);
+            showToast(message ?? "copied to clipboard successfully", Toasts.Type.SUCCESS);
         }} {...props}>{children}</Clickable>
     </TooltipContainer>;
 }
@@ -46,6 +47,7 @@ export const ModalHeaderTitle = ({ iconName, color, name, onColor }: { iconName:
         {" - "}
         <IconTooltip copy={cssColors[color]?.css} className={classes(Margins.left8, "vc-icon-modal-color-tooltip")}
             onContextMenu={e => {
+                // TODO: make this more readable if possible
                 ContextMenuApi.openContextMenu(e, () => {
                     const [query, setQuery] = useState("");
                     return (<Menu.Menu
@@ -88,7 +90,7 @@ export const ModalHeaderTitle = ({ iconName, color, name, onColor }: { iconName:
             }}>
             {cssColors[color]?.name}
         </IconTooltip>
-    </BaseText >;
+    </BaseText>;
 };
 
 export function SettingsAbout() {
