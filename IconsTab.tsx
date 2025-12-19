@@ -46,8 +46,8 @@ function searchMatch(search: string, name: string, Icon: t.Icon, searchbyFunctio
 function RenderIcons({ search, searchbyFunction }: { search: string; searchbyFunction: boolean; }) {
     // TODO: ref might be best fit here, actually WaitFor is better a ton if possible
     if (Icons === null) {
-        const OrgIcons = Array.from(new Set(findAllByCode("[\"size\",\"width\",\"height\",\"color\",\"colorClass\"]")));
-        Icons = Object.fromEntries(Object.keys(OrgIcons).map(k => [String(getNameByIcon(OrgIcons[k], k)), OrgIcons[k]])) as IconsDef;
+        const rawIcons = Array.from(new Set(findAllByCode("[\"size\",\"width\",\"height\",\"color\",\"colorClass\"]")));
+        Icons = Object.fromEntries(Object.keys(rawIcons).map(k => [String(getNameByIcon(rawIcons[k], k)), rawIcons[k]])) as IconsDef;
     }
     return <div className="vc-icons-tab-grid-container">
         {Object.entries(Icons).map(([iconName, Icon], index) =>
