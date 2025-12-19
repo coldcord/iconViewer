@@ -19,7 +19,7 @@ import { Forms, Select, TextInput, useCallback, useEffect, useState } from "@web
 
 import { ModalHeaderTitle } from "./subComponents";
 import * as t from "./types";
-import { _cssColors, convertComponentToHtml, cssColors, iconSizesInPx, saveIcon } from "./utils";
+import { convertComponentToHtml, cssColors, getColorIndex, iconSizesInPx, saveIcon } from "./utils";
 
 type IDivElement = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 
@@ -75,7 +75,7 @@ export function SelectComponent({ option, onChange, onError, className }: IDivEl
 
 
 function ModalComponent(props: { iconName: string, Icon: t.Icon; color: number; } & ModalProps) {
-    const [color, SetColor] = useState((props.color ?? 187));
+    const [color, SetColor] = useState((props.color));
     const [iconSize, SetIconSize] = useState("lg");
     const [saveType, SetSaveType] = useState("png");
     const [customSize, SetCustomSize] = useState(32);
@@ -98,7 +98,7 @@ function ModalComponent(props: { iconName: string, Icon: t.Icon; color: number; 
     const { iconName, Icon } = props;
     return (<ModalRoot {...props} size={ModalSize.MEDIUM} className="vc-ic-modals-root vc-ic-save-modal-root">
         <ModalHeader>
-            <ModalHeaderTitle iconName={iconName} color={color} name="save" onColor={c => SetColor(_cssColors.indexOf(c))} />
+            <ModalHeaderTitle iconName={iconName} color={color} name="save" onColor={c => SetColor(getColorIndex(c))} />
             <ModalCloseButton onClick={props.onClose} />
         </ModalHeader>
         <ModalContent>

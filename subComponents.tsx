@@ -15,7 +15,7 @@ import type { ComponentPropsWithRef, PropsWithChildren } from "react";
 import { _cssColors, cssColors } from "./utils";
 
 
-function searchMatch(search: string, name: string): boolean {
+function colorSearchMatch(search: string, name: string): boolean {
     if (search === "") return true;
     const words = name.toLowerCase().split("_");
     const searchKeywords = search.toLowerCase().split(" ").filter(keyword => keyword !== "");
@@ -71,7 +71,7 @@ export const ModalHeaderTitle = ({ iconName, color, name, onColor }: { iconName:
                         {!!_cssColors.length && <Menu.MenuSeparator />}
 
                         {_cssColors.map(p => (
-                            searchMatch(query, p) && <Menu.MenuItem
+                            colorSearchMatch(query, p) && <Menu.MenuItem
                                 key={p}
                                 id={p}
                                 label={p}
