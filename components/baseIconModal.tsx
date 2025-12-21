@@ -16,12 +16,11 @@ import {
 import { findComponentByCodeLazy } from "@webpack";
 import { Clickable, ContextMenuApi, TooltipContainer } from "@webpack/common";
 
-import { ColorContextMenu } from "./colorContextMenu";
+import { ColorContextMenu } from "./contextMenus/colorContextMenu";
 import { ClickableProps, IconModalProps } from "./types";
 import { colorKeys, cssColors } from "./utils";
 
 const CloseButton = findComponentByCodeLazy("CLOSE_BUTTON_LABEL");
-
 
 export function IconTooltip({ children, copy, className, message, ...props }: ClickableProps & { children: string; copy: string; message?: string; }) {
     return <TooltipContainer text={"Click to copy"} className={className}>

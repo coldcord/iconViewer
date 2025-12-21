@@ -15,11 +15,11 @@ import {
     ModalSize,
     openModal
 } from "@utils/modal";
+import { DefinedSettings } from "@utils/types";
 import { ContextMenuApi, TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
 
-import { ActionsContextMenu } from "./actionsContextMenu";
 import { BaseIconModal } from "./baseIconModal";
-import { settings } from "./settings";
+import { ActionsContextMenu } from "./contextMenus/actionsContextMenu";
 import * as t from "./types";
 import { colorKeys, cssColors, getColorIndex, iconSizes } from "./utils";
 
@@ -45,7 +45,7 @@ function useColorNavigation(initialColor: number) {
     return [color, setColor] as const;
 }
 
-function ModalComponent({ iconName, Icon, findPattern, ...props }: { iconName: string; Icon: t.Icon; findPattern: string | null; } & ModalProps) {
+function ModalComponent({ iconName, Icon, findPattern, settings, ...props }: { iconName: string; Icon: t.Icon; findPattern: string | null; settings: DefinedSettings; } & ModalProps) {
     const [color, setColor] = useColorNavigation(getColorIndex("INTERACTIVE_ICON_DEFAULT"));
 
     const openActionsMenu = (e: React.MouseEvent) => {
@@ -94,7 +94,7 @@ function ModalComponent({ iconName, Icon, findPattern, ...props }: { iconName: s
     </BaseIconModal>);
 }
 
-export function openIconModal(iconName: string, Icon: t.Icon, patternFind: string | null) {
-    openModal(props => <ModalComponent iconName={iconName} Icon={Icon} findPattern={patternFind} {...props} />);
+export function openIconModal(iconName: string, Icon: t.Icon, patternFind: string | null, settings: DefinedSettings) {
+    openModal(props => <ModalComponent iconName={iconName} Icon={Icon} findPattern={patternFind} settings={settings} {...props} />);
 }
 

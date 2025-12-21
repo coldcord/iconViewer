@@ -25,10 +25,12 @@ import { debounce } from "@shared/debounce";
 import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
 import { useIntersection } from "@utils/react";
+import { DefinedSettings } from "@utils/types";
 import { Clickable, React, TextInput, TooltipContainer, useCallback, useEffect, useMemo, useState } from "@webpack/common";
 
 import { openIconModal } from "./IconModal";
 import { iconsFinds } from "./names";
+import { settings } from "./settings";
 import * as t from "./types";
 import { getIcons } from "./utils";
 
@@ -45,10 +47,10 @@ function searchMatch(search: string, name: string, Icon: t.Icon, searchByContext
         name.toLowerCase().includes(search.toLowerCase());
 }
 
-function IconItem({ iconName, Icon, patternFind }: { iconName: string; Icon: t.Icon; patternFind: string | null; }) {
+function IconItem({ iconName, Icon, patternFind, settings }: { iconName: string; Icon: t.Icon; patternFind: string | null; settings: DefinedSettings; }) {
     return (
         <div className="vc-icon-box">
-            <Clickable onClick={() => openIconModal(iconName, Icon, patternFind)}>
+            <Clickable onClick={() => openIconModal(iconName, Icon, patternFind, settings)}>
                 <div className="vc-icon-container">
                     <Icon className="vc-icon-icon" size="lg" width={32} height={32} color="var(--interactive-icon-default)" />
                 </div>
@@ -119,7 +121,7 @@ function IconsTab() {
             </div>
             <div className="vc-icons-tab-grid-container">
                 {visibleIcons.map(([iconName, Icon]) => (
-                    <IconItem key={iconName} iconName={iconName} Icon={Icon} patternFind={iconsFinds[iconName] ?? null} />
+                    <IconItem key={iconName} iconName={iconName} Icon={Icon} patternFind={iconsFinds[iconName] ?? null} settings={settings} />
                 ))}
             </div>
             {visibleCount < filteredIcons.length && (

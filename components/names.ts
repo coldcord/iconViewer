@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-import * as t from "./types";
+import * as t from "./components/types";
 
 // name: pattern
 export const iconsFinds: Record<string, string> = {

@@ -14,6 +14,11 @@ export const settings = definePluginSettings({
         description: "display pre-made find code snippets",
         type: OptionType.BOOLEAN,
         default: true,
+    },
+    copyFindAsPreMadeCode: {
+        description: "copy the find directly or copy it as a pre-made find code (e.g `const BIcon = findComponentByCode(\"9V2.9c0-.5.4-.9.9-.9h7\"))`",
+        type: OptionType.BOOLEAN,
+        default: false,
     }
 });
 

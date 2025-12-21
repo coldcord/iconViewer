@@ -11,7 +11,8 @@ import {
     Menu
 } from "@webpack/common";
 
-import { convertToHtml, cssColors, iconSizesInPx, logger, saveIcon } from "./utils";
+// eslint-disable-next-line
+import { convertToHtml, cssColors, iconSizesInPx, logger, saveIcon } from "../utils";
 
 const BugIcon = findComponentByCodeLazy("1.1.27.1.37 0a6.66 6.6");
 
