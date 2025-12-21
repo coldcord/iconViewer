@@ -15,7 +15,6 @@ import {
     ModalSize,
     openModal
 } from "@utils/modal";
-import { findComponentByCodeLazy } from "@webpack";
 import { ContextMenuApi, TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
 
 import { ActionsContextMenu } from "./actionsContextMenu";
@@ -24,14 +23,12 @@ import { settings } from "./settings";
 import * as t from "./types";
 import { colorKeys, cssColors, getColorIndex, iconSizes } from "./utils";
 
-const CloseButton = findComponentByCodeLazy("CLOSE_BUTTON_LABEL");
-
 function useColorNavigation(initialColor: number) {
     const [color, setColor] = useState(initialColor);
 
     const onKeyDown = useCallback((event: KeyboardEvent) => {
-        event.preventDefault();
         if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+            event.preventDefault();
             const { length } = colorKeys;
             const direction = event.key === "ArrowLeft" ? -1 : 1;
             setColor(prev => (prev + direction + length) % length);

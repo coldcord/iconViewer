@@ -28,11 +28,10 @@ import { useIntersection } from "@utils/react";
 import { Clickable, React, TextInput, TooltipContainer, useCallback, useEffect, useMemo, useState } from "@webpack/common";
 
 import { openIconModal } from "./IconModal";
-import { getNameByIcon, IconsFinds } from "./names";
+import { iconsFinds } from "./names";
 import * as t from "./types";
-import { findAllByCode, IconsDef } from "./utils";
+import { getIcons } from "./utils";
 
-export const Icons: IconsDef | null = null;
 
 function searchMatch(search: string, name: string, Icon: t.Icon, searchByContext: boolean): boolean {
     if (!search) return true;
@@ -46,10 +45,10 @@ function searchMatch(search: string, name: string, Icon: t.Icon, searchByContext
         name.toLowerCase().includes(search.toLowerCase());
 }
 
-function IconItem({ iconName, Icon }: { iconName: string; Icon: t.Icon; }) {
+function IconItem({ iconName, Icon, patternFind }: { iconName: string; Icon: t.Icon; patternFind: string | null; }) {
     return (
         <div className="vc-icon-box">
-            <Clickable onClick={() => openIconModal(iconName, Icon, IconsFinds[iconName] ?? null)}>
+            <Clickable onClick={() => openIconModal(iconName, Icon, patternFind)}>
                 <div className="vc-icon-container">
                     <Icon className="vc-icon-icon" size="lg" width={32} height={32} color="var(--interactive-icon-default)" />
                 </div>
@@ -64,10 +63,7 @@ function IconsTab() {
     const [search, setSearch] = useState("");
     const [searchByFunction, setSearchByFunction] = useState(false);
 
-    const icons = useMemo(() => {
-        const rawIcons = Array.from(new Set(findAllByCode("[\"size\",\"width\",\"height\",\"color\",\"colorClass\"]")));
-        return Object.fromEntries(Object.keys(rawIcons).map(k => [String(getNameByIcon(rawIcons[k], k)), rawIcons[k]])) as IconsDef;
-    }, []);
+    const icons = useMemo(() => getIcons(), []);
 
     const debouncedSetSearch = useMemo(
         () => debounce((query: string) => setSearch(query), 150),
@@ -123,7 +119,7 @@ function IconsTab() {
             </div>
             <div className="vc-icons-tab-grid-container">
                 {visibleIcons.map(([iconName, Icon]) => (
-                    <IconItem key={iconName} iconName={iconName} Icon={Icon} />
+                    <IconItem key={iconName} iconName={iconName} Icon={Icon} patternFind={iconsFinds[iconName] ?? null} />
                 ))}
             </div>
             {visibleCount < filteredIcons.length && (

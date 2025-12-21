@@ -9,16 +9,19 @@ import { copyWithToast } from "@utils/discord";
 import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
 import {
-    ModalCloseButton,
     ModalHeader,
     ModalProps,
     ModalRoot,
 } from "@utils/modal";
+import { findComponentByCodeLazy } from "@webpack";
 import { Clickable, ContextMenuApi, TooltipContainer } from "@webpack/common";
 
 import { ColorContextMenu } from "./colorContextMenu";
 import { ClickableProps, IconModalProps } from "./types";
 import { colorKeys, cssColors } from "./utils";
+
+const CloseButton = findComponentByCodeLazy("CLOSE_BUTTON_LABEL");
+
 
 export function IconTooltip({ children, copy, className, message, ...props }: ClickableProps & { children: string; copy: string; message?: string; }) {
     return <TooltipContainer text={"Click to copy"} className={className}>
@@ -47,7 +50,7 @@ export function BaseIconModal({ children, iconName, currentColor, Icon, onColor,
     return (<ModalRoot {...props}>
         <ModalHeader>
             <ModalHeaderTitle iconName={iconName} currentColor={currentColor} name={name} onColor={onColor} />
-            <ModalCloseButton onClick={props.onClose} />
+            <CloseButton onClick={props.onClose} />
         </ModalHeader>
         {children}
     </ModalRoot>);

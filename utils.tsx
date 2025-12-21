@@ -102,6 +102,27 @@ export function convertToHtml(component: React.ReactElement): string {
 export const findAllByCode = (code: string) => findAll(filters.byCode(code));
 
 
+
+export function findAllIcons() {
+    return findAll(m => {
+        if (typeof m !== "function") return false;
+        const str = m.toString?.() ?? "";
+        if (str.includes("direction:")) return false;
+        if (str.includes('viewBox:"0 0 272 143"')) return false;
+        return str.includes("viewBox:") && str.includes("color:") && (str.includes("foreground:") || str.includes("colorClass:"));
+    });
+}
+
+export function getIcons(): IconsDef {
+    if (cachedIcons) return cachedIcons;
+
+    const allIcons = Array.from(new Set(findAllIcons()));
+    cachedIcons = Object.fromEntries(
+        allIcons.map((icon, idx) => [getNameByIcon(icon, String(idx)), icon])
+    );
+    return cachedIcons as IconsDef;
+}
+
 waitFor(["colors", "layout"], m => {
     colorKeys = Object.keys(m.colors);
 });

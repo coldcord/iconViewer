@@ -7,7 +7,7 @@
 import * as t from "./types";
 
 // name: pattern
-export const IconsFinds: Record<string, string> = {
+export const iconsFinds: Record<string, string> = {
     Discord: "1.6 5.64-2.87",
     XboxNeutral: "8.68-.62c.89-.81 1.5",
     PlaystationNeutral: "2.04Zm-9.35",
@@ -187,7 +187,7 @@ export const IconsFinds: Record<string, string> = {
 // 7 1.43-.7 1.82 0l3.96 6.9c.38.66-.12 1.47-.91 1.47h-7.92c
 // M12 2.81a1 1 0 0 1 0-1.41l.36-.36a1
 
-export const namePatterns = new Map(Object.entries(IconsFinds));
+export const namePatterns = new Map(Object.entries(iconsFinds));
 
 export function getNameByIcon(Icon: t.Icon, defaultName: any) {
     for (const [name, pattern] of namePatterns) {
