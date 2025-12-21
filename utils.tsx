@@ -10,32 +10,32 @@ import { createRoot, ReactDOM } from "@webpack/common";
 
 import * as t from "./types";
 
-export let _cssColors: string[] = [];
+export let colorKeys: string[] = [];
 export type IconsDef = { [k: string]: t.Icon; };
 
 export const iconSizesInPx = findByPropsLazy("sm", "md", "lg", "xxs", "xs");
 export const Colors = findByPropsLazy("colors", "layout");
 
-export const cssColors = new Proxy( // a nice way of accessing a specific
-    {
 
-    },
-    {
-        get: (target, key) => {
-            const colorKey = _cssColors[key];
-            return key in target
-                ? target[key]
-                : Colors.colors[colorKey]?.css != null ? (target[key] = { name: colorKey.split("_").map((x: string) => x[0].toUpperCase() + x.toLowerCase().slice(1)).join(" "), css: Colors.colors[colorKey].css, key: colorKey }) : undefined;
-        },
-        set: (target, key, value) => {
-            target[key] = value;
-            return true;
-        }
+
+export const cssColors = new Proxy({} as Record<number, CssColorData>, {
+    get: (target, key) => {
+        const idx = Number(key);
+        if (isNaN(idx)) return undefined;
+
+        if (target[idx]) return target[idx];
+
+        const colorKey = colorKeys[idx];
+        if (!colorKey || !Colors.colors[colorKey]?.css) return undefined;
+
+        const name = colorKey.split("_").map(x => x[0].toUpperCase() + x.toLowerCase().slice(1)).join(" ");
+        target[idx] = { name, css: Colors.colors[colorKey].css, key: colorKey };
+        return target[idx];
     }
-) as unknown as Array<{ name: string; css: string; key: string; }>;
+});
 
 export function getColorIndex(colorKey: string): number {
-    return _cssColors.indexOf(colorKey);
+    return colorKeys.indexOf(colorKey);
 }
 
 export const iconSizes = ["xxs", "xs", "sm", "md", "lg"];
@@ -101,7 +101,6 @@ export function convertComponentToHtml(component?: React.ReactElement): string {
 export const findAllByCode = (code: string) => findAll(filters.byCode(code));
 
 waitFor(["colors", "layout"], m => {
-    _cssColors = Object.keys(m.colors);
-    cssColors.length = _cssColors.length;
+    colorKeys = Object.keys(m.colors);
 });
 

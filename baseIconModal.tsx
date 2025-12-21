@@ -18,16 +18,7 @@ import {
 import { Clickable, ContextMenuApi, FluxDispatcher, Menu, showToast, Toasts, TooltipContainer, useState } from "@webpack/common";
 
 import { ClickableProps, IconModalProps } from "./types";
-import { _cssColors, cssColors } from "./utils";
-
-
-function colorSearchMatch(search: string, name: string): boolean {
-    if (search === "") return true;
-    const words = name.toLowerCase().split("_");
-    const searchKeywords = search.toLowerCase().split(" ").filter(keyword => keyword !== "");
-    return searchKeywords.every(keyword => words.includes(keyword)) || words.every(keyword => searchKeywords.includes(keyword)) || name.toLowerCase().includes(search.toLowerCase());
-}
-
+import { colorKeys, cssColors } from "./utils";
 
 export function IconTooltip({ children, copy, className, message, ...props }: ClickableProps & { children: string; copy: string; message?: string; }) {
     return <TooltipContainer text={"Click to copy"} className={className}>
@@ -36,6 +27,44 @@ export function IconTooltip({ children, copy, className, message, ...props }: Cl
             showToast(message ?? "copied to clipboard successfully", Toasts.Type.SUCCESS);
         }} {...props}>{children}</Clickable>
     </TooltipContainer>;
+}
+
+function ColorContextMenu({ colorKeys }: { colorKeys: string[]; }) {
+    const [query, setQuery] = useState("");
+    const filtered = colorKeys.filter(k =>
+        !query || k.toLowerCase().includes(query.toLowerCase())
+    );
+
+    return (
+        <Menu.Menu
+            navId="vc-ic-colors-menu"
+            onClose={() => FluxDispatcher.dispatch({ type: "CONTEXT_MENU_CLOSE" })}
+            aria-label="Icon Viewer Colors"
+        >
+            <Menu.MenuControlItem
+                id="vc-ic-colors-search"
+                control={(props, ref) => (
+                    <Menu.MenuSearchControl
+                        {...props}
+                        query={query}
+                        onChange={setQuery}
+                        ref={ref}
+                        placeholder={getIntlMessage("SEARCH")}
+                        autoFocus
+                    />
+                )}
+            />
+            <Menu.MenuSeparator />
+            {filtered.map(colorKey => (
+                <Menu.MenuItem
+                    key={colorKey}
+                    id={colorKey}
+                    label={colorKey}
+                    action={() => FluxDispatcher.dispatch({ type: "ICONVIEWER_COLOR_CHANGE", color: colorKey })}
+                />
+            ))}
+        </Menu.Menu>
+    );
 }
 
 export const ModalHeaderTitle = ({ iconName, color, name, onColor }: { iconName: string; color: number; name: string; onColor?: (color: string) => void; }) => {
@@ -47,48 +76,7 @@ export const ModalHeaderTitle = ({ iconName, color, name, onColor }: { iconName:
         </IconTooltip>
         {" - "}
         <IconTooltip copy={cssColors[color]?.css} className={classes(Margins.left8, "vc-icon-modal-color-tooltip")}
-            onContextMenu={e => {
-                // TODO: make this more readable if possible
-                ContextMenuApi.openContextMenu(e, () => {
-                    const [query, setQuery] = useState("");
-                    return (<Menu.Menu
-                        navId="vc-ic-colors-header-menu"
-                        onClose={() => FluxDispatcher.dispatch({ type: "CONTEXT_MENU_CLOSE" })}
-                        color="danger"
-                        aria-label="Icon Viewer Colors"
-                    >
-
-                        <Menu.MenuControlItem
-                            id="vc-ic-colors-search"
-                            control={(props, ref) => (
-                                <Menu.MenuSearchControl
-                                    {...props}
-                                    query={query}
-                                    onChange={setQuery}
-                                    ref={ref}
-                                    placeholder={getIntlMessage("SEARCH")}
-                                    autoFocus
-                                />
-                            )}
-                        />
-
-                        {!!_cssColors.length && <Menu.MenuSeparator />}
-
-                        {_cssColors.map(p => (
-                            colorSearchMatch(query, p) && <Menu.MenuItem
-                                key={p}
-                                id={p}
-                                label={p}
-                                action={() => {
-                                    if (!onColor) return;
-                                    onColor(p);
-                                }}
-                            />
-                        ))}
-
-                    </Menu.Menu>);
-                });
-            }}>
+            onContextMenu={e=>ContextMenuApi.openContextMenu(e, () => <ColorContextMenu colorKeys={colorKeys} />)}>
             {cssColors[color]?.name}
         </IconTooltip>
     </BaseText>;
