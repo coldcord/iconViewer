@@ -29,25 +29,25 @@ export function IconTooltip({ children, copy, className, message, ...props }: Cl
     </TooltipContainer>;
 }
 
-export const ModalHeaderTitle = ({ iconName, color, name, onColor }: { iconName: string; color: number; name: string; onColor?: (color: string) => void; }) => {
-    return <BaseText weight="semibold"
+export const ModalHeaderTitle = ({ iconName, currentColor, name, onColor }: { iconName: string; currentColor: number; name: string; onColor?: (color: string) => void; }) => {
+    return <BaseText weight="semibold" size="lg"
         style={{ flexGrow: 1, display: "flex" }}
         className={classes("vc-ic-modal-header-title", `vc-ic-${name}-modal-header-title`)}>
         <IconTooltip copy={iconName} className={classes(Margins.right8, "vc-icon-modal-color-tooltip")}>
             {iconName}
         </IconTooltip>
         {" - "}
-        <IconTooltip copy={cssColors[color]?.css} className={classes(Margins.left8, "vc-icon-modal-color-tooltip")}
+        <IconTooltip copy={cssColors[currentColor]?.css} className={classes(Margins.left8, "vc-icon-modal-color-tooltip")}
             onContextMenu={e => ContextMenuApi.openContextMenu(e, () => <ColorContextMenu colorKeys={colorKeys} onColor={onColor} />)}>
-            {cssColors[color]?.name}
+            {cssColors[currentColor]?.name}
         </IconTooltip>
     </BaseText>;
 };
 
-export function BaseIconModal({ children, iconName, color, Icon, onColor, name, ...props }: IconModalProps & ModalProps) {
+export function BaseIconModal({ children, iconName, currentColor, Icon, onColor, name, ...props }: IconModalProps & ModalProps) {
     return (<ModalRoot {...props}>
         <ModalHeader>
-            <ModalHeaderTitle iconName={iconName} color={color} name={name} onColor={onColor} />
+            <ModalHeaderTitle iconName={iconName} currentColor={currentColor} name={name} onColor={onColor} />
             <ModalCloseButton onClick={props.onClose} />
         </ModalHeader>
         {children}
