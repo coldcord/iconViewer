@@ -4,17 +4,12 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+import { definePluginSettings } from "@api/Settings";
 import { BaseText } from "@components/BaseText";
 import { Heading } from "@components/Heading";
-import { copyToClipboard } from "@utils/clipboard";
-import { getIntlMessage } from "@utils/discord";
-import { Margins } from "@utils/margins";
-import { classes } from "@utils/misc";
-import { Clickable, ContextMenuApi, FluxDispatcher, Menu, showToast, Toasts, TooltipContainer, useState } from "@webpack/common";
+import { OptionType } from "@utils/types";
 
-import { ClickableProps } from "./types";
-import { colorKeys, cssColors } from "./utils";
-
+export const settings = definePluginSettings({ /* WIP */ });
 
 export function SettingsAbout() {
     return <>
@@ -35,8 +30,8 @@ export function SettingsAbout() {
                 <li>krystalskullofficial._.</li>
                 <li>davr1</li>
                 <li>suffocate</li>
+                <li>suffocate</li>
             </ul>
         </BaseText>
     </>;
 }
-

@@ -8,15 +8,14 @@ import definePlugin, { StartAt } from "@utils/types";
 import { findComponentByCodeLazy } from "@webpack";
 import { SettingsRouter } from "@webpack/common";
 
-// import settings from "../_core/settings";
 import IconsTab from "./IconsTab";
-import { SettingsAbout } from "./subComponents";
+import { settings, SettingsAbout } from "./settings";
 
 const PaintPaletteIcon = findComponentByCodeLazy("2v2c0 1.66-1.37");
 
 export default definePlugin({
     name: "IconViewer",
-    description: "Adds a new tab to settings, to preview all icons",
+    description: "Preview icons and copy Discord CSS colors via a new settings tab.",
     // @ts-ignore
     authors: [{
         name: "iamme",
@@ -26,18 +25,11 @@ export default definePlugin({
     startAt: StartAt.WebpackReady,
     toolboxActions: {
         "Open Icons Tab"() {
-            SettingsRouter.open("VencordDiscordIcons");
+            SettingsRouter.open("vencord_discord_icons_viewer");
         },
     },
     settingsAboutComponent: SettingsAbout,
-    insertSettings() {
-        return {
-            section: "VencordDiscordIcons",
-            label: "Icons",
-            element: IconsTab,
-            className: "vc-discord-icons",
-        };
-    },
+    settings: settings,
     start() {
         // @ts-ignore
         Vencord.Plugins.plugins.Settings.customEntries.push({

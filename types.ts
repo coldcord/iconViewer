@@ -5,8 +5,7 @@
  */
 
 import { ModalSize } from "@utils/modal";
-import type { JSX, SVGProps } from "react";
-import type { ComponentPropsWithRef, PropsWithChildren } from "react";
+import type { ComponentPropsWithRef, JSX, PropsWithChildren, SVGProps } from "react";
 
 export type IconProps = SVGProps<SVGSVGElement> & {
     size?: string; // "sm" | "md" | "lg" | "xl" | "xxl"
