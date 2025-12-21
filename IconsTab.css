@@ -69,6 +69,8 @@
     border-radius: 5px;
     border: 3px solid transparent;
     box-sizing: border-box;
+
+    transition: border-color 0.3s ease, border-radius 0.3s ease;
 }
 
 .vc-icon-container:hover {
