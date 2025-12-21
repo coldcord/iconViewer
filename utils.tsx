@@ -8,7 +8,7 @@ import { saveFile } from "@utils/web";
 import { filters, findAll, findByPropsLazy, waitFor } from "@webpack";
 import { createRoot, ReactDOM } from "@webpack/common";
 
-import * as t from "./types";
+import * as t from ".";
 
 export let colorKeys: string[] = [];
 export type IconsDef = { [k: string]: t.Icon; };
@@ -40,19 +40,17 @@ export function getColorIndex(colorKey: string): number {
 
 export const iconSizes = ["xxs", "xs", "sm", "md", "lg"];
 
-const CrosspendingTypes: Record<string, string> = {
+export const FORMAT_EXTENSIONS: Record<string, string> = {
     "image/png": "png",
     "image/jpeg": "jpeg",
     "image/gif": "gif",
-    "image/bmp": "bmp",
-    "image/tiff": "tiff",
     "image/webp": "webp",
     "image/svg+xml": "svg",
     "image/avif": "avif"
 };
 
 export function saveIcon(iconName: string, icon: EventTarget & SVGSVGElement | Element | string, color: number, size: number, type: string = "image/png") {
-    const filename = `${iconName}-${cssColors[color]?.name ?? "unknown"}-${size}px.${CrosspendingTypes[type] ?? "png"}`;
+    const filename = `${iconName}-${cssColors[color]?.name ?? "unknown"}-${size}px.${FORMAT_EXTENSIONS[type] ?? "png"}`;
     if (typeof icon === "string") {
         const file = new File([icon], filename, { type: "text/plain" });
         saveFile(file);
