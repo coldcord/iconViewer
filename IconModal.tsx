@@ -22,20 +22,18 @@ import { IconsFinds } from "./names";
 import { openRawModal } from "./rawModal";
 import { openSaveModal } from "./saveModal";
 import * as t from "./types";
-import { cssColors, getColorIndex, iconSizes } from "./utils";
+import { colorKeys, cssColors, getColorIndex, iconSizes } from "./utils";
 
 
 function ModalComponent({ iconName, Icon, ...props }: { iconName: string; Icon: t.Icon; } & ModalProps) {
     const [color, SetColor] = useState(getColorIndex("INTERACTIVE_ICON_DEFAULT"));
 
-    const onKeyDown = useCallback((e: KeyboardEvent) => {
-        if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
-            e.preventDefault();
-            if (e.key === "ArrowLeft") {
-                SetColor(color + -1);
-            } else if (e.key === "ArrowRight") {
-                SetColor(color + 1);
-            }
+    const onKeyDown = useCallback((event: KeyboardEvent) => {
+        event.preventDefault();
+        if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+            const { length } = colorKeys;
+            const direction = event.key === "ArrowLeft" ? -1 : 1;
+            SetColor(prev => (prev + direction + length) % length);
         }
     }, [color]);
 
@@ -45,9 +43,6 @@ function ModalComponent({ iconName, Icon, ...props }: { iconName: string; Icon: 
             document.removeEventListener("keydown", onKeyDown);
         };
     }, [onKeyDown]);
-    if (color < 0 || color >= cssColors.length) {
-        SetColor(0);
-    }
 
     return (<BaseIconModal {...props}
         iconName={iconName}
