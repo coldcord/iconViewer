@@ -5,7 +5,7 @@
  */
 
 import { BaseText } from "@components/BaseText";
-import { copyToClipboard } from "@utils/clipboard";
+import { copyWithToast } from "@utils/discord";
 import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
 import {
@@ -14,8 +14,7 @@ import {
     ModalProps,
     ModalRoot,
 } from "@utils/modal";
-import { Clickable, ContextMenuApi, showToast, Toasts, TooltipContainer } from "@webpack/common";
-import { copyWithToast } from "@utils/discord";
+import { Clickable, ContextMenuApi, TooltipContainer } from "@webpack/common";
 
 import { ColorContextMenu } from "./colorContextMenu";
 import { ClickableProps, IconModalProps } from "./types";

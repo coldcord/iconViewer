@@ -15,7 +15,7 @@ import { convertToHtml, cssColors, iconSizesInPx, logger, saveIcon } from "./uti
 
 const BugIcon = findComponentByCodeLazy("1.1.27.1.37 0a6.66 6.6");
 
-export function ActionsContextMenu({ iconName, Icon, color, findCode }: { iconName: string; Icon: Icon; color: number; findCode: string | null; }) {
+export function ActionsContextMenu({ iconName, Icon, color }: { iconName: string; Icon: Icon; color: number; }) {
     const colorData = cssColors[color];
 
     const handleSave = (type: string) => {

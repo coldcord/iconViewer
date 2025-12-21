@@ -10,10 +10,12 @@ import { Heading } from "@components/Heading";
 import { OptionType } from "@utils/types";
 
 export const settings = definePluginSettings({
-    showFindCodeblocks: {
-
+    preMadeCodeSnippets: {
+        description: "display pre-made find code snippets",
+        type: OptionType.BOOLEAN,
+        default: true,
     }
- });
+});
 
 export function SettingsAbout() {
     return <>
@@ -34,7 +36,7 @@ export function SettingsAbout() {
                 <li>krystalskullofficial._.</li>
                 <li>davr1</li>
                 <li>suffocate</li>
-                <li>suffocate</li>
+                <li>dear.prism</li>
             </ul>
         </BaseText>
     </>;

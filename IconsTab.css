@@ -111,6 +111,8 @@
 }
 
 .vc-ic-modals-footer {
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    gap: 8px;
 }

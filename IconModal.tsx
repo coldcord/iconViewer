@@ -20,7 +20,7 @@ import { ContextMenuApi, TooltipContainer, useCallback, useEffect, useState } fr
 
 import { ActionsContextMenu } from "./actionsContextMenu";
 import { BaseIconModal } from "./baseIconModal";
-import { IconsFinds } from "./names";
+import { settings } from "./settings";
 import * as t from "./types";
 import { colorKeys, cssColors, getColorIndex, iconSizes } from "./utils";
 
@@ -48,14 +48,18 @@ function useColorNavigation(initialColor: number) {
     return [color, setColor] as const;
 }
 
-function ModalComponent({ iconName, Icon, findCode, ...props }: { iconName: string; Icon: t.Icon; findCode: string | null; } & ModalProps) {
+function ModalComponent({ iconName, Icon, findPattern, ...props }: { iconName: string; Icon: t.Icon; findPattern: string | null; } & ModalProps) {
     const [color, setColor] = useColorNavigation(getColorIndex("INTERACTIVE_ICON_DEFAULT"));
 
     const openActionsMenu = (e: React.MouseEvent) => {
         ContextMenuApi.openContextMenu(e, () => (
-            <ActionsContextMenu iconName={iconName} Icon={Icon} color={color} findCode={findCode} />
+            <ActionsContextMenu iconName={iconName} Icon={Icon} color={color} />
         ));
     };
+
+    const findCode = findPattern
+        ? `const ${iconName}Icon = findComponentByCodeLazy(${JSON.stringify(findPattern)})`
+        : null;
 
     return (<BaseIconModal {...props}
         iconName={iconName}
@@ -63,12 +67,10 @@ function ModalComponent({ iconName, Icon, findCode, ...props }: { iconName: stri
         className={classes("vc-ic-modals-root", "vc-ic-icon-modal-root")}
         name="root-icon" currentColor={color} onColor={c => setColor(getColorIndex(c))}>
         <ModalContent>
-            {IconsFinds[iconName] ?
-                <div className="vc-icon-modal-codeblock">
-                    <CodeBlock lang="ts" content={`const ${iconName}Icon = findComponentByCodeLazy(${JSON.stringify(IconsFinds[iconName])})`} />
-                </div>
-                : <></>
-            }
+            <div style={{ visibility: findCode && settings.store.preMadeCodeSnippets ? "visible" : "hidden" }} className="vc-icon-modal-codeblock">
+                <CodeBlock lang="ts" content={settings.store.preMadeCodeSnippets && findCode || " " /* keeping layout consistent */} />
+            </div>
+
             <div className="vc-icon-modal-main-container">
                 <div className="vc-icon-display-box" aria-label={cssColors[color]?.name}>
                     <Icon className="vc-icon-modal-icon" color={cssColors[color]?.css} />
@@ -96,6 +98,6 @@ function ModalComponent({ iconName, Icon, findCode, ...props }: { iconName: stri
 }
 
 export function openIconModal(iconName: string, Icon: t.Icon, patternFind: string | null) {
-    openModal(props => <ModalComponent iconName={iconName} Icon={Icon} findCode={patternFind} {...props} />);
+    openModal(props => <ModalComponent iconName={iconName} Icon={Icon} findPattern={patternFind} {...props} />);
 }
 

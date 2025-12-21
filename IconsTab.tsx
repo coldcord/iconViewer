@@ -32,7 +32,7 @@ import { getNameByIcon, IconsFinds } from "./names";
 import * as t from "./types";
 import { findAllByCode, IconsDef } from "./utils";
 
-export let Icons: IconsDef | null = null;
+export const Icons: IconsDef | null = null;
 
 function searchMatch(search: string, name: string, Icon: t.Icon, searchByContext: boolean): boolean {
     if (!search) return true;
@@ -66,8 +66,7 @@ function IconsTab() {
 
     const icons = useMemo(() => {
         const rawIcons = Array.from(new Set(findAllByCode("[\"size\",\"width\",\"height\",\"color\",\"colorClass\"]")));
-        Icons = Object.fromEntries(Object.keys(rawIcons).map(k => [String(getNameByIcon(rawIcons[k], k)), rawIcons[k]])) as IconsDef;
-        return Icons;
+        return Object.fromEntries(Object.keys(rawIcons).map(k => [String(getNameByIcon(rawIcons[k], k)), rawIcons[k]])) as IconsDef;
     }, []);
 
     const debouncedSetSearch = useMemo(
