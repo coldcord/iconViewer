@@ -9,7 +9,11 @@ import { BaseText } from "@components/BaseText";
 import { Heading } from "@components/Heading";
 import { OptionType } from "@utils/types";
 
-export const settings = definePluginSettings({ /* WIP */ });
+export const settings = definePluginSettings({
+    showFindCodeblocks: {
+
+    }
+ });
 
 export function SettingsAbout() {
     return <>

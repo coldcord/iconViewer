@@ -4,19 +4,22 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+import { Logger } from "@utils/Logger";
 import { saveFile } from "@utils/web";
 import { filters, findAll, findByPropsLazy, waitFor } from "@webpack";
 import { createRoot, ReactDOM } from "@webpack/common";
 
-import * as t from ".";
-import { CssColorData } from "./types";
+import { getNameByIcon } from "./names";
+import { CssColorData, Icon } from "./types";
 
+let cachedIcons: IconsDef | null = null;
 export let colorKeys: string[] = [];
-export type IconsDef = { [k: string]: t.Icon; };
+export type IconsDef = { [k: string]: Icon; };
 
 export const iconSizesInPx = findByPropsLazy("sm", "md", "lg", "xxs", "xs");
 export const Colors = findByPropsLazy("colors", "layout");
 
+export const logger = new Logger("IconViewer");
 
 
 export const cssColors = new Proxy({} as Record<number, CssColorData>, {
@@ -97,6 +100,7 @@ export function convertToHtml(component: React.ReactElement): string {
 
 
 export const findAllByCode = (code: string) => findAll(filters.byCode(code));
+
 
 waitFor(["colors", "layout"], m => {
     colorKeys = Object.keys(m.colors);

@@ -21,7 +21,7 @@ export type Icon = (props: IconProps) => JSX.Element;
 export interface IconModalProps {
     children: any[];
     iconName: string;
-    color: number;
+    currentColor: number;
     Icon?: Icon;
     onColor?: (color: string) => void;
     name: string;

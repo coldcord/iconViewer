@@ -4,9 +4,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-import { Button } from "@components/Button";
 import { CodeBlock } from "@components/CodeBlock";
-import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
 import {
     ModalContent,
@@ -15,27 +13,27 @@ import {
     ModalSize,
     openModal
 } from "@utils/modal";
+import { findComponentByCodeLazy } from "@webpack";
 import { TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
 
 import { BaseIconModal } from "./baseIconModal";
 import { IconsFinds } from "./names";
-import { openRawModal } from "./rawModal";
-import { openSaveModal } from "./saveModal";
 import * as t from "./types";
 import { colorKeys, cssColors, getColorIndex, iconSizes } from "./utils";
 
+const CloseButton = findComponentByCodeLazy("CLOSE_BUTTON_LABEL");
 
-function ModalComponent({ iconName, Icon, ...props }: { iconName: string; Icon: t.Icon; } & ModalProps) {
-    const [color, SetColor] = useState(getColorIndex("INTERACTIVE_ICON_DEFAULT"));
+function useColorNavigation(initialColor: number) {
+    const [color, setColor] = useState(initialColor);
 
     const onKeyDown = useCallback((event: KeyboardEvent) => {
         event.preventDefault();
         if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
             const { length } = colorKeys;
             const direction = event.key === "ArrowLeft" ? -1 : 1;
-            SetColor(prev => (prev + direction + length) % length);
+            setColor(prev => (prev + direction + length) % length);
         }
-    }, [color]);
+    }, []);
 
     useEffect(() => {
         document.addEventListener("keydown", onKeyDown);
@@ -44,15 +42,21 @@ function ModalComponent({ iconName, Icon, ...props }: { iconName: string; Icon: 
         };
     }, [onKeyDown]);
 
+    return [color, setColor] as const;
+}
+
+function ModalComponent({ iconName, Icon, ...props }: { iconName: string; Icon: t.Icon; } & ModalProps) {
+    const [color, setColor] = useColorNavigation(getColorIndex("INTERACTIVE_ICON_DEFAULT"));
+
     return (<BaseIconModal {...props}
         iconName={iconName}
         size={ModalSize.DYNAMIC}
-        className={classes("vc-ic-modals-root", "vc-ic-icon-modal-root")}
-        name="root-icon" color={color}>
+        className={classes("vc-ic-modals-icon", "vc-ic-icon-modal-icon")}
+        name="root-icon" currentColor={color} onColor={c => setColor(getColorIndex(c))}>
         <ModalContent>
             {IconsFinds[iconName] ?
                 <div className="vc-icon-modal-codeblock">
-                    <CodeBlock lang="ts" content={`const ${iconName + "Icon"} = findComponentByCode(${JSON.stringify(IconsFinds[iconName])})`} />
+                    <CodeBlock lang="ts" content={`const ${iconName}Icon = findComponentByCodeLazy(${JSON.stringify(IconsFinds[iconName])})`} />
                 </div>
                 : <></>
             }
@@ -72,23 +76,11 @@ function ModalComponent({ iconName, Icon, ...props }: { iconName: string; Icon: 
             </div>
         </ModalContent>
         <ModalFooter className="vc-ic-modals-footer">
-            <Button
-                onClick={() => openSaveModal(iconName, Icon, color)}
-            >
-                Save as
-            </Button>
-            <Button
-                variant="secondary"
-                className={classes(Margins.right8, "vc-iv-raw-modal-button")}
-                onClick={() => openRawModal(iconName, Icon, color)}
-            >
-                Raw
-            </Button>
         </ModalFooter>
     </BaseIconModal>);
 }
 
-export function openIconModal(iconName: string, Icon: t.Icon) {
+export function openIconModal(iconName: string, Icon: t.Icon, patternFind?: string) {
     openModal(props => <ModalComponent iconName={iconName} Icon={Icon} {...props} />);
 }
 
