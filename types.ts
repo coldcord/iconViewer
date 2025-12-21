@@ -30,6 +30,12 @@ export interface IconModalProps {
     size?: ModalSize;
 }
 
+export interface CssColorData {
+    name: string;
+    css: string;
+    key: string;
+}
+
 export type ClickableProps<T extends "a" | "div" | "span" | "li" = "div"> = PropsWithChildren<ComponentPropsWithRef<T>> & {
     tag?: T;
 };

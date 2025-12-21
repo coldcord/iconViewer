@@ -9,6 +9,7 @@ import { filters, findAll, findByPropsLazy, waitFor } from "@webpack";
 import { createRoot, ReactDOM } from "@webpack/common";
 
 import * as t from ".";
+import { CssColorData } from "./types";
 
 export let colorKeys: string[] = [];
 export type IconsDef = { [k: string]: t.Icon; };
@@ -49,30 +50,31 @@ export const FORMAT_EXTENSIONS: Record<string, string> = {
     "image/avif": "avif"
 };
 
-export function saveIcon(iconName: string, icon: EventTarget & SVGSVGElement | Element | string, color: number, size: number, type: string = "image/png") {
-    const filename = `${iconName}-${cssColors[color]?.name ?? "unknown"}-${size}px.${FORMAT_EXTENSIONS[type] ?? "png"}`;
+
+export function saveIcon(iconName: string, icon: Element | string, color: number, size: number, type: string) {
+    const colorName = cssColors[color]?.name ?? "unknown";
+    const ext = FORMAT_EXTENSIONS[type] ?? "png";
+    const filename = `${iconName}-${colorName}-${size}px.${ext}`;
+
     if (typeof icon === "string") {
-        const file = new File([icon], filename, { type: "text/plain" });
-        saveFile(file);
+        saveFile(new File([icon], filename, { type: "text/plain" }));
         return;
     }
 
-    const innerElements = icon.children;
-    for (const el of innerElements) {
+    for (const el of icon.children) {
         const fill = el.getAttribute("fill");
-        if (fill && fill.startsWith("var(")) {
-            el.setAttribute("fill", getComputedStyle(icon).getPropertyValue(fill.replace("var(", "").replace(")", "")));
+        if (fill?.startsWith("var(")) {
+            el.setAttribute("fill", getComputedStyle(icon).getPropertyValue(fill.slice(4, -1)));
         }
     }
 
-    // save svg as the given type
     const canvas = document.createElement("canvas");
     canvas.width = size;
     canvas.height = size;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const img = new Image();
 
+    const img = new Image();
     img.onload = () => {
         ctx.drawImage(img, 0, 0, size, size);
         const link = document.createElement("a");
@@ -80,21 +82,19 @@ export function saveIcon(iconName: string, icon: EventTarget & SVGSVGElement | E
         link.href = canvas.toDataURL(type);
         link.click();
     };
-
     img.src = `data:image/svg+xml;base64,${btoa(icon.outerHTML)}`;
 }
 
 
-export function convertComponentToHtml(component?: React.ReactElement): string {
+export function convertToHtml(component: React.ReactElement): string {
     const container = document.createElement("div");
     const root = createRoot(container);
-
     ReactDOM.flushSync(() => root.render(component));
     const content = container.innerHTML;
     root.unmount();
-
     return content;
 }
+
 
 export const findAllByCode = (code: string) => findAll(filters.byCode(code));
 

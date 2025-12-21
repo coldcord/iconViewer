@@ -17,7 +17,7 @@ import { Forms, Select, TextInput, useCallback, useEffect, useState } from "@web
 
 import { BaseIconModal } from "./baseIconModal";
 import * as t from "./types";
-import { convertComponentToHtml, cssColors, getColorIndex, iconSizesInPx, saveIcon } from "./utils";
+import { convertToHtml, cssColors, getColorIndex, iconSizesInPx, saveIcon } from "./utils";
 
 type IDivElement = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 
@@ -131,7 +131,7 @@ function ModalComponent({ iconName, Icon, ...props }: { iconName: string, Icon: 
             <Button
                 onClick={() => saveIcon(iconName,
                     saveType === "image/svg+xml" || document.querySelector(".vc-icon-modal-icon") == null ?
-                        convertComponentToHtml(<Icon className="vc-icon-modal-icon" color={cssColors[color].css} />) :
+                        convertToHtml(<Icon className="vc-icon-modal-icon" color={cssColors[color].css} />) :
                         document.querySelector(".vc-icon-modal-icon") as Element,
                     color, iconSizesInPx[iconSize] ?? customSize, saveType)}
             >
