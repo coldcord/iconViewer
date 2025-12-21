@@ -49,7 +49,7 @@ function searchMatch(search: string, name: string, Icon: t.Icon, searchByContext
 function IconItem({ iconName, Icon }: { iconName: string; Icon: t.Icon; }) {
     return (
         <div className="vc-icon-box">
-            <Clickable onClick={() => openIconModal(iconName, Icon, IconsFinds[iconName])}>
+            <Clickable onClick={() => openIconModal(iconName, Icon, IconsFinds[iconName] ?? null)}>
                 <div className="vc-icon-container">
                     <Icon className="vc-icon-icon" size="lg" width={32} height={32} color="var(--interactive-icon-default)" />
                 </div>

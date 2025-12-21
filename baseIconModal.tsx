@@ -15,6 +15,7 @@ import {
     ModalRoot,
 } from "@utils/modal";
 import { Clickable, ContextMenuApi, showToast, Toasts, TooltipContainer } from "@webpack/common";
+import { copyWithToast } from "@utils/discord";
 
 import { ColorContextMenu } from "./colorContextMenu";
 import { ClickableProps, IconModalProps } from "./types";
@@ -23,8 +24,7 @@ import { colorKeys, cssColors } from "./utils";
 export function IconTooltip({ children, copy, className, message, ...props }: ClickableProps & { children: string; copy: string; message?: string; }) {
     return <TooltipContainer text={"Click to copy"} className={className}>
         <Clickable onClick={() => {
-            copyToClipboard(copy);
-            showToast(message ?? "copied to clipboard successfully", Toasts.Type.SUCCESS);
+            copyWithToast(copy, message ?? "copied to clipboard successfully");
         }} {...props}>{children}</Clickable>
     </TooltipContainer>;
 }

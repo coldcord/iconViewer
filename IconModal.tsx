@@ -4,7 +4,9 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+import { Button } from "@components/Button";
 import { CodeBlock } from "@components/CodeBlock";
+import { copyWithToast } from "@utils/discord";
 import { classes } from "@utils/misc";
 import {
     ModalContent,
@@ -14,8 +16,9 @@ import {
     openModal
 } from "@utils/modal";
 import { findComponentByCodeLazy } from "@webpack";
-import { TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
+import { ContextMenuApi, TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
 
+import { ActionsContextMenu } from "./actionsContextMenu";
 import { BaseIconModal } from "./baseIconModal";
 import { IconsFinds } from "./names";
 import * as t from "./types";
@@ -45,13 +48,19 @@ function useColorNavigation(initialColor: number) {
     return [color, setColor] as const;
 }
 
-function ModalComponent({ iconName, Icon, ...props }: { iconName: string; Icon: t.Icon; } & ModalProps) {
+function ModalComponent({ iconName, Icon, findCode, ...props }: { iconName: string; Icon: t.Icon; findCode: string | null; } & ModalProps) {
     const [color, setColor] = useColorNavigation(getColorIndex("INTERACTIVE_ICON_DEFAULT"));
+
+    const openActionsMenu = (e: React.MouseEvent) => {
+        ContextMenuApi.openContextMenu(e, () => (
+            <ActionsContextMenu iconName={iconName} Icon={Icon} color={color} findCode={findCode} />
+        ));
+    };
 
     return (<BaseIconModal {...props}
         iconName={iconName}
         size={ModalSize.DYNAMIC}
-        className={classes("vc-ic-modals-icon", "vc-ic-icon-modal-icon")}
+        className={classes("vc-ic-modals-root", "vc-ic-icon-modal-root")}
         name="root-icon" currentColor={color} onColor={c => setColor(getColorIndex(c))}>
         <ModalContent>
             {IconsFinds[iconName] ?
@@ -76,11 +85,17 @@ function ModalComponent({ iconName, Icon, ...props }: { iconName: string; Icon: 
             </div>
         </ModalContent>
         <ModalFooter className="vc-ic-modals-footer">
+            <Button variant="primary" onClick={() => copyWithToast(findCode ?? String(Icon), findCode ? "Find code copied!" : "Raw function copied!")}>
+                {findCode ? "Copy" : "Copy Raw"}
+            </Button>
+            <Button variant="secondary" onClick={openActionsMenu}>
+                Actions
+            </Button>
         </ModalFooter>
     </BaseIconModal>);
 }
 
-export function openIconModal(iconName: string, Icon: t.Icon, patternFind?: string) {
-    openModal(props => <ModalComponent iconName={iconName} Icon={Icon} {...props} />);
+export function openIconModal(iconName: string, Icon: t.Icon, patternFind: string | null) {
+    openModal(props => <ModalComponent iconName={iconName} Icon={Icon} findCode={patternFind} {...props} />);
 }
 
