@@ -21,69 +21,115 @@ import "./IconsTab.css";
 import { Button } from "@components/Button";
 import { Heading } from "@components/Heading";
 import { SettingsTab, wrapTab } from "@components/settings/tabs/BaseTab";
+import { debounce } from "@shared/debounce";
 import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
-import { Clickable, React, TextInput, TooltipContainer } from "@webpack/common";
+import { useIntersection } from "@utils/react";
+import { Clickable, React, TextInput, TooltipContainer, useCallback, useEffect, useMemo, useState } from "@webpack/common";
 
 import { openIconModal } from "./IconModal";
-import { getNameByIcon } from "./names";
+import { getNameByIcon, IconsFinds } from "./names";
 import * as t from "./types";
 import { findAllByCode, IconsDef } from "./utils";
 
 export let Icons: IconsDef | null = null;
 
-function searchMatch(search: string, name: string, Icon: t.Icon, searchbyFunction: boolean): boolean {
-    if (search === "") return true;
-    if (searchbyFunction) {
-        return String(Icon).includes(search);
-    }
+function searchMatch(search: string, name: string, Icon: t.Icon, searchByContext: boolean): boolean {
+    if (!search) return true;
+
+    if (searchByContext) return String(Icon).includes(search);
+
     const words = name.replace(/([A-Z]([a-z]+)?)/g, " $1").toLowerCase().split(" ");
-    const searchKeywords = search.toLowerCase().split(" ");
-    return searchKeywords.every(keyword => words.includes(keyword)) || words.every(keyword => searchKeywords.includes(keyword)) || name.toLowerCase().includes(search.toLowerCase());
+    const keywords = search.toLowerCase().split(" ");
+    return keywords.every(k => words.includes(k)) ||
+        words.every(w => keywords.includes(w)) ||
+        name.toLowerCase().includes(search.toLowerCase());
 }
 
-
-function RenderIcons({ search, searchbyFunction }: { search: string; searchbyFunction: boolean; }) {
-    // TODO: ref might be best fit here, actually WaitFor is better a ton if possible
-    if (Icons === null) {
-        const rawIcons = Array.from(new Set(findAllByCode("[\"size\",\"width\",\"height\",\"color\",\"colorClass\"]")));
-        Icons = Object.fromEntries(Object.keys(rawIcons).map(k => [String(getNameByIcon(rawIcons[k], k)), rawIcons[k]])) as IconsDef;
-    }
-    return <div className="vc-icons-tab-grid-container">
-        {Object.entries(Icons).map(([iconName, Icon], index) =>
-            searchMatch(search, iconName, Icon, searchbyFunction) && <React.Fragment key={`iv-${iconName}`}>
-                <div className="vc-icon-box">
-                    <Clickable onClick={() => openIconModal(iconName, Icon)}>
-                        <div className="vc-icon-container">
-                            <Icon className="vc-icon-icon" size="xxl" />
-                        </div>
-                    </Clickable>
-                    <Heading className="vc-icon-title" tag="h3">{iconName}</Heading>
+function IconItem({ iconName, Icon }: { iconName: string; Icon: t.Icon; }) {
+    return (
+        <div className="vc-icon-box">
+            <Clickable onClick={() => openIconModal(iconName, Icon, IconsFinds[iconName])}>
+                <div className="vc-icon-container">
+                    <Icon className="vc-icon-icon" size="lg" width={32} height={32} color="var(--interactive-icon-default)" />
                 </div>
-            </React.Fragment>
-        )}</div>;
+            </Clickable>
+            <Heading className="vc-icon-title" tag="h3">{iconName}</Heading>
+        </div>
+    );
 }
 
 function IconsTab() {
-    const [search, setSearch] = React.useState<string>("");
-    const [searchByFunction, setSearchByFunction] = React.useState<boolean>(false);
-    const MemoRenderIcons = React.memo(RenderIcons);
+    const [searchInput, setSearchInput] = useState("");
+    const [search, setSearch] = useState("");
+    const [searchByFunction, setSearchByFunction] = useState(false);
+
+    const icons = useMemo(() => {
+        const rawIcons = Array.from(new Set(findAllByCode("[\"size\",\"width\",\"height\",\"color\",\"colorClass\"]")));
+        Icons = Object.fromEntries(Object.keys(rawIcons).map(k => [String(getNameByIcon(rawIcons[k], k)), rawIcons[k]])) as IconsDef;
+        return Icons;
+    }, []);
+
+    const debouncedSetSearch = useMemo(
+        () => debounce((query: string) => setSearch(query), 150),
+        []
+    );
+
+    const onSearch = useCallback((query: string) => {
+        setSearchInput(query);
+        debouncedSetSearch(query);
+    }, [debouncedSetSearch]);
+
+    const filteredIcons = useMemo(() =>
+        Object.entries(icons).filter(([name, Icon]) => searchMatch(search, name, Icon, searchByFunction)),
+        [icons, search, searchByFunction]
+    );
+
+    const iconsToLoad = 120;
+    const [visibleCount, setVisibleCount] = useState(iconsToLoad);
+
+    useEffect(() => {
+        setVisibleCount(iconsToLoad);
+    }, [search, searchByFunction]);
+
+    const loadMore = useCallback(() => {
+        setVisibleCount(v => Math.min(v + iconsToLoad, filteredIcons.length));
+    }, [filteredIcons.length]);
+
+    const [sentinelRef, isSentinelVisible] = useIntersection();
+
+    useEffect(() => {
+        if (isSentinelVisible && visibleCount < filteredIcons.length) {
+            loadMore();
+        }
+    }, [isSentinelVisible, visibleCount, filteredIcons.length, loadMore]);
+
+    const visibleIcons = filteredIcons.slice(0, visibleCount);
 
     return (
         <SettingsTab>
             <div className={classes(Margins.top16, "vc-icon-tab-search-bar-grid")}>
-                <TextInput autoFocus value={search} placeholder="Search for an icon..." onChange={setSearch} />
+                <TextInput autoFocus value={searchInput} placeholder="Search for an icon..." onChange={onSearch} />
                 <TooltipContainer text="Search by function context">
                     <Button
                         size="small"
                         aria-label="Search by function context"
-                        style={{ marginTop: "50%" }}
-                        variant={searchByFunction ? "positive" : "none"}
+                        className="vc-icon-search-func-btn"
+                        variant={searchByFunction ? "positive" : "primary"}
                         onClick={() => setSearchByFunction(!searchByFunction)}
-                    >Func</Button>
+                    >
+                        Func
+                    </Button>
                 </TooltipContainer>
             </div>
-            <MemoRenderIcons search={search} searchbyFunction={searchByFunction} />
+            <div className="vc-icons-tab-grid-container">
+                {visibleIcons.map(([iconName, Icon]) => (
+                    <IconItem key={iconName} iconName={iconName} Icon={Icon} />
+                ))}
+            </div>
+            {visibleCount < filteredIcons.length && (
+                <div ref={sentinelRef} className="vc-icon-sentinel" />
+            )}
         </SettingsTab>
     );
 }
