@@ -179,7 +179,12 @@ export const iconsFinds: Record<string, string> = {
     PlusMid: "0v6H5a1",
     ExperimentalLootbox: ".98-1.18c.87", // a guess
     Location: "9-8.03 9-13a9",
-    Phone: "1-3-3V4Zm5"
+    Phone: "1-3-3V4Zm5",
+    //
+    PaintPalette: "2v2c0 1.66-1.37",
+    Treat: "1.21c1.08.57.68 2.21-.55",
+    // MagicWand: ""
+    Nitro: "12c0-1.29.95"
 };
 
 // 13l4.91-8.05a1.8

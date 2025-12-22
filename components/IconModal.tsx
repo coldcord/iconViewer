@@ -4,24 +4,55 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+import { BaseText } from "@components/BaseText";
 import { Button } from "@components/Button";
 import { CodeBlock } from "@components/CodeBlock";
 import { copyWithToast } from "@utils/discord";
+import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
 import {
     ModalContent,
     ModalFooter,
+    ModalHeader,
     ModalProps,
+    ModalRoot,
     ModalSize,
     openModal
 } from "@utils/modal";
 import { DefinedSettings } from "@utils/types";
-import { ContextMenuApi, TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
+import { findComponentByCodeLazy } from "@webpack";
+import { Clickable, ContextMenuApi, TooltipContainer, useCallback, useEffect, useState } from "@webpack/common";
 
-import { BaseIconModal } from "./baseIconModal";
 import { ActionsContextMenu } from "./contextMenus/actionsContextMenu";
+import { ColorContextMenu } from "./contextMenus/colorContextMenu";
 import * as t from "./types";
 import { colorKeys, cssColors, getColorIndex, iconSizes } from "./utils";
+
+
+const CloseButton = findComponentByCodeLazy("CLOSE_BUTTON_LABEL");
+
+export function IconTooltip({ children, copy, className, message, ...props }: t.ClickableProps & { children: string; copy: string; message?: string; }) {
+    return <TooltipContainer text={"Click to copy"} className={className}>
+        <Clickable onClick={() => {
+            copyWithToast(copy, message ?? "copied to clipboard successfully");
+        }} {...props}>{children}</Clickable>
+    </TooltipContainer>;
+}
+
+export const ModalHeaderTitle = ({ iconName, currentColor, onColor }: { iconName: string; currentColor: number; onColor?: (color: string) => void; }) => {
+    return <BaseText weight="semibold" size="lg"
+        style={{ flexGrow: 1, display: "flex" }}
+        className={classes("vc-ic-modal-header-title", "vc-ic-modal-header-title")}>
+        <IconTooltip copy={iconName} className={classes(Margins.right8, "vc-icon-modal-color-tooltip")}>
+            {iconName}
+        </IconTooltip>
+        {" - "}
+        <IconTooltip copy={cssColors[currentColor]?.css} className={classes(Margins.left8, "vc-icon-modal-color-tooltip")}
+            onContextMenu={e => ContextMenuApi.openContextMenu(e, () => <ColorContextMenu colorKeys={colorKeys} onColor={onColor} />)}>
+            {cssColors[currentColor]?.name}
+        </IconTooltip>
+    </BaseText>;
+};
 
 function useColorNavigation(initialColor: number) {
     const [color, setColor] = useState(initialColor);
@@ -50,7 +81,7 @@ function ModalComponent({ iconName, Icon, findPattern, settings, ...props }: { i
 
     const openActionsMenu = (e: React.MouseEvent) => {
         ContextMenuApi.openContextMenu(e, () => (
-            <ActionsContextMenu iconName={iconName} Icon={Icon} color={color} />
+            <ActionsContextMenu iconName={iconName} Icon={Icon} color={color} settings={settings} />
         ));
     };
 
@@ -58,11 +89,11 @@ function ModalComponent({ iconName, Icon, findPattern, settings, ...props }: { i
         ? `const ${iconName}Icon = findComponentByCodeLazy(${JSON.stringify(findPattern)})`
         : null;
 
-    return (<BaseIconModal {...props}
-        iconName={iconName}
-        size={ModalSize.DYNAMIC}
-        className={classes("vc-ic-modals-root", "vc-ic-icon-modal-root")}
-        name="root-icon" currentColor={color} onColor={c => setColor(getColorIndex(c))}>
+    return (<ModalRoot {...props} size={ModalSize.DYNAMIC} className={classes("vc-ic-modals-root", "vc-ic-icon-modal-root")}>
+        <ModalHeader>
+            <ModalHeaderTitle iconName={iconName} currentColor={color} onColor={c => setColor(getColorIndex(c))} />
+            <CloseButton onClick={props.onClose} />
+        </ModalHeader>
         <ModalContent>
             <div style={{ visibility: findCode && settings.store.preMadeCodeSnippets ? "visible" : "hidden" }} className="vc-icon-modal-codeblock">
                 <CodeBlock lang="ts" content={settings.store.preMadeCodeSnippets && findCode || " " /* keeping layout consistent */} />
@@ -91,7 +122,7 @@ function ModalComponent({ iconName, Icon, findPattern, settings, ...props }: { i
                 Actions
             </Button>
         </ModalFooter>
-    </BaseIconModal>);
+    </ModalRoot>);
 }
 
 export function openIconModal(iconName: string, Icon: t.Icon, patternFind: string | null, settings: DefinedSettings) {

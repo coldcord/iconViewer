@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+import { copyWithToast } from "@utils/discord";
+import { DefinedSettings } from "@utils/types";
 import { Icon } from "@vencord/discord-types";
 import { findComponentByCodeLazy } from "@webpack";
 import {
@@ -12,11 +14,31 @@ import {
 } from "@webpack/common";
 
 // eslint-disable-next-line
-import { convertToHtml, cssColors, iconSizesInPx, logger, saveIcon } from "../utils";
+import { convertToHtml, cssColors, getIcons, iconSizesInPx, logger, saveIcon } from "../utils";
+import { findBestSmallestPattern } from "./generator";
 
 const BugIcon = findComponentByCodeLazy("1.1.27.1.37 0a6.66 6.6");
+// MagnifyingGlassIcon
+const f207Icon = findComponentByCodeLazy("14 0Z\",clipRule:\"evenodd\",className:_})}");
+const f207Icon = findComponentByCodeLazy("14 0Z\",clipRule:\"evenodd\",className:_})}");
 
-export function ActionsContextMenu({ iconName, Icon, color }: { iconName: string; Icon: Icon; color: number; }) {
+// find uniquest smallest pattern
+async function findUniquePattern(iconName: string, Icon: Icon, settings: DefinedSettings) {
+    const source = String(Icon);
+    const allSources = Object.values(getIcons()).map(i => String(i));
+    const generatedFind = await findBestSmallestPattern(source, allSources, settings.store.randomizeGeneratedFind);
+    logger.info(`smallest uniquest pattern found for icon ${iconName}: ${JSON.stringify(generatedFind)}`);
+    if (!isNaN(parseFloat(iconName))) { // is numeric?
+        iconName = "f" + iconName;
+    }
+    const find = settings.store.copyGeneratedFindAsPreMadeCode ? generatedFind
+        : `const ${iconName}Icon = findComponentByCodeLazy(${JSON.stringify(generatedFind)});`;
+
+    copyWithToast(find, "generated find copied! (can be flawed!)");
+}
+
+
+export function ActionsContextMenu({ iconName, Icon, color, settings }: { iconName: string; Icon: Icon; color: number; settings: DefinedSettings; }) {
     const colorData = cssColors[color];
 
     const handleSave = (type: string) => {
@@ -39,6 +61,12 @@ export function ActionsContextMenu({ iconName, Icon, color }: { iconName: string
                 label="Log to Console"
                 icon={BugIcon}
                 action={() => logger.info(Icon)}
+            />
+            <Menu.MenuItem
+                id="generate-unique-find"
+                label="generate unique find"
+                icon={BugIcon}
+                action={async () => findUniquePattern(iconName, Icon, settings)}
             />
             <Menu.MenuItem id="save" label="Save As...">
                 <Menu.MenuItem

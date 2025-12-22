@@ -9,7 +9,7 @@ import { findComponentByCodeLazy } from "@webpack";
 import { SettingsRouter } from "@webpack/common";
 
 import IconsTab from "./components/IconsTab";
-import { settings, SettingsAbout } from "./settings";
+import { settings, SettingsAbout } from "./components/settings";
 
 const PaintPaletteIcon = findComponentByCodeLazy("2v2c0 1.66-1.37");
 

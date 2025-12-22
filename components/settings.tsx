@@ -15,8 +15,13 @@ export const settings = definePluginSettings({
         type: OptionType.BOOLEAN,
         default: true,
     },
-    copyFindAsPreMadeCode: {
-        description: "copy the find directly or copy it as a pre-made find code (e.g `const BIcon = findComponentByCode(\"9V2.9c0-.5.4-.9.9-.9h7\"))`",
+    copyGeneratedFindAsPreMadeCode: {
+        description: "If enabled, copy the generated find as a JavaScript code snippet (e.g., `const BIcon = findComponentByCode(\"9V2.9c0-.5.4-.9.9-.9h7\")`) otherwise copy generated find value.",
+        type: OptionType.BOOLEAN,
+        default: true,
+    },
+    randomizeGeneratedFind: {
+        description: "randomly generate a find each time, slower but beneficial in cases where the generated find contains function variable",
         type: OptionType.BOOLEAN,
         default: false,
     }
