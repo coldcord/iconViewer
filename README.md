@@ -1,11 +1,11 @@
 Adds a new tab to settings, to preview all icons cross discord
 
-![preview](https://github.com/user-attachments/assets/f08e9514-5b0c-4a27-ae96-755a5ab0443d)
-![download-modal-preview](https://github.com/user-attachments/assets/c5ca5b62-6502-41cb-bcb9-5ffb7cf6341a)
+![preview](https://i.imgur.com/8E7rYyB.png)
 
 useful for plugin dev and css styling.
 
 features:
+
 - preview icons
 - copy icon names and css variables
 - ability to download icons in different formats (SVG, PNG, GIF, etc.).
