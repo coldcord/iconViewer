@@ -86,7 +86,7 @@ function ModalComponent({ iconName, Icon, findPattern, settings, ...props }: { i
     };
 
     const findCode = findPattern
-        ? `const ${iconName}Icon = findComponentByCodeLazy(${JSON.stringify(findPattern)})`
+        ? `const ${iconName}Icon = findComponentByCodeLazy(${JSON.stringify(findPattern)});`
         : null;
 
     return (<ModalRoot {...props} size={ModalSize.DYNAMIC} className={classes("vc-ic-modals-root", "vc-ic-icon-modal-root")}>

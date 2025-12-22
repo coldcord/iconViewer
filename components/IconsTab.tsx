@@ -120,8 +120,8 @@ function IconsTab() {
                 </TooltipContainer>
             </div>
             <div className="vc-icons-tab-grid-container">
-                {visibleIcons.map(([iconName, Icon]) => (
-                    <IconItem key={iconName} iconName={iconName} Icon={Icon} patternFind={iconsFinds[iconName] ?? null} settings={settings} />
+                {visibleIcons.map(([iconName, Icon], index) => (
+                    <IconItem key={iconName + index} iconName={iconName} Icon={Icon} patternFind={iconsFinds[iconName] ?? null} settings={settings} />
                 ))}
             </div>
             {visibleCount < filteredIcons.length && (

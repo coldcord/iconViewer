@@ -4,14 +4,13 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+import { PaintbrushIcon } from "@components/Icons";
 import definePlugin, { StartAt } from "@utils/types";
-import { findComponentByCodeLazy } from "@webpack";
 import { SettingsRouter } from "@webpack/common";
 
 import IconsTab from "./components/IconsTab";
 import { settings, SettingsAbout } from "./components/settings";
 
-const PaintPaletteIcon = findComponentByCodeLazy("2v2c0 1.66-1.37");
 
 export default definePlugin({
     name: "IconViewer",
@@ -34,9 +33,9 @@ export default definePlugin({
         // @ts-ignore
         Vencord.Plugins.plugins.Settings.customEntries.push({
             key: "vencord_discord_icons_viewer",
-            title: "Icons",
+            title: "Icon Finder",
             Component: IconsTab,
-            Icon: PaintPaletteIcon
+            Icon: PaintbrushIcon
         });
     },
     stop() {

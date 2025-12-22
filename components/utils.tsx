@@ -9,7 +9,7 @@ import { saveFile } from "@utils/web";
 import { filters, findAll, findByPropsLazy, waitFor } from "@webpack";
 import { createRoot, ReactDOM } from "@webpack/common";
 
-import { getNameByIcon } from "./names";
+import { getNameByIcon, namePatterns } from "./names";
 import { CssColorData, Icon } from "./types";
 
 let cachedIcons: IconsDef | null = null;
@@ -120,6 +120,7 @@ export function getIcons(): IconsDef {
     cachedIcons = Object.fromEntries(
         allIcons.map((icon, idx) => [getNameByIcon(icon, String(idx)), icon])
     );
+    logger.debug("left patterns:", namePatterns);
     return cachedIcons as IconsDef;
 }
 

@@ -41,7 +41,7 @@ function shuffleArray(array: any[]) {
         .map(({ value }) => value);
 }
 
-export async function findBestSmallestPattern(iconSource: string, allStrings: string[], shuffle: boolean = false, startingLength: number = 15) {
+export async function findBestSmallestPattern(iconSource: string, allStrings: string[], shuffle: boolean = false, startingLength: number = 20) {
     const sourceLength = iconSource.length;
 
     for (let len = startingLength; len <= sourceLength; len++) {

@@ -18,9 +18,7 @@ import { convertToHtml, cssColors, getIcons, iconSizesInPx, logger, saveIcon } f
 import { findBestSmallestPattern } from "./generator";
 
 const BugIcon = findComponentByCodeLazy("1.1.27.1.37 0a6.66 6.6");
-// MagnifyingGlassIcon
-const f207Icon = findComponentByCodeLazy("14 0Z\",clipRule:\"evenodd\",className:_})}");
-const f207Icon = findComponentByCodeLazy("14 0Z\",clipRule:\"evenodd\",className:_})}");
+const MagnifyingGlassIcon = findComponentByCodeLazy(/14 0Z",clipRule:"evenodd",className:\i\}\)\}/);
 
 // find uniquest smallest pattern
 async function findUniquePattern(iconName: string, Icon: Icon, settings: DefinedSettings) {
@@ -31,8 +29,8 @@ async function findUniquePattern(iconName: string, Icon: Icon, settings: Defined
     if (!isNaN(parseFloat(iconName))) { // is numeric?
         iconName = "f" + iconName;
     }
-    const find = settings.store.copyGeneratedFindAsPreMadeCode ? generatedFind
-        : `const ${iconName}Icon = findComponentByCodeLazy(${JSON.stringify(generatedFind)});`;
+    const find = settings.store.copyGeneratedFindAsPreMadeCode ? `const ${iconName}Icon = findComponentByCodeLazy(${JSON.stringify(generatedFind)});`
+        : generatedFind;
 
     copyWithToast(find, "generated find copied! (can be flawed!)");
 }
@@ -65,7 +63,7 @@ export function ActionsContextMenu({ iconName, Icon, color, settings }: { iconNa
             <Menu.MenuItem
                 id="generate-unique-find"
                 label="generate unique find"
-                icon={BugIcon}
+                icon={MagnifyingGlassIcon}
                 action={async () => findUniquePattern(iconName, Icon, settings)}
             />
             <Menu.MenuItem id="save" label="Save As...">
