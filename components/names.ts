@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-import * as t from "./components/types";
+import * as t from "./types";
 
 // name: pattern
 export const iconsFinds: Record<string, string> = {
@@ -18,7 +18,7 @@ export const iconsFinds: Record<string, string> = {
     NintendoSwitchNeutral: "14V2.32c0",
     Pencil: "0-2.82 0l-1.38 1.38a1",
     AngleBrackets: "0-.4.8v1.98c0",
-    NitroWheel: "2h3a1 1 0 1 1 0 2H5.5",
+    NitroWheel: "12c0-1.29.95",
     Bill: "75.34.75.75C6 7.99 5 9",
     Chat: "2.2 22H12Z\",",
     ChatVoice: "22H12Zm2-5.26c0",
@@ -38,7 +38,6 @@ export const iconsFinds: Record<string, string> = {
     QrCode: "0v3ZM20",
     Friends: "12h1a8",
     PlusSmall: "0v-5h5a1",
-    CircleQuestion: "10.58l-3.3-3.3a1",
     Pin: "1-.06-.63L6.16",
     PinUpright: "5H8v4.35l-3.39",
     PinUprightSlash: "1.56ZM11.08 ",
@@ -76,7 +75,6 @@ export const iconsFinds: Record<string, string> = {
     React: "04-4ZM16.96 4.08c",
     Camera: "1.34 1.71 1.34H20a3",
     Sticker: "1-.58.82l-4.24",
-    StageX: "13.07-1.38ZM16.7",
     StageLock: "7.14-3.85ZM18.98",
     Stage: "20.03c-.25.72.12",
     ConnectionFine: "1 0 1 1-2 0A17 17 ",
@@ -87,7 +85,6 @@ export const iconsFinds: Record<string, string> = {
     ChatCheck: "22H12c.22",
     Hammer: "1.42ZM7.76",
     StickerSmall: "1-.5.5H7a4",
-    StickerSad: "1.66-1.12 5.5",
     MagnifyingGlassPlus: "M11 7a1 1 0",
     MagnifyingGlassMinus: "1 0 2H7a1",
     // MagnifyingGlass Icon is difficult to match (1.41-1.41l4.68 4.67a1)
@@ -101,9 +98,9 @@ export const iconsFinds: Record<string, string> = {
     AnnouncementsWarning: "1-2.46-1.28 3.85",
     Announcements: ".42.27.79.62",
     ShieldLock: "2.83v2.67a.5.5",
-    ShieldUser: "9.77V6.75c0-.57.17",
-    ShieldAt: "14.42-.35.75",
-    Shield: "M4.27 5.22A2.66", // a guess
+    ShieldUser: "1.33 0a40.17 40",
+    ShieldAt: ".2.28.33.19.57.",
+    Shield: "1-.68-.12-.49-.", // a guess
     Slash: "1-.43-.76L15.78",
     SlashBox: "0-3-3H5Zm12.79",
     Apps: "2.95H20a2 2 0",
@@ -117,7 +114,7 @@ export const iconsFinds: Record<string, string> = {
     User: "2.9.06.24.26.",
     UserMinus: "3-3h5.02c.38",
     UserPlus: "2.07ZM12",
-    UserPlay: "0-3.61-.71h-.94Z",
+    UserPlay: "56-.25c-.26.06-",
     UserBox: "0-3-3H5Zm10 6a3", // a guess
     Settings: "0ZM16 12a4",
     SettingsInfo: "10Zm1-4a1",
@@ -142,7 +139,7 @@ export const iconsFinds: Record<string, string> = {
     Keyboard: "28.22.5.5.5h1a",
     NewUserSimple: "93-.94h-2.24a5.6",
     Apple: "2.54A12.25 12.25",
-    Steam: "2.94v.05l-2.62",
+    // Steam: "2.94v.05l-2.62",
     HeadphonesSlash: "04-.25l3.48-3.48Z",
     //
     Headphones: "4.1-2.13h1.86A9",
@@ -162,7 +159,6 @@ export const iconsFinds: Record<string, string> = {
     UploadAttachment: " 0-.06.04V5a3",
     Bicycle: "10h4.48l.55",
     At: "33h1.02Zm",
-    Riot: "8.45-2.04ZM14.88",
     BookCheck: "3v12H5.5a1.5 1.5",
     BrowserLink: "1.41l2.52-2.52a5.98", // name guess
     Sun: "1.42ZM23", // name guess
@@ -182,9 +178,77 @@ export const iconsFinds: Record<string, string> = {
     Phone: "1-3-3V4Zm5",
     //
     PaintPalette: "2v2c0 1.66-1.37",
+    PaintbrushIcon: "13l4.91-8.05a1.",
     Treat: "1.21c1.08.57.68 2.21-.55",
-    // MagicWand: ""
-    Nitro: "12c0-1.29.95"
+    MagicWand: "27 2.27.85c.48.",
+    ThreadLock: "{fillRule:\"evenodd\",d:\"M16",
+    CoffeeCup: "45 0 0 0-.2.4 1",
+    ArrowRight: ".48 0 0 0 0-2.6",
+    Lamp: "h4.18a1.41 1.41", // a guess
+    BellZ: "M19 11.5a.5.5 0",
+    BellSlash: "20 20ZM3.13 16.",
+    Music: "3 3.5 3S8 17.66",
+    MusicSlash: "0 0 1 2.65-1.89",
+    Paperclip: "57 4.01a6.97 6.",
+    Envelope: "0 0 0 3-3V8.8Z\"",
+    Snowflake: ".88A1 1 0 1 1 5",
+    Ticket: "9-.7Zm2.75 2.75",
+    Leaf: "26-1-1.85-.42-1",
+    MicrophoneArrowRight: "1 0 1.4l-4 4a1 ",
+    PawPrint: ".68-3.95.79-1.0",
+    GameController: "23-.55c-.57.13-",
+    GameControllerLink: "6 6.06a1 1 0 0 ",
+    MicrophoneSlash: "3.83l-.02.02A5.",
+    Pause: "6ZM15 4a1 1 0 0",
+    Cloud: " 0 0 1 5 5v.2A5",
+    Skull: ".58 1.2-.05.19-",
+    PlayStationNeutral2: ".4035 13.3058 1",
+    SpotifyNeutral2: "8,9.37785148 C1",
+    XboxNeutral2: "29146,3.3252989",
+    AppleNeutral2: "2.396-2.48 4.06",
+    TikTokNeutral: "2.893 2.893 0 0",
+    OsWindows: "094L20.105 3zM4",
+    LaptopPhone: "8H2a1 1 0 1 0 0",
+    UserShield: "6 12.1294V12.70",
+    UserClock: "1 11.53 11h.94c",
+    Backpack: "6.35 11H7V9a1 1",
+    Hourglass: "-2.06 2.06A6 6 ",
+    CirclePlus: "1 1 0 2h-4v4a1 ",
+    CircleQuestion: "27l-.28-2a1 1 0",
+    CircleCheck: "0 0-1.4-1.4L10 ",
+    CirclePlay: "c0-.88 1-1.4 1.73-.9",
+    CirclePlusPlay: "1 12.665c-.923-",
+    CircleInformation: "2-.79l1.05-4.86",
+    CircleWarning: "12 0l-.38-6.94a",
+    CircleX: "42L13.42 12l3.3-3.3a",
+    EmojiMinus: ".59-9.05 9.33 9.33 0",
+    EmojiPlus: "l.06.02h.02A1 1",
+    EmojiSad: ".5 12C17.3284 1",
+    Clock: " 0v7c0 .27.1.52",
+    Train: "3 3h-.13l.96 1.",
+    ThumbsDown: " 1-.08.24l-.54.33a1.",
+    ThumbsDown2: "868 10.2225 13.087 1",
+    ThumbsUp: "9a1.92 1.92 0 0 0-1.",
+    ThumbsUp2: "18 16.5424 14.7841C1",
+    Potion: ".33.47a7 7 0 0 ",
+    Dots: "1 0 4Zm0 8a2 2 ",
+    Trophy: "2 0 0 1-2 2H8Zm9.29-",
+    Thunder: " 0 0-.66-1.75h-4.81a",
+    Disc: "-1.29-1.26-.21-.82.0",
+    Car: " 0 0 1 1.94 1.51ZM10",
+    StickerSad: "5.82 0 1 1 0 0 0 1.6",
+    AttachmentUpload: ".5v2.3a.4.4 0 0 1-.6", // a guess
+    ForumLock: "V5c0-.66.22-1.28.58-",
+    Timer: "l-.67.68A8.96 8.96 0",
+    Shop: "-3 3h-2.75a.25.25 0 ",
+    ShopStar: "a.28.28 0 0 0-.4 0 4",
+    HeartOutline: " 5 0 0 0-3.85 1.69L1",
+    HandRequestSpeakList: "0 0 0 .43-.48v-2.59L",
+    PiggyBank: "55L20.5 16h.5a2 2 0 ",
+    WiltedRose: "6.26 0 0 0-.3-.13Z\",",
+    GlobalEarthLocked: "46c-.95-.3-1.95-.46-",
+    DoorExit: ",d:\"M15.3 16.7a1 1 0",
+    DoorEnter: "M9 10a1 1 0 0 1 1 1v"
 };
 
 // 13l4.91-8.05a1.8
@@ -193,8 +257,8 @@ export const iconsFinds: Record<string, string> = {
 // M12 2.81a1 1 0 0 1 0-1.41l.36-.36a1
 
 export const namePatterns = new Map(Object.entries(iconsFinds));
-
 export function getNameByIcon(Icon: t.Icon, defaultName: any) {
+    // TODO: add map of icons -> name for debugging purposes
     for (const [name, pattern] of namePatterns) {
         if (String(Icon).includes(pattern)) {
             namePatterns.delete(name); // remove pattern from map after being found prevent overshadowing
