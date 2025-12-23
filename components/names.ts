@@ -319,7 +319,7 @@ export const iconsFinds: Record<string, string> = {
     Tools: "l-1.58 1.58a1 1 0 0 ", // new?
     Speedometer: "83-13.8a1 1 0 0 0-1.",
     Wrench: "1-1v-3.27c0-.82.5-1.",
-    TriangularGlassBottle: "v6.49a2 2 0 0 1-.5 1", // new?
+    Beaker: "v6.49a2 2 0 0 1-.5 1", // new?
     Tower: ".41 15H9v1.59Zm4-.59", // new
     VideoClip: "a.5.5 0 0 0-.4-.8h-4",
     Embed: "1h6a1 1 0 1 1 0 2H6a",
@@ -337,19 +337,19 @@ export const iconsFinds: Record<string, string> = {
     CalendarPlus: " 2.1 1.73 2.61.11.06",
     SkipForward: "-2.18-.02a1.1 1.1 0 ", // new
     SkipBackward: " 1.04 0 1 1 2.04-.46", // new
-    GloryMountain: "ZM2.76 9.47a1 1 0 1 ", // new?
+    Achievements: "ZM2.76 9.47a1 1 0 1 ",
     SettingsCircle: "87-.12 1.14.24.7.95 ", // a guess
     Branches: " 1 0-2 0V11H8a4 4 0 ", // new?
     MoneyExchange: "1.1 1.1 0 0 1 .18.06", // new?
-    LineGraph: "2 0V7a1 1 0 0 0-1-1h", // new
+    Analytics: "2 0V7a1 1 0 0 0-1-1h",
     CodeBadge: "44 5.33333L5.33333 7", // UIC
     Expand: "8 3H16a1 1 0 0 1-1-1", // a guess
     SoftSquareOutline: "375C4.06519 3 3 4.06",
     SquareOutline: ":\"1.5\",y:\"1.5\",fill:", // pretty breakable
     Poll: "12a2 2 0 1 0 0-4H4Z\"",
-    WindowLaunch: " 1v6a3 3 0 0 1-3 3H4", // a guess
-    WindowPlus: "a.5.5 0 0 1-.5-.5V15", // new?
-    WindowTopOutline: " 0-3 3v2a1 1 0 0 0 1", // a guess
+    Browser: " 1v6a3 3 0 0 1-3 3H4",
+    BrowserPlus: "a.5.5 0 0 1-.5-.5V15",
+    BrowserCheckered: " 0-3 3v2a1 1 0 0 0 1",
     ChannelsFollowed: "2-2H4ZM15 14a2 2 0 0",
     CircleShield: "19.56 9.99995 16.826", // a guess
     Webhook: "-.01a1 1 0 0 0-.66 1",
@@ -368,6 +368,9 @@ export const iconsFinds: Record<string, string> = {
     ArrowLargeLeft: "1 0 1.4-1.4L6.42 13", // a guess
     ArrowLargeRight: "59l-6.3 6.3a1 1 0 0", // a guess
     Italic: "0 0 1-.47-.69l.6-1.5",
+    Badge_: "0 1 1.19-1.19l.93-.", // this is actually named badge despise not looking so
+    Accessibility: " 0 1 .48-1.94l3.55.8",
+    BlurBackground: ".27.27 0 0 1-.09-.37",
 };
 
 
