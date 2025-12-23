@@ -153,9 +153,9 @@ export const iconsFinds: Record<string, string> = {
     Badge: ".44.5.49a3.14",
     Tag: "88-2.12V4a2",
     // Attachment mostly guesses (or papers? idk)
-    Attachment: "5.22.5.5V18a4",
-    AttachmentWarning: "1.48Zm3.93-4.47a",
-    AttachmentDeny: "\"M21.76 14.83a", // name guess
+    File: "5.22.5.5V18a4",
+    FileWarning: "1.48Zm3.93-4.47a",
+    FileDeny: "\"M21.76 14.83a", // name guess
     Bicycle: "10h4.48l.55",
     At: "33h1.02Zm",
     BookCheck: "3v12H5.5a1.5 1.5",
@@ -241,7 +241,7 @@ export const iconsFinds: Record<string, string> = {
     Disc: "-1.29-1.26-.21-.82.0",
     Car: " 0 0 1 1.94 1.51ZM10",
     StickerSad: "5.82 0 1 1 0 0 0 1.6",
-    AttachmentUpload: ".5v2.3a.4.4 0 0 1-.6", // a guess
+    FileUp: ".5v2.3a.4.4 0 0 1-.6",
     Forum: "-9 3.58-9 8c0 1.5.47",
     ForumLock: "V5c0-.66.22-1.28.58-",
     ForumWarning: "-.51.25-.8a2.86 2.86",
@@ -312,7 +312,7 @@ export const iconsFinds: Record<string, string> = {
     Summary: " .3.82H6v-.83c0-.29-",
     Swords: ".53.53a1 1 0 0 1 .29", // new
     Clapperboard: "0 1-3-3v-8.5ZM5 14a1", // new
-    Attachments: "6 6v5.5a.5.5 0 0 1-.", // new?
+    Files: "6 6v5.5a.5.5 0 0 1-.", // new?
     AngrySign: "0 1 3.4 5.92 5.95 5.", // new
     Ear: "0 0 22 18a1 1 0 1 0-", // new
     EarSlash: ".33.11.4.53.16.78l-.", // new
@@ -322,7 +322,7 @@ export const iconsFinds: Record<string, string> = {
     TriangularGlassBottle: "v6.49a2 2 0 0 1-.5 1", // new?
     Tower: ".41 15H9v1.59Zm4-.59", // new
     VideoClip: "a.5.5 0 0 0-.4-.8h-4",
-    VideoWindow: "1h6a1 1 0 1 1 0 2H6a", // new?
+    Embed: "1h6a1 1 0 1 1 0 2H6a",
     Minimize: "a1 1 0 1 0 0-2h-3a4 ", // a guess
     Maximize: "0 2 0V6a4 4 0 0 0-4-", // a guess
     ArrowsOppositeDirections: "1 1-2 0V5.41l-5.3 5.", // a guess
@@ -345,6 +345,7 @@ export const iconsFinds: Record<string, string> = {
     Expand: "8 3H16a1 1 0 0 1-1-1", // a guess
     SoftSquareOutline: "375C4.06519 3 3 4.06",
     SquareOutline: ":\"1.5\",y:\"1.5\",fill:", // pretty breakable
+    Poll: "12a2 2 0 1 0 0-4H4Z\""
 };
 
 
