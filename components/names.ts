@@ -293,7 +293,7 @@ export const iconsFinds: Record<string, string> = {
     FlagCheck: " 0 0 0-1.48 1.48l2.1",
     GridSquare: "-1.46 3.25-3.25v-2.5", // a guess
     Minus: "width:\"8\",height:\"2\",x:\"2\",y:\"5\"", // all I'm gonna say.. interesting (pretty breakable)
-    Party: "1 0 0 0-1.21-.73l-4 ",
+    Soundboard: "1 0 0 0-1.21-.73l-4 ",
     Clipboard: " 0 0 1-1-1Zm0 4a1 1 ",
     ClipboardCheck: "\"M17 5.5V6a1 1 0 0 1",
     Menu: "2a1 1 0 1 0 0-2H9Z\",", // a guess
@@ -334,8 +334,9 @@ export const iconsFinds: Record<string, string> = {
     CrescentMoon: "46l-1.2.45-.45 1.2a.", // new? is this even the correct name?
     NavigateSign: ".3.07.4.2l2.63 3.5a.", // new? does this name fit
     Calendar: " 1 1 1v9a3 3 0 0 1-3",
+    CalendarPlus: " 2.1 1.73 2.61.11.06",
     SkipForward: "-2.18-.02a1.1 1.1 0 ", // new
-    SkipBackward: "19l-.02.02a11.47 11.", // new
+    SkipBackward: " 1.04 0 1 1 2.04-.46", // new
     GloryMountain: "ZM2.76 9.47a1 1 0 1 ", // new?
     SettingsCircle: "87-.12 1.14.24.7.95 ", // a guess
     Branches: " 1 0-2 0V11H8a4 4 0 ", // new?
@@ -345,7 +346,28 @@ export const iconsFinds: Record<string, string> = {
     Expand: "8 3H16a1 1 0 0 1-1-1", // a guess
     SoftSquareOutline: "375C4.06519 3 3 4.06",
     SquareOutline: ":\"1.5\",y:\"1.5\",fill:", // pretty breakable
-    Poll: "12a2 2 0 1 0 0-4H4Z\""
+    Poll: "12a2 2 0 1 0 0-4H4Z\"",
+    WindowLaunch: " 1v6a3 3 0 0 1-3 3H4", // a guess
+    WindowPlus: "a.5.5 0 0 1-.5-.5V15", // new?
+    WindowTopOutline: " 0-3 3v2a1 1 0 0 0 1", // a guess
+    ChannelsFollowed: "2-2H4ZM15 14a2 2 0 0",
+    CircleShield: "19.56 9.99995 16.826", // a guess
+    Webhook: "-.01a1 1 0 0 0-.66 1",
+    Penguin: "3-1.58-2-2.4-3.84-2.",
+    Planet: "c.3.12.3.54 0 .66l-1",
+    ArrowAngleRightUp: "0 1-1.4-1.4L18.58 9",
+    ArrowAngleLeftUp: "0 1.4-1.4L5.42 9H11a",
+    ArrowAngleRightDown: "1 1 0 1 0-2 0v3.54A1",
+    ArrowAngleLeftDown: " 2H3a1 1 0 0 1-1-1V8",
+    ArrowSmallUp: "1l3.3 3.3a1 1 0 0 0 ", // a guess
+    ArrowSmallDown: "0 0 1 1.4 1.42l-5 5", // a guess
+    ArrowSmallLeft: "2H6.41l3.3-3.3a1 1 0", // a guess
+    ArrowSmallRight: "1 0 1 0-1.4 1.4l3.29", // a guess
+    ArrowLargeUp: "0 1.4-1.42l-8-8Z\",c", // a guess
+    // ArrowLargeDown doesn't seem to exist
+    ArrowLargeLeft: "1 0 1.4-1.4L6.42 13", // a guess
+    ArrowLargeRight: "59l-6.3 6.3a1 1 0 0", // a guess
+    Italic: "0 0 1-.47-.69l.6-1.5",
 };
 
 
