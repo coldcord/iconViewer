@@ -120,7 +120,7 @@ export function getIcons(): IconsDef {
     cachedIcons = Object.fromEntries(
         allIcons.map((icon, idx) => [getNameByIcon(icon, String(idx)), icon])
     );
-    logger.debug("left patterns:", namePatterns);
+    logger.debug("failed patterns:", namePatterns);
     return cachedIcons as IconsDef;
 }
 

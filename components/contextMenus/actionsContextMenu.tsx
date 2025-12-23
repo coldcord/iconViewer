@@ -25,14 +25,14 @@ async function findUniquePattern(iconName: string, Icon: Icon, settings: Defined
     const source = String(Icon);
     const allSources = Object.values(getIcons()).map(i => String(i));
     const generatedFind = await findBestSmallestPattern(source, allSources, settings.store.randomizeGeneratedFind);
-    logger.info(`smallest uniquest pattern found for icon ${iconName}: ${JSON.stringify(generatedFind)}`);
+    logger.debug(`smallest uniquest pattern found for icon ${iconName}: ${JSON.stringify(generatedFind)}`);
     if (!isNaN(parseFloat(iconName))) { // is numeric?
         iconName = "f" + iconName;
     }
     const find = settings.store.copyGeneratedFindAsPreMadeCode ? `const ${iconName}Icon = findComponentByCodeLazy(${JSON.stringify(generatedFind)});`
         : generatedFind;
 
-    copyWithToast(find, "generated find copied! (can be flawed!)");
+    copyWithToast(find, `generated find ${JSON.stringify(generatedFind)} copied! (can be flawed!)`);
 }
 
 

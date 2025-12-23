@@ -97,7 +97,7 @@ export const iconsFinds: Record<string, string> = {
     AnnouncementsLock: "1-2.46-1.28 3.86",
     AnnouncementsWarning: "1-2.46-1.28 3.85",
     Announcements: ".42.27.79.62",
-    ShieldLock: "2.83v2.67a.5.5",
+    ShieldLock: "1l.6-4.65c.05-.17-.0",
     ShieldUser: "1.33 0a40.17 40",
     ShieldAt: ".2.28.33.19.57.",
     Shield: "1-.68-.12-.49-.", // a guess
@@ -114,7 +114,7 @@ export const iconsFinds: Record<string, string> = {
     User: "2.9.06.24.26.",
     UserMinus: "3-3h5.02c.38",
     UserPlus: "2.07ZM12",
-    UserPlay: "56-.25c-.26.06-",
+    UserPlay: " 1 3.65-8.61c.4-.2.4",
     UserBox: "0-3-3H5Zm10 6a3", // a guess
     Settings: "0ZM16 12a4",
     SettingsInfo: "10Zm1-4a1",
@@ -156,7 +156,6 @@ export const iconsFinds: Record<string, string> = {
     Attachment: "5.22.5.5V18a4",
     AttachmentWarning: "1.48Zm3.93-4.47a",
     AttachmentDeny: "\"M21.76 14.83a", // name guess
-    UploadAttachment: " 0-.06.04V5a3",
     Bicycle: "10h4.48l.55",
     At: "33h1.02Zm",
     BookCheck: "3v12H5.5a1.5 1.5",
@@ -201,12 +200,16 @@ export const iconsFinds: Record<string, string> = {
     MicrophoneSlash: "3.83l-.02.02A5.",
     Pause: "6ZM15 4a1 1 0 0",
     Cloud: " 0 0 1 5 5v.2A5",
+    CloudCheck: ".05-4.78-4.65-4.96zM",
+    Cloud2: "4.78-4.65-4.96z\"}),(",
     Skull: ".58 1.2-.05.19-",
     PlayStationNeutral2: ".4035 13.3058 1",
     SpotifyNeutral2: "8,9.37785148 C1",
     XboxNeutral2: "29146,3.3252989",
     AppleNeutral2: "2.396-2.48 4.06",
     TikTokNeutral: "2.893 2.893 0 0",
+    YoutubeNeutral2: "1 24 12.0545 24 12.0",
+    CrunchyrollNeutral: "6 9.64c-.03.06-.05 0",
     OsWindows: "094L20.105 3zM4",
     LaptopPhone: "8H2a1 1 0 1 0 0",
     UserShield: "6 12.1294V12.70",
@@ -224,6 +227,7 @@ export const iconsFinds: Record<string, string> = {
     EmojiMinus: ".59-9.05 9.33 9.33 0",
     EmojiPlus: "l.06.02h.02A1 1",
     EmojiSad: ".5 12C17.3284 1",
+    EmojiSparkle: " 0 0 22.47 8.6a2.93 ",
     Clock: " 0v7c0 .27.1.52",
     Train: "3 3h-.13l.96 1.",
     ThumbsDown: " 1-.08.24l-.54.33a1.",
@@ -238,18 +242,114 @@ export const iconsFinds: Record<string, string> = {
     Car: " 0 0 1 1.94 1.51ZM10",
     StickerSad: "5.82 0 1 1 0 0 0 1.6",
     AttachmentUpload: ".5v2.3a.4.4 0 0 1-.6", // a guess
+    Forum: "-9 3.58-9 8c0 1.5.47",
     ForumLock: "V5c0-.66.22-1.28.58-",
+    ForumWarning: "-.51.25-.8a2.86 2.86",
     Timer: "l-.67.68A8.96 8.96 0",
     Shop: "-3 3h-2.75a.25.25 0 ",
-    ShopStar: "a.28.28 0 0 0-.4 0 4",
+    ShopSparkle: "a.28.28 0 0 0-.4 0 4",
     HeartOutline: " 5 0 0 0-3.85 1.69L1",
     HandRequestSpeakList: "0 0 0 .43-.48v-2.59L",
     PiggyBank: "55L20.5 16h.5a2 2 0 ",
     WiltedRose: "6.26 0 0 0-.3-.13Z\",",
     GlobalEarthLocked: "46c-.95-.3-1.95-.46-",
+    Door: "3v7.5a.5.5 0 0 1-.5",
+    DoorEnter: "M9 10a1 1 0 0 1 1 1v",
     DoorExit: ",d:\"M15.3 16.7a1 1 0",
-    DoorEnter: "M9 10a1 1 0 0 1 1 1v"
+    UserCircle: "1-1.46.9 10.95 10.95",
+    UserCircleStatus: "1a.4.4 0 0 1 .38.27c",
+    Group: "67 1.5-1.5a7.5 7.5 0",
+    GroupPlus: "-.47-1.63.11-.27.2-.",
+    GroupArrowDown: "1.42 1.42l1.85 1.84 ",
+    ImageLock: " 5.81 19H13v3H5a3 3 ",
+    ImagePlus: "6.22-.48.06l-.47-.63",
+    ImageSparkle: "5 1.38a3.22 3.22 0 0",
+    Images: "76 1.32-1.33.76a.8.8",
+    Image: "3V5Zm13.35 8.13 3.5 ",
+    ImageFileUp: "2 0l.55.73.98-.98a3 ",
+    ImageFile: "0 0 4-4v-7.5a.5.5 0 ",
+    ImageWarning: ".12.9.26.9 1.54 0 1.",
+    ClockWarning: "-.73-.3-.97l-3-3A1 1",
+    ClockX: ".42 19l2.3 2.3a1 1 0",
+    UnknownGame: ".4987V9.9987C19.1667", // a guess
+    Replay: ".38.7-.54 1.32-1.16 ", // a guess
+    Retry: "-2 0v3a9.98 9.98 0 0",
+    HandRequestSpeak: " 0 0 14.28.03l.95-3.", // a guess
+    HandRequestSpeakDeny: "89a7.47 7.47 0 0 1-7", // a guess
+    SadPoop: "106.1-18.5 c3.1-1.3,",
+    PhoneHangUp: " 1-.32-6.92 12.67 12",
+    PhoneCall: "a1 1 0 0 1 1-1 8 8 0",
+    PencilSparkle: ".15-.38.45-.68.83-.8",
+    Deny: " 7.03L19.03 6.38A8.9",
+    CircleOutline: "03 6.38A8.96 8.96 0 ", // a guess
+    ExperimentalConfetti: "0 0 1 .35 1.06l-.06.", // a guess
+    AppsPlus: "3 0 0 1-3-3V5ZM2 16a",
+    Folder: " 1 1.66.9L12 5h7a3 3",
+    FolderPlus: " 0 1-2 0v-3H8a1 1 0 ",
+    Sparkle: " 0 3.18 0l.85-2.27a2",
+    MobilePhoneController: " 1 0 0 0-1-1H8a1 1 0",
+    UserController: ".58.32a19.22 19.22 0",
+    CreditCard: "6a3 3 0 0 1 3 3v1H1V",
+    FlagCheck: " 0 0 0-1.48 1.48l2.1",
+    GridSquare: "-1.46 3.25-3.25v-2.5", // a guess
+    Minus: "width:\"8\",height:\"2\",x:\"2\",y:\"5\"", // all I'm gonna say.. interesting (pretty breakable)
+    Party: "1 0 0 0-1.21-.73l-4 ",
+    Clipboard: " 0 0 1-1-1Zm0 4a1 1 ",
+    ClipboardCheck: "\"M17 5.5V6a1 1 0 0 1",
+    Menu: "2a1 1 0 1 0 0-2H9Z\",", // a guess
+    Boost: "0.88l-4.68-3.83C7.25",
+    BoostSlash: ".44-1.57-1.51a1.02 1",
+    BoostTier1: "C7.25 7.01 7 7.35 7 ", // a guess
+    BoostTier1Simple: ".73l3.98 3.86a1 1 0 ", // a guess
+    BoostTier2: "-.54-.3-.73l-4-3.9a1", // a guess
+    BoostTier2Simple: ".06 1.05-2.6l4.9-4Z\"", // a guess
+    BoostTier3: " 0l-2.36-2.36a1 1 0 ", // a guess (check if this isn't the simple version)
+    BoostTier3Simple: ".18 1.19l.51 1.38c.1", // a guess
+    Receipt: " 0 0 0-1.27-.97l-2.5", // a guess
+    Paper: "Zm1 4a1 1 0 1 0 0 2h",
+    PaperPlus: " 0 0 3 3h9c.1 0 .12-",
+    ClassicGameController: ".55l.9 4.72h3.34a2 2", // a guess
+    Summary: " .3.82H6v-.83c0-.29-",
+    Swords: ".53.53a1 1 0 0 1 .29", // new
+    Clapperboard: "0 1-3-3v-8.5ZM5 14a1", // new
+    Attachments: "6 6v5.5a.5.5 0 0 1-.", // new?
+    AngrySign: "0 1 3.4 5.92 5.95 5.", // new
+    Ear: "0 0 22 18a1 1 0 1 0-", // new
+    EarSlash: ".33.11.4.53.16.78l-.", // new
+    Tools: "l-1.58 1.58a1 1 0 0 ", // new?
+    Speedometer: "83-13.8a1 1 0 0 0-1.",
+    Wrench: "1-1v-3.27c0-.82.5-1.",
+    TriangularGlassBottle: "v6.49a2 2 0 0 1-.5 1", // new?
+    Tower: ".41 15H9v1.59Zm4-.59", // new
+    VideoClip: "a.5.5 0 0 0-.4-.8h-4",
+    VideoWindow: "1h6a1 1 0 1 1 0 2H6a", // new?
+    Minimize: "a1 1 0 1 0 0-2h-3a4 ", // a guess
+    Maximize: "0 2 0V6a4 4 0 0 0-4-", // a guess
+    ArrowsOppositeDirections: "1 1-2 0V5.41l-5.3 5.", // a guess
+    XLarge2: "1 6 6.583 1.576 11 1",
+    Waveform: "-2 0V6ZM1 8a1 1 0 0 ", // a guess
+    Town: "M7.36 10.23a1 1 0 0 ", // new?
+    SwimmingGoggles: ".83 1.2 1.2 0 0 0-1.", // new?
+    SmallX2: ".5 L6,6 L8.5,8.5 L6,",
+    CrescentMoon: "46l-1.2.45-.45 1.2a.", // new? is this even the correct name?
+    NavigateSign: ".3.07.4.2l2.63 3.5a.", // new? does this name fit
+    Calendar: " 1 1 1v9a3 3 0 0 1-3",
+    SkipForward: "-2.18-.02a1.1 1.1 0 ", // new
+    SkipBackward: "19l-.02.02a11.47 11.", // new
+    GloryMountain: "ZM2.76 9.47a1 1 0 1 ", // new?
+    SettingsCircle: "87-.12 1.14.24.7.95 ", // a guess
+    Branches: " 1 0-2 0V11H8a4 4 0 ", // new?
+    MoneyExchange: "1.1 1.1 0 0 1 .18.06", // new?
+    LineGraph: "2 0V7a1 1 0 0 0-1-1h", // new
+    CodeBadge: "44 5.33333L5.33333 7", // UIC
+    Expand: "8 3H16a1 1 0 0 1-1-1", // a guess
+    SoftSquareOutline: "375C4.06519 3 3 4.06",
+    SquareOutline: ":\"1.5\",y:\"1.5\",fill:", // pretty breakable
 };
+
+
+//   "ImageText",pencil
+// 1.4a1.59
 
 // 13l4.91-8.05a1.8
 // 82.58l4.24
