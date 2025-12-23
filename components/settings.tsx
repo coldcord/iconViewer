@@ -23,7 +23,7 @@ export const settings = definePluginSettings({
     randomizeGeneratedFind: {
         description: "randomly generate a find each time, slower but beneficial in cases where the generated find contains function variable",
         type: OptionType.BOOLEAN,
-        default: false,
+        default: true,
     }
 });
 

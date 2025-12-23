@@ -51,9 +51,11 @@ function IconItem({ iconName, Icon, patternFind, settings }: { iconName: string;
     return (
         <div className="vc-icon-box">
             <Clickable onClick={() => openIconModal(iconName, Icon, patternFind, settings)}>
-                <div className="vc-icon-container">
-                    <Icon className="vc-icon-icon" size="lg" width={32} height={32} color="var(--interactive-icon-default)" />
-                </div>
+                <TooltipContainer text={iconName} hideOnClick={true} delay={0.3}>
+                    <div className="vc-icon-container">
+                        <Icon className="vc-icon-icon" size="lg" width={32} height={32} color="var(--interactive-icon-default)" />
+                    </div>
+                </TooltipContainer>
             </Clickable>
             <Heading className="vc-icon-title" tag="h3">{iconName}</Heading>
         </div>
